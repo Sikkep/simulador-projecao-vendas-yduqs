@@ -43,15 +43,13 @@
     button,input{font:inherit}button{cursor:pointer}
     button:focus-visible,input:focus-visible{outline:3px solid rgba(42,196,210,.55);outline-offset:3px}
     .header{position:fixed;z-index:60;inset:0 0 auto;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;color:var(--header-dark);background:var(--header);box-shadow:0 5px 30px rgba(0,0,0,.28)}
-    .brand,.header-status,.brand-mark{display:flex;align-items:center}.brand{gap:8px}.brand-mark{gap:10px;margin-left:7px;font-weight:900;letter-spacing:-.02em}
+    .brand,.brand-mark{display:flex;align-items:center}.brand{gap:8px}.brand-mark{gap:10px;margin-left:7px;font-weight:900;letter-spacing:-.02em}
     .menu-dots{width:42px;height:42px;display:grid;grid-template-columns:repeat(3,3px);grid-auto-rows:3px;align-content:center;justify-content:center;gap:4px;border:1px solid rgba(4,37,59,.14);border-radius:12px;color:var(--header-dark);background:rgba(255,255,255,.1);transition:.18s}
     .menu-dots span{width:3px;height:3px;border-radius:50%;background:currentColor}.menu-dots:hover{background:rgba(255,255,255,.28);transform:translateY(-1px)}
     .q-secret{width:37px;height:42px;display:grid;place-items:center;padding:0;border:0;background:transparent}
     .q-symbol{position:relative;width:27px;height:27px;border:7px solid var(--header-dark);border-radius:50%}
     .q-symbol:after{content:"";position:absolute;width:10px;height:7px;right:-7px;bottom:-5px;border-radius:2px;background:var(--header-dark);transform:rotate(47deg)}
     .brand-name{font-size:15px}
-    .header-status{gap:9px;padding:8px 12px;border:1px solid rgba(4,37,59,.12);border-radius:999px;background:rgba(255,255,255,.1);font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
-    .header-status i{width:7px;height:7px;border-radius:50%;background:var(--header-dark);box-shadow:0 0 0 4px rgba(4,37,59,.1)}
     .sidebar{position:fixed;z-index:40;top:72px;left:0;bottom:0;width:286px;display:flex;flex-direction:column;padding:26px 18px 16px;border-right:1px solid var(--line);background:linear-gradient(180deg,rgba(47,124,246,.08),transparent 24%),var(--sidebar);box-shadow:16px 0 42px rgba(0,0,0,.12);overflow:hidden}
     .side-title{display:flex;align-items:center;gap:12px;padding:0 8px 18px;border-bottom:1px solid var(--line-soft)}
     .side-title-icon{width:38px;height:38px;display:grid;place-items:center;border:1px solid rgba(42,196,210,.24);border-radius:12px;color:var(--cyan-soft);background:rgba(42,196,210,.09)}
@@ -76,13 +74,12 @@
     .context-icon{width:31px;height:31px;display:grid;place-items:center;flex:0 0 auto;border-radius:9px;color:#8FC4F3;background:rgba(47,124,246,.1)}.context-item small{display:block;color:var(--muted-2);font-size:9px;font-weight:850;letter-spacing:.09em;text-transform:uppercase}.context-item strong{display:block;margin-top:2px;color:#BFD8F0;font-size:12px}
     .workspace{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(460px,1.2fr);gap:18px;align-items:stretch}
     .card{border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,rgba(17,42,70,.55),rgba(9,22,38,.9));box-shadow:var(--shadow)}.input-card{padding:24px}
-    .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.card-head h2{margin:0;color:var(--white);font-size:17px;letter-spacing:-.02em}.chip{padding:6px 9px;border:1px solid rgba(47,124,246,.2);border-radius:999px;color:#8EBEF4;background:rgba(47,124,246,.08);font-size:9px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+    .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.card-head h2{margin:0;color:var(--white);font-size:17px;letter-spacing:-.02em}
     .field{margin-bottom:17px}.field label{display:block;margin-bottom:7px;color:#9DB4CA;font-size:11px;font-weight:800}.input-wrap{position:relative}
     .input-wrap input{width:100%;height:49px;padding:0 64px 0 14px;border:1px solid #1A3B5D;border-radius:11px;color:var(--white);background:#071729;font-weight:800;transition:.16s}.input-wrap input[type="date"]{padding-right:14px;color-scheme:dark}.input-wrap input:hover{border-color:#285780}.input-wrap input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 4px rgba(42,196,210,.09)}
     .affix{position:absolute;top:50%;right:13px;color:#577592;font-size:10px;font-weight:850;pointer-events:none;transform:translateY(-50%)}.helper{display:block;margin-top:6px;color:#526D87;font-size:10px;line-height:1.45}
     .result-card{position:relative;overflow:hidden;padding:24px;background:radial-gradient(circle at 100% 0,rgba(47,124,246,.19),transparent 35%),linear-gradient(150deg,#0C2139,#071525)}
     .result-card:after{content:"";position:absolute;width:170px;height:170px;right:-87px;bottom:-98px;border:26px solid rgba(42,196,210,.035);border-radius:50%}
-    .live{display:inline-flex;align-items:center;gap:6px;color:#8DC8F7;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.live:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(42,196,210,.09)}
     .projection-list{position:relative;z-index:1;display:grid;gap:8px}.projection{display:grid;grid-template-columns:31px 1fr;gap:11px;align-items:center;min-height:56px;padding:10px 12px;border:1px solid rgba(75,128,180,.14);border-radius:12px;background:rgba(17,42,70,.45)}
     .projection-number{width:29px;height:29px;display:grid;place-items:center;border:1px solid rgba(47,124,246,.17);border-radius:8px;color:#76AEF4;background:rgba(47,124,246,.08);font-size:9px;font-weight:900}.projection p{margin:0;color:#8DA5BD;font-size:12px;line-height:1.5}.projection strong{color:var(--white);font-weight:850}.projection.earned{border-color:rgba(42,196,210,.28);background:linear-gradient(90deg,rgba(42,196,210,.1),rgba(47,124,246,.06))}
     .total{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:14px;padding:17px 18px;border:1px solid rgba(115,196,255,.22);border-radius:14px;color:var(--white);background:linear-gradient(105deg,#1557B3,#217FCE 62%,#229EB2);box-shadow:0 15px 35px rgba(3,38,80,.33)}
@@ -99,8 +96,8 @@
     .password-error{min-height:17px;margin:7px 0 0;color:#8EC8F5;font-size:10px}.shake{animation:shake .28s ease}@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
     .toast{position:fixed;z-index:130;right:24px;bottom:24px;display:flex;align-items:center;gap:9px;padding:12px 15px;border:1px solid rgba(42,196,210,.26);border-radius:11px;color:#DFFBFF;background:#0A3D53;box-shadow:0 16px 40px rgba(0,0,0,.35);font-size:12px;font-weight:800;opacity:0;pointer-events:none;transform:translateY(12px);transition:.18s}.toast.show{opacity:1;transform:none}
     @media(max-width:1050px){.main{padding-right:24px;padding-left:310px}.workspace{grid-template-columns:1fr}.context-bar{grid-template-columns:1fr 1fr 1fr}}
-    @media(max-width:760px){.header{height:64px;padding:0 14px}.header-status{font-size:9px}.sidebar{position:fixed;z-index:40;top:64px;left:0;bottom:0;width:228px;min-height:0;margin:0;padding:17px 12px 12px;border-right:1px solid var(--line);border-bottom:0;border-left:0;box-shadow:12px 0 35px rgba(0,0,0,.16);overflow:hidden}.side-title{padding-bottom:13px}.side-title-icon{width:34px;height:34px}.side-title strong{font-size:15px}.menu-label{margin:12px 4px 7px}.role-menu-label{margin-top:9px}.product-list{display:grid;grid-template-columns:1fr;gap:5px;overflow:visible;padding:0}.product-btn{width:100%;min-width:0;grid-template-columns:28px minmax(0,1fr) 14px;gap:8px;padding:7px 8px;font-size:12px}.product-icon{width:28px;height:28px}.main{min-height:100vh;padding:88px 14px 38px 246px}.hero{display:block}.active-badge{margin-top:16px}.context-bar{grid-template-columns:1fr}.workspace{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.footer{align-items:flex-start;flex-direction:column;gap:7px}.footer-actions{width:100%;justify-content:space-between}}
-    @media(max-width:430px){.header-status span{display:none}.sidebar{width:198px;padding:14px 8px}.side-title{gap:8px;padding:0 3px 11px}.side-title small{font-size:8px}.menu-label{margin:10px 4px 6px}.product-btn{grid-template-columns:26px minmax(0,1fr) 12px;gap:6px;padding:6px 7px;font-size:11px}.product-icon{width:26px;height:26px}.main{padding:84px 10px 32px 208px}.hero h1{font-size:26px}.input-card,.result-card{padding:14px;border-radius:15px}.projection{grid-template-columns:26px 1fr;gap:7px;padding:8px}.projection p{font-size:10px}.modal-head,.modal-body,.modal-foot{padding-right:18px;padding-left:18px}.admin-product-tabs{grid-template-columns:1fr}.modal-foot{align-items:stretch;flex-direction:column-reverse}.modal-foot button{width:100%}}
+    @media(max-width:760px){.header{height:64px;padding:0 14px}.sidebar{position:fixed;z-index:40;top:64px;left:0;bottom:0;width:228px;min-height:0;margin:0;padding:17px 12px 12px;border-right:1px solid var(--line);border-bottom:0;border-left:0;box-shadow:12px 0 35px rgba(0,0,0,.16);overflow:hidden}.side-title{padding-bottom:13px}.side-title-icon{width:34px;height:34px}.side-title strong{font-size:15px}.menu-label{margin:12px 4px 7px}.role-menu-label{margin-top:9px}.product-list{display:grid;grid-template-columns:1fr;gap:5px;overflow:visible;padding:0}.product-btn{width:100%;min-width:0;grid-template-columns:28px minmax(0,1fr) 14px;gap:8px;padding:7px 8px;font-size:12px}.product-icon{width:28px;height:28px}.main{min-height:100vh;padding:88px 14px 38px 246px}.hero{display:block}.active-badge{margin-top:16px}.context-bar{grid-template-columns:1fr}.workspace{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.footer{align-items:flex-start;flex-direction:column;gap:7px}.footer-actions{width:100%;justify-content:space-between}}
+    @media(max-width:430px){.sidebar{width:198px;padding:14px 8px}.side-title{gap:8px;padding:0 3px 11px}.side-title small{font-size:8px}.menu-label{margin:10px 4px 6px}.product-btn{grid-template-columns:26px minmax(0,1fr) 12px;gap:6px;padding:6px 7px;font-size:11px}.product-icon{width:26px;height:26px}.main{padding:84px 10px 32px 208px}.hero h1{font-size:26px}.input-card,.result-card{padding:14px;border-radius:15px}.projection{grid-template-columns:26px 1fr;gap:7px;padding:8px}.projection p{font-size:10px}.modal-head,.modal-body,.modal-foot{padding-right:18px;padding-left:18px}.admin-product-tabs{grid-template-columns:1fr}.modal-foot{align-items:stretch;flex-direction:column-reverse}.modal-foot button{width:100%}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -114,7 +111,6 @@
         <span class="q-symbol" aria-hidden="true"></span>
       </button>
     </div>
-    <div class="header-status"><i></i><span>Simulador ativo</span></div>
   </header>
 
   <aside class="sidebar" id="sidebar" aria-label="Menu do simulador">
@@ -172,7 +168,7 @@
 
       <section class="workspace" aria-label="Calculadora de projeção">
         <article class="card input-card">
-          <div class="card-head"><h2>Suas expectativas</h2><span class="chip">Simulação</span></div>
+          <div class="card-head"><h2>Suas expectativas</h2></div>
           <div class="field">
             <label for="quantity">Quantidade de vendas</label>
             <div class="input-wrap"><input id="quantity" type="number" min="0" step="1" value="18" inputmode="numeric"><span class="affix">vendas</span></div>
@@ -191,7 +187,7 @@
         </article>
 
         <article class="card result-card" aria-live="polite">
-          <div class="card-head"><h2>Resumo da projeção</h2><span class="live">Em tempo real</span></div>
+          <div class="card-head"><h2>Resumo da projeção</h2></div>
           <div class="projection-list">
             <div class="projection"><span class="projection-number">01</span><p>Uma venda é <strong id="saleValueText">R$ 180,00</strong></p></div>
             <div class="projection"><span class="projection-number">02</span><p>Se você vender <strong id="quantityText">18</strong>, ganha <strong id="baseText">R$ 3.240,00</strong></p></div>
