@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071221">
+  <title>Simulador Comercial YDUQS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      "yduqs-cyan": "#24B8C6",
+      "yduqs-navy": "#071221",
+      "yduqs-blue": "#2F7CF6"
+    }}}};
+  </script>
+  <style>
+    :root{
+      color-scheme:dark;
+      --header:#24B8C6;
+      --header-dark:#06253B;
+      --page:#050B14;
+      --sidebar:#081525;
+      --sidebar-deep:#06101D;
+      --surface:#0B192B;
+      --surface-2:#0E2138;
+      --surface-3:#112A46;
+      --line:#173553;
+      --line-soft:rgba(91,171,232,.16);
+      --blue:#2F7CF6;
+      --blue-2:#1E5FCB;
+      --cyan:#2AC4D2;
+      --cyan-soft:#74DDE7;
+      --white:#F4FAFF;
+      --text:#DCEBFA;
+      --muted:#7F9AB5;
+      --muted-2:#59738D;
+      --danger:#86BFF1;
+      --shadow:0 24px 70px rgba(0,0,0,.28);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 72% 5%,rgba(47,124,246,.13),transparent 30%),radial-gradient(circle at 12% 75%,rgba(36,184,198,.07),transparent 26%),var(--page);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+    button,input{font:inherit}button{cursor:pointer}
+    button:focus-visible,input:focus-visible{outline:3px solid rgba(42,196,210,.55);outline-offset:3px}
+    .header{position:fixed;z-index:60;inset:0 0 auto;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;color:var(--header-dark);background:var(--header);box-shadow:0 5px 30px rgba(0,0,0,.28)}
+    .brand,.header-status,.brand-mark{display:flex;align-items:center}.brand{gap:8px}.brand-mark{gap:10px;margin-left:7px;font-weight:900;letter-spacing:-.02em}
+    .menu-dots{width:42px;height:42px;display:grid;grid-template-columns:repeat(3,3px);grid-auto-rows:3px;align-content:center;justify-content:center;gap:4px;border:1px solid rgba(4,37,59,.14);border-radius:12px;color:var(--header-dark);background:rgba(255,255,255,.1);transition:.18s}
+    .menu-dots span{width:3px;height:3px;border-radius:50%;background:currentColor}.menu-dots:hover{background:rgba(255,255,255,.28);transform:translateY(-1px)}
+    .q-secret{width:37px;height:42px;display:grid;place-items:center;padding:0;border:0;background:transparent}
+    .q-symbol{position:relative;width:27px;height:27px;border:7px solid var(--header-dark);border-radius:50%}
+    .q-symbol:after{content:"";position:absolute;width:10px;height:7px;right:-7px;bottom:-5px;border-radius:2px;background:var(--header-dark);transform:rotate(47deg)}
+    .brand-name{font-size:15px}
+    .header-status{gap:9px;padding:8px 12px;border:1px solid rgba(4,37,59,.12);border-radius:999px;background:rgba(255,255,255,.1);font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+    .header-status i{width:7px;height:7px;border-radius:50%;background:var(--header-dark);box-shadow:0 0 0 4px rgba(4,37,59,.1)}
+    .sidebar{position:fixed;z-index:40;top:72px;left:0;bottom:0;width:286px;display:flex;flex-direction:column;padding:26px 18px 20px;border-right:1px solid var(--line);background:linear-gradient(180deg,rgba(47,124,246,.08),transparent 24%),var(--sidebar);box-shadow:16px 0 42px rgba(0,0,0,.12)}
+    .side-title{display:flex;align-items:center;gap:12px;padding:0 8px 24px;border-bottom:1px solid var(--line-soft)}
+    .side-title-icon{width:38px;height:38px;display:grid;place-items:center;border:1px solid rgba(42,196,210,.24);border-radius:12px;color:var(--cyan-soft);background:rgba(42,196,210,.09)}
+    .side-title strong{display:block;color:var(--white);font-size:17px;letter-spacing:-.02em}.side-title small{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
+    .menu-label{margin:25px 10px 11px;color:var(--muted-2);font-size:10px;font-weight:900;letter-spacing:.2em}
+    .product-list{display:grid;gap:8px;overflow:visible}.product-btn{position:relative;width:100%;display:grid;grid-template-columns:32px minmax(0,1fr) 16px;align-items:center;gap:11px;padding:11px 12px;border:1px solid transparent;border-radius:12px;color:#91A8C0;background:transparent;font-size:13px;font-weight:780;text-align:left;transition:.18s}
+    .product-btn:before{content:"";position:absolute;left:-1px;width:3px;height:0;border-radius:0 3px 3px 0;background:var(--cyan);transition:.18s}
+    .product-btn:hover{color:var(--white);border-color:var(--line-soft);background:rgba(47,124,246,.07)}
+    .product-btn.active{color:var(--white);border-color:rgba(47,124,246,.3);background:linear-gradient(100deg,rgba(47,124,246,.25),rgba(42,196,210,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+    .product-btn.active:before{height:27px}.product-icon{width:32px;height:32px;display:grid;flex:0 0 auto;place-items:center;border:1px solid rgba(95,154,214,.15);border-radius:10px;color:#8DAACA;background:#0C2037}
+    .product-btn.active .product-icon{color:var(--cyan-soft);border-color:rgba(42,196,210,.22);background:rgba(42,196,210,.09)}.product-btn>span:nth-child(2){min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.product-chevron{display:grid;place-items:center;color:#557794;transition:.18s}.product-btn:hover .product-chevron,.product-btn.active .product-chevron{color:#A9DCEB}.product-btn.active .product-chevron{transform:translateX(2px)}
+    .role-menu-label{margin-top:18px}.admin-menu-label{margin-top:20px}.admin-access{position:relative;width:100%;display:grid;grid-template-columns:32px minmax(0,1fr) 16px;align-items:center;gap:11px;padding:11px 12px;border:1px solid rgba(42,196,210,.16);border-radius:12px;color:#A7BDD3;background:rgba(42,196,210,.045);text-align:left;transition:.18s}.admin-access:hover{color:var(--white);border-color:rgba(42,196,210,.34);background:rgba(42,196,210,.1);transform:translateY(-1px)}.admin-access .product-icon{color:#78C9E6;border-color:rgba(42,196,210,.2);background:rgba(42,196,210,.08)}.admin-access strong{display:block;overflow:hidden;color:inherit;font-size:12px;text-overflow:ellipsis;white-space:nowrap}.admin-access small{display:block;margin-top:2px;color:#617F9C;font-size:9px;font-weight:700;letter-spacing:.03em}.admin-access:hover small{color:#8EABC5}.admin-lock{display:grid;place-items:center;color:#5E819D}
+    .side-footer{margin-top:auto;padding:18px 10px 0;border-top:1px solid var(--line-soft);color:var(--muted-2);font-size:10px;line-height:1.55}.side-footer strong{display:block;margin-bottom:4px;color:#708DAA;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+    .sidebar.menu-pulse{animation:menuPulse .48s ease}@keyframes menuPulse{50%{box-shadow:16px 0 60px rgba(47,124,246,.24)}}
+    .main{min-height:100vh;padding:112px 36px 42px 322px}.wrap{width:100%;max-width:1180px;margin:auto}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;color:var(--cyan-soft);font-size:10px;font-weight:900;letter-spacing:.19em;text-transform:uppercase}.eyebrow i{width:21px;height:1px;background:var(--cyan)}
+    .hero{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:27px}
+    .hero h1{max-width:810px;margin:0;color:var(--white);font-size:clamp(31px,3.5vw,47px);font-weight:850;line-height:1.07;letter-spacing:-.042em}
+    .hero-copy{max-width:650px;margin:13px 0 0;color:var(--muted);font-size:14px;line-height:1.7}
+    .active-badge{display:inline-flex;align-items:center;gap:9px;flex:0 0 auto;margin-top:5px;padding:10px 13px;border:1px solid rgba(42,196,210,.22);border-radius:999px;color:#A7EBF0;background:rgba(42,196,210,.07);font-size:11px;font-weight:850}.active-badge i{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(42,196,210,.1)}
+    .context-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+    .context-item{display:flex;align-items:center;gap:11px;padding:12px 14px;border:1px solid var(--line-soft);border-radius:13px;background:rgba(11,25,43,.65)}
+    .context-icon{width:31px;height:31px;display:grid;place-items:center;flex:0 0 auto;border-radius:9px;color:#8FC4F3;background:rgba(47,124,246,.1)}.context-item small{display:block;color:var(--muted-2);font-size:9px;font-weight:850;letter-spacing:.09em;text-transform:uppercase}.context-item strong{display:block;margin-top:2px;color:#BFD8F0;font-size:12px}
+    .workspace{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(460px,1.2fr);gap:18px;align-items:stretch}
+    .card{border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,rgba(17,42,70,.55),rgba(9,22,38,.9));box-shadow:var(--shadow)}.input-card{padding:24px}
+    .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.card-head h2{margin:0;color:var(--white);font-size:17px;letter-spacing:-.02em}.chip{padding:6px 9px;border:1px solid rgba(47,124,246,.2);border-radius:999px;color:#8EBEF4;background:rgba(47,124,246,.08);font-size:9px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+    .field{margin-bottom:17px}.field label{display:block;margin-bottom:7px;color:#9DB4CA;font-size:11px;font-weight:800}.input-wrap{position:relative}
+    .input-wrap input{width:100%;height:49px;padding:0 64px 0 14px;border:1px solid #1A3B5D;border-radius:11px;color:var(--white);background:#071729;font-weight:800;transition:.16s}.input-wrap input[type="date"]{padding-right:14px;color-scheme:dark}.input-wrap input:hover{border-color:#285780}.input-wrap input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 4px rgba(42,196,210,.09)}
+    .affix{position:absolute;top:50%;right:13px;color:#577592;font-size:10px;font-weight:850;pointer-events:none;transform:translateY(-50%)}.helper{display:block;margin-top:6px;color:#526D87;font-size:10px;line-height:1.45}
+    .result-card{position:relative;overflow:hidden;padding:24px;background:radial-gradient(circle at 100% 0,rgba(47,124,246,.19),transparent 35%),linear-gradient(150deg,#0C2139,#071525)}
+    .result-card:after{content:"";position:absolute;width:170px;height:170px;right:-87px;bottom:-98px;border:26px solid rgba(42,196,210,.035);border-radius:50%}
+    .live{display:inline-flex;align-items:center;gap:6px;color:#8DC8F7;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.live:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(42,196,210,.09)}
+    .projection-list{position:relative;z-index:1;display:grid;gap:8px}.projection{display:grid;grid-template-columns:31px 1fr;gap:11px;align-items:center;min-height:56px;padding:10px 12px;border:1px solid rgba(75,128,180,.14);border-radius:12px;background:rgba(17,42,70,.45)}
+    .projection-number{width:29px;height:29px;display:grid;place-items:center;border:1px solid rgba(47,124,246,.17);border-radius:8px;color:#76AEF4;background:rgba(47,124,246,.08);font-size:9px;font-weight:900}.projection p{margin:0;color:#8DA5BD;font-size:12px;line-height:1.5}.projection strong{color:var(--white);font-weight:850}.projection.earned{border-color:rgba(42,196,210,.28);background:linear-gradient(90deg,rgba(42,196,210,.1),rgba(47,124,246,.06))}
+    .total{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:14px;padding:17px 18px;border:1px solid rgba(115,196,255,.22);border-radius:14px;color:var(--white);background:linear-gradient(105deg,#1557B3,#217FCE 62%,#229EB2);box-shadow:0 15px 35px rgba(3,38,80,.33)}
+    .total-label{display:block;margin-bottom:3px;color:#B9D9F5;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.total-value{display:block;font-size:clamp(25px,3.2vw,34px);font-weight:900;line-height:1;letter-spacing:-.04em}.trend{width:39px;height:39px;display:grid;flex:0 0 auto;place-items:center;border:1px solid rgba(255,255,255,.13);border-radius:12px;background:rgba(2,27,57,.2)}
+    .footer{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:16px;color:#3F5B75;font-size:10px}.footer span:last-child{color:#6699C5;font-weight:800}
+    .modal-bg{position:fixed;z-index:100;inset:0;display:grid;place-items:center;padding:20px;visibility:hidden;opacity:0;background:rgba(1,6,13,.78);backdrop-filter:blur(8px);transition:.18s}.modal-bg.open{visibility:visible;opacity:1}
+    .modal{width:min(540px,100%);max-height:calc(100vh - 40px);overflow-y:auto;border:1px solid #1A4166;border-radius:20px;background:linear-gradient(145deg,#0D2035,#071522);box-shadow:0 30px 90px rgba(0,0,0,.5);transform:translateY(12px) scale(.985);transition:.19s}.modal-bg.open .modal{transform:none}
+    .login-modal{width:min(410px,100%)}.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:22px 24px 18px;border-bottom:1px solid var(--line)}.kicker{display:block;margin-bottom:5px;color:#76BCEB;font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.modal-head h2{margin:0;color:var(--white);font-size:21px;letter-spacing:-.03em}
+    .close{width:35px;height:35px;display:grid;place-items:center;border:1px solid #173857;border-radius:10px;color:#89A8C6;background:#0D2842}.close:hover{color:var(--white);border-color:#28618E}.modal-body{padding:21px 24px 6px}.modal-description{margin:0 0 18px;color:var(--muted);font-size:12px;line-height:1.6}
+    .admin-modal{width:min(680px,100%)}.admin-section-label{display:block;margin:0 0 7px;color:#5E7F9D;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.admin-profile-tabs,.admin-product-tabs{display:grid;gap:8px;margin:0 0 16px}.admin-profile-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-product-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.admin-profile-tab,.admin-product-tab{min-width:0;padding:10px 8px;border:1px solid #183B5C;border-radius:10px;color:#7896B2;background:#091A2C;font-size:10px;font-weight:850;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:.16s}.admin-profile-tab:hover,.admin-product-tab:hover{color:var(--white);border-color:#28618E}.admin-profile-tab.active,.admin-product-tab.active{color:#DFFBFF;border-color:rgba(42,196,210,.42);background:linear-gradient(100deg,rgba(47,124,246,.26),rgba(42,196,210,.12));box-shadow:inset 0 0 0 1px rgba(42,196,210,.05)}
+    .admin-banner{display:flex;align-items:center;gap:6px;margin-bottom:19px;padding:11px 13px;border:1px solid rgba(42,196,210,.18);border-radius:11px;color:#A7C4E0;background:rgba(42,196,210,.05);font-size:12px}.admin-banner strong{color:#BCEEF2}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.modal-foot{display:flex;justify-content:flex-end;gap:9px;padding:16px 24px 22px}
+    .btn-secondary,.btn-primary{min-height:42px;padding:0 16px;border-radius:10px;font-size:12px;font-weight:850;transition:.15s}.btn-secondary{border:1px solid #1C4365;color:#91ADC8;background:#0A1B2D}.btn-primary{border:1px solid #348DD7;color:#fff;background:linear-gradient(105deg,#1C63CE,#228FB8);box-shadow:0 9px 22px rgba(11,77,153,.25)}.btn-secondary:hover{color:#fff;border-color:#2A5C86}.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+    .password-error{min-height:17px;margin:7px 0 0;color:#8EC8F5;font-size:10px}.shake{animation:shake .28s ease}@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+    .toast{position:fixed;z-index:130;right:24px;bottom:24px;display:flex;align-items:center;gap:9px;padding:12px 15px;border:1px solid rgba(42,196,210,.26);border-radius:11px;color:#DFFBFF;background:#0A3D53;box-shadow:0 16px 40px rgba(0,0,0,.35);font-size:12px;font-weight:800;opacity:0;pointer-events:none;transform:translateY(12px);transition:.18s}.toast.show{opacity:1;transform:none}
+    @media(max-width:1050px){.main{padding-right:24px;padding-left:310px}.workspace{grid-template-columns:1fr}.context-bar{grid-template-columns:1fr 1fr 1fr}}
+    @media(max-width:760px){.header{height:64px;padding:0 14px}.header-status{font-size:9px}.sidebar{position:fixed;z-index:40;top:64px;left:0;bottom:0;width:228px;min-height:0;margin:0;padding:17px 12px 16px;border-right:1px solid var(--line);border-bottom:0;border-left:0;box-shadow:12px 0 35px rgba(0,0,0,.16);overflow-y:auto}.side-title{padding-bottom:15px}.side-title-icon{width:34px;height:34px}.side-title strong{font-size:15px}.menu-label{margin:15px 4px 9px}.admin-menu-label{margin-top:16px}.product-list{display:grid;grid-template-columns:1fr;gap:7px;overflow:visible;padding:0}.product-btn{width:100%;min-width:0;grid-template-columns:30px minmax(0,1fr) 14px;gap:9px;padding:10px 9px;font-size:12px}.product-icon{width:30px;height:30px}.admin-access{grid-template-columns:30px minmax(0,1fr) 14px;gap:9px;padding:10px 9px}.side-footer{display:none}.main{min-height:100vh;padding:88px 14px 38px 246px}.hero{display:block}.active-badge{margin-top:16px}.context-bar{grid-template-columns:1fr}.workspace{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.footer{align-items:flex-start;flex-direction:column;gap:5px}}
+    @media(max-width:430px){.header-status span{display:none}.sidebar{width:198px;padding:14px 8px}.side-title{gap:8px;padding:0 3px 13px}.side-title small{font-size:8px}.menu-label{margin:13px 4px 8px}.product-btn{grid-template-columns:28px minmax(0,1fr) 12px;gap:6px;padding:9px 7px;font-size:11px}.product-icon{width:28px;height:28px}.admin-access{grid-template-columns:28px minmax(0,1fr) 12px;gap:6px;padding:9px 7px}.admin-access small{display:none}.main{padding:84px 10px 32px 208px}.hero h1{font-size:26px}.input-card,.result-card{padding:14px;border-radius:15px}.projection{grid-template-columns:26px 1fr;gap:7px;padding:8px}.projection p{font-size:10px}.modal-head,.modal-body,.modal-foot{padding-right:18px;padding-left:18px}.admin-product-tabs{grid-template-columns:1fr}.modal-foot{align-items:stretch;flex-direction:column-reverse}.modal-foot button{width:100%}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <button class="menu-dots" id="menuDots" type="button" aria-label="Ir para o menu de produtos" aria-controls="productMenu">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </button>
+      <button class="q-secret" id="qSecret" type="button" aria-label="YDUQS">
+        <span class="q-symbol" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="header-status"><i></i><span>Simulador ativo</span></div>
+  </header>
+
+  <aside class="sidebar" id="sidebar" aria-label="Menu do simulador">
+    <div class="side-title">
+      <span class="side-title-icon" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>
+      </span>
+      <span><strong>Simulador</strong><small>Projeção comercial</small></span>
+    </div>
+    <div id="productMenu">
+      <div class="menu-label">CONSULTOR</div>
+      <nav class="product-list" aria-label="Simulações para consultor">
+        <button class="product-btn active" type="button" data-product="consultor_graduacao">
+          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-5 9 5-9 5-9-5Z"/><path d="M7 12.5V17c2.8 2 7.2 2 10 0v-4.5"/></svg></span><span>Graduação</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+        </button>
+        <button class="product-btn" type="button" data-product="consultor_posGraduacao">
+          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3h8v4H8zM6 7h12v14H6z"/><path d="M9 12h6M9 16h4"/></svg></span><span>Pós-Graduação</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+        </button>
+        <button class="product-btn" type="button" data-product="consultor_cursoTecnico">
+          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5 5L4 17l3 3 5.7-5.7a4 4 0 0 0 5-5l-2.3 2.3-3-3 2.3-2.3Z"/></svg></span><span>Curso Técnico</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+        </button>
+      </nav>
+      <div class="menu-label role-menu-label">GERENTE</div>
+      <nav class="product-list" aria-label="Simulações para gerente">
+        <button class="product-btn" type="button" data-product="gerente_graduacao">
+          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-5 9 5-9 5-9-5Z"/><path d="M7 12.5V17c2.8 2 7.2 2 10 0v-4.5"/></svg></span><span>Graduação</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+        </button>
+        <button class="product-btn" type="button" data-product="gerente_posGraduacao">
+          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3h8v4H8zM6 7h12v14H6z"/><path d="M9 12h6M9 16h4"/></svg></span><span>Pós-Graduação</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+        </button>
+        <button class="product-btn" type="button" data-product="gerente_cursoTecnico">
+          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5 5L4 17l3 3 5.7-5.7a4 4 0 0 0 5-5l-2.3 2.3-3-3 2.3-2.3Z"/></svg></span><span>Curso Técnico</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+        </button>
+      </nav>
+    </div>
+    <div class="menu-label admin-menu-label">GESTÃO</div>
+    <button class="admin-access" id="adminAccess" type="button" aria-label="Abrir administração protegida por senha">
+      <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2"/></svg></span>
+      <span><strong>Administração</strong><small>Valores e metas</small></span>
+      <span class="admin-lock" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+    </button>
+    <div class="side-footer"><strong>Ambiente de projeção</strong>Os parâmetros de cada produto são carregados automaticamente.</div>
+  </aside>
+
+  <main class="main">
+    <div class="wrap">
+      <div class="eyebrow"><i></i>Performance comercial</div>
+      <div class="hero">
+        <div>
+          <h1 id="pageTitle">Projeção de vendas - Consultor - Graduação</h1>
+          <p class="hero-copy">Simule a sua produção e acompanhe, em tempo real, o valor projetado para o período selecionado.</p>
+        </div>
+        <div class="active-badge" aria-live="polite"><i></i><span id="badge">Consultor • Graduação</span></div>
+      </div>
+
+      <section class="context-bar" aria-label="Contexto da simulação">
+        <div class="context-item"><span class="context-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-5 9 5-9 5-9-5Z"/><path d="M7 12.5V17c2.8 2 7.2 2 10 0v-4.5"/></svg></span><span><small>Produto simulado</small><strong id="contextProduct">Graduação</strong></span></div>
+        <div class="context-item"><span class="context-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 5h14a2 2 0 0 1 2 2v13H3V7a2 2 0 0 1 2-2Z"/></svg></span><span><small>Fechamento</small><strong id="contextDate">31/08</strong></span></div>
+        <div class="context-item"><span class="context-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span><small>Perfil comercial</small><strong id="contextProfile">Consultor</strong></span></div>
+      </section>
+
+      <section class="workspace" aria-label="Calculadora de projeção">
+        <article class="card input-card">
+          <div class="card-head"><h2>Suas expectativas</h2><span class="chip">Simulação</span></div>
+          <div class="field">
+            <label for="quantity">Quantidade de vendas</label>
+            <div class="input-wrap"><input id="quantity" type="number" min="0" step="1" value="18" inputmode="numeric"><span class="affix">vendas</span></div>
+            <small class="helper">Informe quantas matrículas você espera realizar.</small>
+          </div>
+          <div class="field">
+            <label for="goal">Meta</label>
+            <div class="input-wrap"><input id="goal" type="number" min="1" step="1" value="30" inputmode="numeric"><span class="affix">vendas</span></div>
+            <small class="helper">A meta padrão é carregada para o produto selecionado.</small>
+          </div>
+          <div class="field">
+            <label for="date">Dia/Mês</label>
+            <div class="input-wrap"><input id="date" type="date" value="2026-08-31"></div>
+            <small class="helper">Use a data-limite considerada na projeção.</small>
+          </div>
+        </article>
+
+        <article class="card result-card" aria-live="polite">
+          <div class="card-head"><h2>Resumo da projeção</h2><span class="live">Em tempo real</span></div>
+          <div class="projection-list">
+            <div class="projection"><span class="projection-number">01</span><p>Uma venda é <strong id="saleValueText">R$ 180,00</strong></p></div>
+            <div class="projection"><span class="projection-number">02</span><p>Se você vender <strong id="quantityText">18</strong>, ganha <strong id="baseText">R$ 3.240,00</strong></p></div>
+            <div class="projection" id="bonusRow"><span class="projection-number">03</span><p>Se bater a meta <strong id="goalText">30 vendas</strong>, ganha um adicional de <strong id="bonusText">R$ 1.200,00</strong></p></div>
+            <div class="projection"><span class="projection-number">04</span><p>Se você fizer <strong id="finalQuantityText">18</strong> vendas até <strong id="dateText">31/08</strong>, irá ganhar <strong id="totalInlineText">R$ 3.240,00</strong></p></div>
+          </div>
+          <div class="total">
+            <div><span class="total-label">Total projetado</span><span class="total-value" id="totalText">R$ 3.240,00</span></div>
+            <span class="trend" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="m4 16 5-5 4 4 7-8"/><path d="M14 7h6v6"/></svg></span>
+          </div>
+        </article>
+      </section>
+      <div class="footer"><span>Valores meramente ilustrativos para simulação interna.</span><span id="lastUpdate">Parâmetros atualizados</span></div>
+    </div>
+  </main>
+
+  <div class="modal-bg" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
+    <section class="modal login-modal" id="loginPanel">
+      <div class="modal-head">
+        <div><span class="kicker">Área restrita</span><h2 id="loginTitle">Acesso administrativo</h2></div>
+        <button class="close" id="closeLogin" type="button" aria-label="Fechar acesso"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
+      <form id="loginForm">
+        <div class="modal-body">
+          <p class="modal-description">Informe a senha administrativa para editar os valores que alimentam o simulador.</p>
+          <div class="field">
+            <label for="adminPassword">Senha</label>
+            <div class="input-wrap"><input id="adminPassword" type="password" autocomplete="current-password" required></div>
+            <p class="password-error" id="passwordError" role="alert"></p>
+          </div>
+        </div>
+        <div class="modal-foot"><button class="btn-secondary" id="cancelLogin" type="button">Cancelar</button><button class="btn-primary" type="submit">Desbloquear</button></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-bg" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminTitle" aria-hidden="true">
+    <section class="modal admin-modal">
+      <div class="modal-head">
+        <div><span class="kicker">Área restrita</span><h2 id="adminTitle">Parâmetros do simulador</h2></div>
+        <button class="close" id="closeAdmin" type="button" aria-label="Fechar administração"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
+      <form id="adminForm">
+        <div class="modal-body">
+          <p class="modal-description">Selecione o perfil e o curso, defina os parâmetros desejados e salve todas as alterações de uma só vez.</p>
+          <span class="admin-section-label">Perfil comercial</span>
+          <div class="admin-profile-tabs" id="adminProfileTabs" role="tablist" aria-label="Perfil administrado">
+            <button class="admin-profile-tab active" type="button" role="tab" data-admin-profile="consultor">Consultor</button>
+            <button class="admin-profile-tab" type="button" role="tab" data-admin-profile="gerente">Gerente</button>
+          </div>
+          <span class="admin-section-label">Curso</span>
+          <div class="admin-product-tabs" id="adminProductTabs" role="tablist" aria-label="Produto administrado">
+            <button class="admin-product-tab active" type="button" role="tab" data-admin-product="graduacao">Graduação</button>
+            <button class="admin-product-tab" type="button" role="tab" data-admin-product="posGraduacao">Pós-Graduação</button>
+            <button class="admin-product-tab" type="button" role="tab" data-admin-product="cursoTecnico">Curso Técnico</button>
+          </div>
+          <div class="admin-banner">Editando parâmetros de <strong id="adminProduct">Consultor • Graduação</strong></div>
+          <div class="form-grid">
+            <div class="field"><label for="adminSaleValue">Valor de cada venda</label><div class="input-wrap"><input id="adminSaleValue" type="number" min="0" step="0.01" required inputmode="decimal"><span class="affix">R$</span></div></div>
+            <div class="field"><label for="adminGoal">Quantidade da meta</label><div class="input-wrap"><input id="adminGoal" type="number" min="1" step="1" required inputmode="numeric"><span class="affix">vendas</span></div></div>
+            <div class="field"><label for="adminBonus">Adicional ao bater a meta</label><div class="input-wrap"><input id="adminBonus" type="number" min="0" step="0.01" required inputmode="decimal"><span class="affix">R$</span></div></div>
+            <div class="field"><label for="adminDate">Data de fechamento</label><div class="input-wrap"><input id="adminDate" type="date" required></div></div>
+          </div>
+        </div>
+        <div class="modal-foot"><button class="btn-secondary" id="cancelAdmin" type="button">Cancelar</button><button class="btn-primary" type="submit">Salvar alterações</button></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 4 4L19 6"/></svg>Parâmetros salvos com sucesso.</div>
+
+  <script>
+    (function(){
+      "use strict";
+      var STORAGE_KEY="yduqs-sales-simulator-v2";
+      var ACTIVE_KEY="yduqs-sales-active-product-v2";
+      var ADMIN_PASSWORD="YDUQS@2026";
+      var defaults={
+        consultor_graduacao:{profile:"Consultor",profileKey:"consultor",productKey:"graduacao",name:"Graduação",saleValue:180,goal:30,bonus:1200,closingDate:"2026-08-31",initialSales:18},
+        consultor_posGraduacao:{profile:"Consultor",profileKey:"consultor",productKey:"posGraduacao",name:"Pós-Graduação",saleValue:250,goal:20,bonus:1000,closingDate:"2026-08-28",initialSales:14},
+        consultor_cursoTecnico:{profile:"Consultor",profileKey:"consultor",productKey:"cursoTecnico",name:"Curso Técnico",saleValue:120,goal:35,bonus:900,closingDate:"2026-08-25",initialSales:24},
+        gerente_graduacao:{profile:"Gerente",profileKey:"gerente",productKey:"graduacao",name:"Graduação",saleValue:320,goal:45,bonus:2500,closingDate:"2026-08-31",initialSales:28},
+        gerente_posGraduacao:{profile:"Gerente",profileKey:"gerente",productKey:"posGraduacao",name:"Pós-Graduação",saleValue:420,goal:30,bonus:2200,closingDate:"2026-08-28",initialSales:20},
+        gerente_cursoTecnico:{profile:"Gerente",profileKey:"gerente",productKey:"cursoTecnico",name:"Curso Técnico",saleValue:210,goal:50,bonus:1800,closingDate:"2026-08-25",initialSales:32}
+      };
+      var $=function(s){return document.querySelector(s)};
+      var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+      var el={
+        quantity:$("#quantity"),goal:$("#goal"),date:$("#date"),badge:$("#badge"),pageTitle:$("#pageTitle"),
+        contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),saleValueText:$("#saleValueText"),
+        quantityText:$("#quantityText"),baseText:$("#baseText"),goalText:$("#goalText"),bonusText:$("#bonusText"),
+        finalQuantityText:$("#finalQuantityText"),dateText:$("#dateText"),totalInlineText:$("#totalInlineText"),
+        totalText:$("#totalText"),bonusRow:$("#bonusRow"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
+        loginModal:$("#loginModal"),loginPanel:$("#loginPanel"),loginForm:$("#loginForm"),adminPassword:$("#adminPassword"),
+        passwordError:$("#passwordError"),adminModal:$("#adminModal"),adminForm:$("#adminForm"),adminProduct:$("#adminProduct"),
+        adminSaleValue:$("#adminSaleValue"),adminGoal:$("#adminGoal"),adminBonus:$("#adminBonus"),adminDate:$("#adminDate"),
+        toast:$("#toast"),lastUpdate:$("#lastUpdate")
+      };
+      function cloneDefaults(){return JSON.parse(JSON.stringify(defaults))}
+      function safeNumber(value,fallback){var n=Number(value);return Number.isFinite(n)&&n>=0?n:(fallback||0)}
+      function loadProducts(){
+        try{
+          var stored=JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if(!stored||typeof stored!=="object")return cloneDefaults();
+          var result=cloneDefaults();
+          Object.keys(result).forEach(function(key){result[key]=Object.assign(result[key],stored[key]||{},{name:defaults[key].name,profile:defaults[key].profile,profileKey:defaults[key].profileKey,productKey:defaults[key].productKey})});
+          return result;
+        }catch(error){return cloneDefaults()}
+      }
+      var products=loadProducts();
+      var active=localStorage.getItem(ACTIVE_KEY);
+      if(!products[active])active="consultor_graduacao";
+      var sellerInputs={};
+      var adminDraft=null;
+      var adminEditing=null;
+      Object.keys(products).forEach(function(key){var p=products[key];sellerInputs[key]={quantity:p.initialSales,goal:p.goal,date:p.closingDate}});
+      function money(value){return new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:2}).format(value)}
+      function shortDate(value){if(!value||!/^\d{4}-\d{2}-\d{2}$/.test(value))return"--/--";var parts=value.split("-");return parts[2]+"/"+parts[1]}
+      function render(){
+        var p=products[active];
+        var quantity=Math.max(0,Math.floor(safeNumber(el.quantity.value,0)));
+        var goal=Math.max(1,Math.floor(safeNumber(el.goal.value,p.goal)));
+        var date=el.date.value||p.closingDate;
+        var base=quantity*p.saleValue;
+        var earned=quantity>=goal?p.bonus:0;
+        var total=base+earned;
+        sellerInputs[active]={quantity:quantity,goal:goal,date:date};
+        el.pageTitle.textContent="Projeção de vendas - "+p.profile+" - "+p.name;
+        el.badge.textContent=p.profile+" • "+p.name;el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
+        el.saleValueText.textContent=money(p.saleValue);el.quantityText.textContent=quantity;el.baseText.textContent=money(base);
+        el.goalText.textContent=goal+" vendas";el.bonusText.textContent=money(p.bonus);el.finalQuantityText.textContent=quantity;
+        el.dateText.textContent=shortDate(date);el.totalInlineText.textContent=money(total);el.totalText.textContent=money(total);
+        el.bonusRow.classList.toggle("earned",earned>0);
+      }
+      function loadProduct(key){
+        active=key;localStorage.setItem(ACTIVE_KEY,key);
+        var inputs=sellerInputs[key];el.quantity.value=inputs.quantity;el.goal.value=inputs.goal;el.date.value=inputs.date;
+        $$(".product-btn").forEach(function(btn){var on=btn.dataset.product===active;btn.classList.toggle("active",on);btn.setAttribute("aria-current",on?"page":"false")});
+        render();
+      }
+      function showModal(modal){modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
+      function hideModal(modal){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow=""}
+      function requestAdminAccess(){
+        if(sessionStorage.getItem("yduqs-admin-unlocked")==="true"){openAdmin();return}
+        el.adminPassword.value="";el.passwordError.textContent="";showModal(el.loginModal);
+        setTimeout(function(){el.adminPassword.focus()},50);
+      }
+      function closeLogin(){hideModal(el.loginModal);el.adminAccess.focus()}
+      function saveVisibleAdminFields(){
+        if(!adminDraft||!adminEditing)return;
+        var p=adminDraft[adminEditing];
+        p.saleValue=safeNumber(el.adminSaleValue.value,p.saleValue);
+        p.goal=Math.max(1,Math.floor(safeNumber(el.adminGoal.value,p.goal)));
+        p.bonus=safeNumber(el.adminBonus.value,p.bonus);
+        p.closingDate=el.adminDate.value||p.closingDate;
+      }
+      function selectAdminProduct(key,keepVisibleChanges){
+        if(!adminDraft||!adminDraft[key])return;
+        if(keepVisibleChanges)saveVisibleAdminFields();
+        adminEditing=key;
+        var p=adminDraft[key];
+        el.adminProduct.textContent=p.profile+" • "+p.name;el.adminSaleValue.value=p.saleValue;el.adminGoal.value=p.goal;
+        el.adminBonus.value=p.bonus;el.adminDate.value=p.closingDate;
+        $$(".admin-profile-tab").forEach(function(btn){
+          var on=btn.dataset.adminProfile===p.profileKey;btn.classList.toggle("active",on);btn.setAttribute("aria-selected",on?"true":"false");
+        });
+        $$(".admin-product-tab").forEach(function(btn){
+          var on=btn.dataset.adminProduct===p.productKey;btn.classList.toggle("active",on);btn.setAttribute("aria-selected",on?"true":"false");
+        });
+      }
+      function openAdmin(){
+        hideModal(el.loginModal);
+        adminDraft=JSON.parse(JSON.stringify(products));adminEditing=null;selectAdminProduct(active,false);
+        showModal(el.adminModal);setTimeout(function(){el.adminSaleValue.focus()},50);
+      }
+      function closeAdmin(){hideModal(el.adminModal);adminDraft=null;adminEditing=null;el.adminAccess.focus()}
+      var toastTimer;
+      function showToast(){clearTimeout(toastTimer);el.toast.classList.add("show");toastTimer=setTimeout(function(){el.toast.classList.remove("show")},2600)}
+      [el.quantity,el.goal,el.date].forEach(function(input){input.addEventListener("input",render)});
+      $$(".product-btn").forEach(function(btn){btn.addEventListener("click",function(){loadProduct(btn.dataset.product)})});
+      el.menuDots.addEventListener("click",function(){
+        el.sidebar.classList.remove("menu-pulse");void el.sidebar.offsetWidth;el.sidebar.classList.add("menu-pulse");
+        $(".product-btn.active").focus();setTimeout(function(){el.sidebar.classList.remove("menu-pulse")},520);
+      });
+      el.adminAccess.addEventListener("click",requestAdminAccess);
+      el.qSecret.addEventListener("dblclick",requestAdminAccess);
+      $$(".admin-profile-tab").forEach(function(btn){btn.addEventListener("click",function(){
+        var productKey=adminDraft[adminEditing].productKey;selectAdminProduct(btn.dataset.adminProfile+"_"+productKey,true);
+      })});
+      $$(".admin-product-tab").forEach(function(btn){btn.addEventListener("click",function(){
+        var profileKey=adminDraft[adminEditing].profileKey;selectAdminProduct(profileKey+"_"+btn.dataset.adminProduct,true);
+      })});
+      el.loginForm.addEventListener("submit",function(event){
+        event.preventDefault();
+        if(el.adminPassword.value===ADMIN_PASSWORD){sessionStorage.setItem("yduqs-admin-unlocked","true");openAdmin();return}
+        el.passwordError.textContent="Senha incorreta. Tente novamente.";el.loginPanel.classList.remove("shake");
+        void el.loginPanel.offsetWidth;el.loginPanel.classList.add("shake");el.adminPassword.select();
+      });
+      $("#closeLogin").addEventListener("click",closeLogin);$("#cancelLogin").addEventListener("click",closeLogin);
+      $("#closeAdmin").addEventListener("click",closeAdmin);$("#cancelAdmin").addEventListener("click",closeAdmin);
+      el.loginModal.addEventListener("click",function(event){if(event.target===el.loginModal)closeLogin()});
+      el.adminModal.addEventListener("click",function(event){if(event.target===el.adminModal)closeAdmin()});
+      el.adminForm.addEventListener("submit",function(event){
+        event.preventDefault();saveVisibleAdminFields();products=adminDraft;
+        Object.keys(products).forEach(function(key){sellerInputs[key].goal=products[key].goal;sellerInputs[key].date=products[key].closingDate});
+        el.goal.value=products[active].goal;el.date.value=products[active].closingDate;
+        localStorage.setItem(STORAGE_KEY,JSON.stringify(products));render();closeAdmin();
+        el.lastUpdate.textContent="Parâmetros atualizados agora";showToast();
+      });
+      document.addEventListener("keydown",function(event){
+        if(event.ctrlKey&&event.shiftKey&&event.key.toLowerCase()==="a"){event.preventDefault();requestAdminAccess();return}
+        if(event.key==="Escape"){if(el.adminModal.classList.contains("open"))closeAdmin();else if(el.loginModal.classList.contains("open"))closeLogin()}
+      });
+      loadProduct(active);
+    })();
+  </script>
+</body>
+</html>
