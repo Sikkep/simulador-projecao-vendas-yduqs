@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#071221">
-  <title>Simulador Comercial YDUQS</title>
+  <title>Simulador de Remuneração Variável</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { theme: { extend: { colors: {
@@ -98,6 +98,35 @@
     @media(max-width:1050px){.main{padding-right:24px;padding-left:310px}.workspace{grid-template-columns:1fr}.context-bar{grid-template-columns:1fr 1fr 1fr}}
     @media(max-width:760px){.header{height:64px;padding:0 14px}.sidebar{position:fixed;z-index:40;top:64px;left:0;bottom:0;width:228px;min-height:0;margin:0;padding:17px 12px 12px;border-right:1px solid var(--line);border-bottom:0;border-left:0;box-shadow:12px 0 35px rgba(0,0,0,.16);overflow:hidden}.side-title{padding-bottom:13px}.side-title-icon{width:34px;height:34px}.side-title strong{font-size:15px}.menu-label{margin:12px 4px 7px}.role-menu-label{margin-top:9px}.product-list{display:grid;grid-template-columns:1fr;gap:5px;overflow:visible;padding:0}.product-btn{width:100%;min-width:0;grid-template-columns:28px minmax(0,1fr) 14px;gap:8px;padding:7px 8px;font-size:12px}.product-icon{width:28px;height:28px}.main{min-height:100vh;padding:88px 14px 38px 246px}.hero{display:block}.active-badge{margin-top:16px}.context-bar{grid-template-columns:1fr}.workspace{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.footer{align-items:flex-start;flex-direction:column;gap:7px}.footer-actions{width:100%;justify-content:space-between}}
     @media(max-width:430px){.sidebar{width:198px;padding:14px 8px}.side-title{gap:8px;padding:0 3px 11px}.side-title small{font-size:8px}.menu-label{margin:10px 4px 6px}.product-btn{grid-template-columns:26px minmax(0,1fr) 12px;gap:6px;padding:6px 7px;font-size:11px}.product-icon{width:26px;height:26px}.main{padding:84px 10px 32px 208px}.hero h1{font-size:26px}.input-card,.result-card{padding:14px;border-radius:15px}.projection{grid-template-columns:26px 1fr;gap:7px;padding:8px}.projection p{font-size:10px}.modal-head,.modal-body,.modal-foot{padding-right:18px;padding-left:18px}.admin-product-tabs{grid-template-columns:1fr}.modal-foot{align-items:stretch;flex-direction:column-reverse}.modal-foot button{width:100%}}
+    /* Direção visual premium: tipografia, contraste e menos caixas */
+    body{background:radial-gradient(circle at 82% 8%,rgba(42,196,210,.055),transparent 27%),linear-gradient(145deg,#040A12,#06111F 58%,#040A12);color:#D9E8F5}
+    .header{height:68px;padding:0 22px;color:var(--cyan);border-bottom:1px solid rgba(87,143,190,.1);background:rgba(4,10,18,.94);box-shadow:none;backdrop-filter:blur(14px)}
+    .menu-dots{border-color:rgba(42,196,210,.15);color:#6EDBE4;background:rgba(42,196,210,.035)}.menu-dots:hover{background:rgba(42,196,210,.09)}
+    .q-symbol{border-color:#2AC4D2}.q-symbol:after{background:#2AC4D2}
+    .sidebar{top:68px;border-right-color:rgba(87,143,190,.13);background:#061322;box-shadow:none}
+    .side-title{border-bottom-color:rgba(87,143,190,.12)}.side-title-icon{border:0;color:#58D3DE;background:rgba(42,196,210,.07)}
+    .product-btn:before{display:none}.product-btn:hover{border-color:transparent;background:rgba(42,196,210,.055)}
+    .product-btn.active{color:#031521;border-color:transparent;background:#2AC4D2;box-shadow:none}.product-btn.active .product-icon{color:#042131;border-color:transparent;background:rgba(4,33,49,.1)}.product-btn.active .product-chevron{color:#042131}
+    .main{padding:108px 42px 34px 326px}.wrap{max-width:1240px}
+    .hero{display:block;margin-bottom:28px}.hero h1{max-width:none;font-size:clamp(36px,4vw,54px);font-weight:860;letter-spacing:-.05em}.hero-copy,.active-badge,.eyebrow{display:none}
+    .context-bar{display:flex;gap:0;margin:0 0 28px;padding:0 0 20px;border-bottom:1px solid rgba(104,160,205,.11)}
+    .context-item{flex:1;padding:0 28px;border:0;border-right:1px solid rgba(104,160,205,.14);border-radius:0;background:transparent}.context-item:first-child{padding-left:0}.context-item:last-child{padding-right:0;border-right:0}
+    .context-icon{width:24px;height:30px;border-radius:0;color:#2AC4D2;background:transparent}.context-item small{color:#557590;font-size:8px;letter-spacing:.14em}.context-item strong{margin-top:4px;color:#E5F2FC;font-size:12px}
+    .workspace{grid-template-columns:minmax(300px,.78fr) minmax(500px,1.22fr);gap:28px}
+    .card{border:0;border-radius:18px;background:rgba(8,25,43,.68);box-shadow:0 24px 75px rgba(0,0,0,.16)}.input-card,.result-card{padding:30px}
+    .card-head{margin-bottom:26px}.card-head h2{font-size:20px;font-weight:760;letter-spacing:-.03em}.section-kicker{display:block;margin-bottom:7px;color:#4F7899;font-size:8px;font-weight:900;letter-spacing:.18em}
+    .field{margin-bottom:18px}.field label{margin-bottom:8px;color:#A8C0D3;font-size:10px;letter-spacing:.03em}.input-wrap input{height:52px;border-color:rgba(75,137,189,.22);border-radius:9px;background:rgba(3,13,23,.62);font-size:15px}.input-wrap input:hover{border-color:rgba(42,196,210,.38)}
+    .quantity-field{margin-bottom:25px}.secondary-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.secondary-fields .field{margin:0}.secondary-fields .helper{display:none}
+    .progress-block{margin-top:22px}.progress-track{height:8px;overflow:hidden;border-radius:999px;background:rgba(101,151,191,.13)}.progress-track span{display:block;width:60%;height:100%;border-radius:inherit;background:#2AC4D2;box-shadow:0 0 20px rgba(42,196,210,.35);transition:width .28s ease}.progress-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px}.progress-meta strong{color:#72DEE7;font-size:9px;font-weight:900;letter-spacing:.11em}.progress-meta span{color:#587893;font-size:9px}
+    .result-card{overflow:visible;background:rgba(7,22,38,.76)}.result-card:after{display:none}.projection-list{display:block}
+    .projection{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:end;min-height:0;padding:19px 0;border:0;border-bottom:1px solid rgba(92,148,194,.13);border-radius:0;background:transparent}.projection:first-child{padding-top:2px}.projection.earned{border-color:rgba(42,196,210,.28);background:transparent}.projection-number{display:none}
+    .metric-copy{display:block;min-width:0}.metric-label{display:block;color:#7B9AB3;font-size:9px;font-weight:900;letter-spacing:.12em}.metric-copy small{display:block;margin-top:7px;color:#466985;font-size:10px}.metric-copy small strong{color:#7899B2;font-weight:800}
+    .metric-value{color:#F1F8FD;font-size:clamp(25px,2.6vw,36px);font-weight:900;line-height:1;letter-spacing:-.045em;text-align:right;white-space:nowrap}.metric-partial .metric-value{font-size:clamp(30px,3vw,42px)}.projection.earned .metric-value{color:#5ED7E1}
+    .total{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-top:28px;padding:28px 0 0;border:0;border-radius:0;background:transparent;box-shadow:none}.total-copy{display:block}.total-label{color:#6B8CA5;font-size:9px;letter-spacing:.14em}.total-copy small{display:block;margin-top:8px;color:#456A86;font-size:10px}.total-copy small strong{color:#7296B0}.total-value{color:#39D0DA;font-size:clamp(42px,5.1vw,70px);font-weight:950;line-height:.88;letter-spacing:-.065em;white-space:nowrap;text-shadow:0 0 35px rgba(42,196,210,.13)}
+    .footer{margin-top:22px;padding-top:14px;border-top:1px solid rgba(92,148,194,.08)}
+    @media(max-width:1050px){.main{padding-right:26px;padding-left:310px}.workspace{grid-template-columns:1fr}.total-value{font-size:clamp(42px,8vw,64px)}}
+    @media(max-width:760px){.header{height:64px}.sidebar{top:64px}.main{padding:90px 16px 36px 246px}.hero h1{font-size:34px}.context-bar{display:grid;grid-template-columns:1fr;padding-bottom:12px}.context-item,.context-item:first-child,.context-item:last-child{padding:10px 0;border-right:0;border-bottom:1px solid rgba(104,160,205,.11)}.context-item:last-child{border-bottom:0}.secondary-fields{grid-template-columns:1fr}.input-card,.result-card{padding:22px}.projection{grid-template-columns:1fr;gap:10px;align-items:start}.metric-value{text-align:left}.total{align-items:flex-start;flex-direction:column}.total-value{font-size:42px}.progress-meta{align-items:flex-start;flex-direction:column;gap:5px}}
+    @media(max-width:430px){.main{padding:86px 10px 30px 208px}.hero h1{font-size:28px}.input-card,.result-card{padding:16px;border-radius:14px}.card-head h2{font-size:17px}.metric-value,.metric-partial .metric-value{font-size:25px}.total-value{font-size:31px}.footer-actions{align-items:flex-end;flex-direction:column}.footer-admin{align-self:flex-end}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -151,13 +180,8 @@
 
   <main class="main">
     <div class="wrap">
-      <div class="eyebrow"><i></i>Performance comercial</div>
       <div class="hero">
-        <div>
-          <h1 id="pageTitle">Projeção de vendas - Consultor - Graduação</h1>
-          <p class="hero-copy">Simule a sua produção e acompanhe, em tempo real, o valor projetado para o período selecionado.</p>
-        </div>
-        <div class="active-badge" aria-live="polite"><i></i><span id="badge">Consultor • Graduação</span></div>
+        <h1 id="pageTitle">Projeção de Vendas</h1>
       </div>
 
       <section class="context-bar" aria-label="Contexto da simulação">
@@ -168,35 +192,47 @@
 
       <section class="workspace" aria-label="Calculadora de projeção">
         <article class="card input-card">
-          <div class="card-head"><h2>Suas expectativas</h2></div>
-          <div class="field">
+          <div class="card-head"><div><span class="section-kicker">SIMULAÇÃO COMERCIAL</span><h2>Suas expectativas</h2></div></div>
+          <div class="field quantity-field">
             <label for="quantity">Quantidade de vendas</label>
             <div class="input-wrap"><input id="quantity" type="number" min="0" step="1" value="18" inputmode="numeric"><span class="affix">vendas</span></div>
             <small class="helper">Informe quantas matrículas você espera realizar.</small>
+            <div class="progress-block" aria-live="polite">
+              <div class="progress-track" role="progressbar" aria-label="Percentual da meta atingida" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60" id="progressTrack"><span id="progressFill"></span></div>
+              <div class="progress-meta"><strong id="progressText">60% DA META ATINGIDA</strong><span id="progressDetail">18 de 30 vendas</span></div>
+            </div>
           </div>
-          <div class="field">
-            <label for="goal">Meta</label>
-            <div class="input-wrap"><input id="goal" type="number" min="1" step="1" value="30" inputmode="numeric"><span class="affix">vendas</span></div>
-            <small class="helper">A meta padrão é carregada para o produto selecionado.</small>
-          </div>
-          <div class="field">
-            <label for="date">Dia/Mês</label>
-            <div class="input-wrap"><input id="date" type="date" value="2026-08-31"></div>
-            <small class="helper">Use a data-limite considerada na projeção.</small>
+          <div class="secondary-fields">
+            <div class="field">
+              <label for="goal">Meta</label>
+              <div class="input-wrap"><input id="goal" type="number" min="1" step="1" value="30" inputmode="numeric"><span class="affix">vendas</span></div>
+            </div>
+            <div class="field">
+              <label for="date">Dia/Mês</label>
+              <div class="input-wrap"><input id="date" type="date" value="2026-08-31"></div>
+            </div>
           </div>
         </article>
 
         <article class="card result-card" aria-live="polite">
-          <div class="card-head"><h2>Resumo da projeção</h2></div>
+          <div class="card-head"><div><span class="section-kicker">REMUNERAÇÃO VARIÁVEL</span><h2>Resumo da Projeção</h2></div></div>
           <div class="projection-list">
-            <div class="projection"><span class="projection-number">01</span><p>Uma venda é <strong id="saleValueText">R$ 180,00</strong></p></div>
-            <div class="projection"><span class="projection-number">02</span><p>Se você vender <strong id="quantityText">18</strong>, ganha <strong id="baseText">R$ 3.240,00</strong></p></div>
-            <div class="projection" id="bonusRow"><span class="projection-number">03</span><p>Se bater a meta <strong id="goalText">30 vendas</strong>, ganha um adicional de <strong id="bonusText">R$ 1.200,00</strong></p></div>
-            <div class="projection"><span class="projection-number">04</span><p>Se você fizer <strong id="finalQuantityText">18</strong> vendas até <strong id="dateText">31/08</strong>, irá ganhar <strong id="totalInlineText">R$ 3.240,00</strong></p></div>
+            <div class="projection metric-unit">
+              <span class="metric-copy"><span class="metric-label">VALOR UNITÁRIO POR VENDA</span><small>Valor considerado para cada matrícula</small></span>
+              <strong class="metric-value" id="saleValueText">R$ 180,00</strong>
+            </div>
+            <div class="projection metric-partial">
+              <span class="metric-copy"><span class="metric-label">PROJEÇÃO DE GANHOS PARCIAIS</span><small>Com <strong id="quantityText">18</strong> vendas no período</small></span>
+              <strong class="metric-value" id="baseText">R$ 3.240,00</strong>
+            </div>
+            <div class="projection" id="bonusRow">
+              <span class="metric-copy"><span class="metric-label">GANHOS ADICIONAIS NA META</span><small>Meta configurada em <strong id="goalText">30 vendas</strong></small></span>
+              <strong class="metric-value" id="bonusText">R$ 1.200,00</strong>
+            </div>
           </div>
           <div class="total">
-            <div><span class="total-label">Total projetado</span><span class="total-value" id="totalText">R$ 3.240,00</span></div>
-            <span class="trend" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="m4 16 5-5 4 4 7-8"/><path d="M14 7h6v6"/></svg></span>
+            <span class="total-copy"><span class="total-label">REMUNERAÇÃO TOTAL PROJETADA</span><small>Projeção calculada até <strong id="dateText">31/08</strong></small></span>
+            <span class="total-value" id="totalText">R$ 3.240,00</span>
           </div>
         </article>
       </section>
@@ -285,10 +321,10 @@
       var $=function(s){return document.querySelector(s)};
       var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
       var el={
-        quantity:$("#quantity"),goal:$("#goal"),date:$("#date"),badge:$("#badge"),pageTitle:$("#pageTitle"),
+        quantity:$("#quantity"),goal:$("#goal"),date:$("#date"),pageTitle:$("#pageTitle"),
         contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),saleValueText:$("#saleValueText"),
         quantityText:$("#quantityText"),baseText:$("#baseText"),goalText:$("#goalText"),bonusText:$("#bonusText"),
-        finalQuantityText:$("#finalQuantityText"),dateText:$("#dateText"),totalInlineText:$("#totalInlineText"),
+        dateText:$("#dateText"),progressTrack:$("#progressTrack"),progressFill:$("#progressFill"),progressText:$("#progressText"),progressDetail:$("#progressDetail"),
         totalText:$("#totalText"),bonusRow:$("#bonusRow"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
         loginModal:$("#loginModal"),loginPanel:$("#loginPanel"),loginForm:$("#loginForm"),adminPassword:$("#adminPassword"),
         passwordError:$("#passwordError"),adminModal:$("#adminModal"),adminForm:$("#adminForm"),adminProduct:$("#adminProduct"),
@@ -323,12 +359,13 @@
         var base=quantity*p.saleValue;
         var earned=quantity>=goal?p.bonus:0;
         var total=base+earned;
+        var progress=Math.min(100,Math.round(quantity/goal*100));
         sellerInputs[active]={quantity:quantity,goal:goal,date:date};
-        el.pageTitle.textContent="Projeção de vendas - "+p.profile+" - "+p.name;
-        el.badge.textContent=p.profile+" • "+p.name;el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
+        el.pageTitle.textContent="Projeção de Vendas";
+        el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
         el.saleValueText.textContent=money(p.saleValue);el.quantityText.textContent=quantity;el.baseText.textContent=money(base);
-        el.goalText.textContent=goal+" vendas";el.bonusText.textContent=money(p.bonus);el.finalQuantityText.textContent=quantity;
-        el.dateText.textContent=shortDate(date);el.totalInlineText.textContent=money(total);el.totalText.textContent=money(total);
+        el.goalText.textContent=goal+" vendas";el.bonusText.textContent=money(p.bonus);el.dateText.textContent=shortDate(date);el.totalText.textContent=money(total);
+        el.progressFill.style.width=progress+"%";el.progressText.textContent=progress+"% DA META ATINGIDA";el.progressDetail.textContent=quantity+" de "+goal+" vendas";el.progressTrack.setAttribute("aria-valuenow",progress);
         el.bonusRow.classList.toggle("earned",earned>0);
       }
       function loadProduct(key){
