@@ -116,7 +116,7 @@
     .card{border:1px solid rgba(118,160,205,.12);border-radius:18px;background:rgba(27,41,87,.92);box-shadow:0 24px 75px rgba(5,10,35,.17)}.input-card,.result-card{padding:30px}
     .card-head{margin-bottom:26px}.card-head h2{font-size:20px;font-weight:760;letter-spacing:-.03em}.section-kicker{display:block;margin-bottom:7px;color:#4F7899;font-size:8px;font-weight:900;letter-spacing:.18em}
     .field{margin-bottom:18px}.field label{margin-bottom:8px;color:#B7C8DB;font-size:10px;letter-spacing:.03em}.input-wrap input{height:52px;border-color:rgba(126,168,210,.25);border-radius:9px;background:#121D42;font-size:15px}.input-wrap input:hover{border-color:rgba(27,174,190,.55)}
-    .quantity-field{margin-bottom:25px}.expectation-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.expectation-fields .field{margin:0}.secondary-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.secondary-fields .field{margin:0}.secondary-fields .helper{display:none}.secondary-fields .locked-helper{display:block;color:#82A5C1}.locked-input input{padding-right:112px;border-color:rgba(27,174,190,.24);background:#101A3B;cursor:not-allowed}.locked-affix{display:flex;align-items:center;gap:5px;color:#72D8E1}.locked-affix svg{flex:0 0 auto}
+    .quantity-field{margin-bottom:25px}.expectation-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.expectation-fields .field{margin:0}.secondary-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.secondary-fields .field{margin:0}.secondary-fields .helper{display:none}.locked-input input{padding-right:76px;border-color:rgba(126,168,210,.25);background:#121D42;cursor:default}.locked-input .affix{color:#91A9C2}
     .progress-block{margin-top:22px}.progress-track{height:7px;overflow:hidden;border-radius:999px;background:rgba(127,169,211,.16)}.progress-track span{display:block;width:60%;height:100%;border-radius:inherit;background:#1BAEBE;box-shadow:0 0 20px rgba(27,174,190,.38);transition:width .28s ease}.progress-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:11px}.progress-meta strong{color:#75DFE8;font-size:10px;font-weight:850;letter-spacing:.09em}.progress-meta span{color:#98ADC5;font-size:11px;font-weight:600}
     .result-card{overflow:visible;background:rgba(30,46,94,.94)}.result-card:after{display:none}.projection-list{display:block}
     .projection{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:center;min-height:0;padding:25px 0;border:0;border-bottom:1px solid rgba(92,148,194,.13);border-radius:0;background:transparent}.projection:first-child{padding-top:7px}.projection.earned{border-color:rgba(42,196,210,.28);background:transparent}.projection-number{display:none}
@@ -232,8 +232,7 @@
           <div class="secondary-fields">
             <div class="field">
               <label for="goal">Meta para receber prêmio</label>
-              <div class="input-wrap locked-input"><input id="goal" type="number" min="1" step="1" value="30" inputmode="numeric" readonly aria-readonly="true"><span class="affix locked-affix"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>matrículas</span></div>
-              <small class="helper locked-helper">Definida e alterada somente no Admin.</small>
+              <div class="input-wrap locked-input"><input id="goal" type="text" value="30" readonly aria-readonly="true"><span class="affix">matrículas</span></div>
             </div>
             <div class="field">
               <label for="date">Data-limite</label>
