@@ -278,7 +278,7 @@
             </div>
           </div>
           <div class="pace-section">
-            <div class="pace-head"><span>Sugestão de cadência</span><small>Médias necessárias para alcançar a pretensão até o prazo</small></div>
+            <div class="pace-head"><span>Sugestão de cadência</span><small>Valores mínimos inteiros para alcançar a pretensão até o prazo</small></div>
             <div class="pace-grid">
               <div class="pace-card"><span>Por mês</span><strong id="monthlySuggestion">--</strong><small>matrículas/mês</small></div>
               <div class="pace-card"><span>Por semana</span><strong id="weeklySuggestion">--</strong><small>matrículas/semana</small></div>
@@ -448,15 +448,15 @@
           [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.cadenceSuggestion].forEach(function(item){item.textContent="0"});el.cadenceUnit.textContent="dias por matrícula";
           el.planSummary.textContent="Informe uma quantidade em “Pretendo fazer” para gerar as sugestões.";el.planBonusNote.textContent="";return;
         }
-        var monthly=quantity/months;var weekly=quantity*7/planningDays;var daily=quantity/planningDays;var cadence=planningDays/quantity;
-        el.monthlySuggestion.textContent=rate(monthly);el.weeklySuggestion.textContent=rate(weekly);el.dailySuggestion.textContent=rate(daily);
-        if(cadence>=1){el.cadenceSuggestion.textContent="1 a cada "+rate(cadence);el.cadenceUnit.textContent=cadence===1?"dia":"dias"}
-        else{el.cadenceSuggestion.textContent=rate(1/cadence);el.cadenceUnit.textContent="matrículas por dia"}
-        el.planSummary.textContent="Para alcançar "+quantity+" "+enrollmentWord(quantity)+" até "+shortDate(date)+", mantenha em média "+rate(daily)+" por dia, "+rate(weekly)+" por semana ou "+rate(monthly)+" por mês.";
+        var monthly=Math.ceil(quantity/months);var weekly=Math.ceil(quantity*7/planningDays);var daily=Math.ceil(quantity/planningDays);var cadence=planningDays/quantity;
+        el.monthlySuggestion.textContent=monthly;el.weeklySuggestion.textContent=weekly;el.dailySuggestion.textContent=daily;
+        if(cadence>=1){var cadenceDays=Math.max(1,Math.floor(cadence));el.cadenceSuggestion.textContent="1 a cada "+cadenceDays;el.cadenceUnit.textContent=cadenceDays===1?"dia":"dias"}
+        else{el.cadenceSuggestion.textContent=daily;el.cadenceUnit.textContent=daily===1?"matrícula por dia":"matrículas por dia"}
+        el.planSummary.textContent="Para alcançar "+quantity+" "+enrollmentWord(quantity)+" até "+shortDate(date)+", o ritmo mínimo inteiro é "+daily+" por dia, "+weekly+" por semana ou "+monthly+" por mês.";
         if(quantity>=goal)el.planBonusNote.textContent="Sua pretensão já cobre a meta do bônus de "+goal+" "+enrollmentWord(goal)+".";
         else{
-          var bonusDaily=goal/planningDays;var bonusWeekly=goal*7/planningDays;var bonusMonthly=goal/months;
-          el.planBonusNote.textContent="Para a meta do bônus de "+goal+", o ritmo seria "+rate(bonusDaily)+" por dia, "+rate(bonusWeekly)+" por semana ou "+rate(bonusMonthly)+" por mês.";
+          var bonusDaily=Math.ceil(goal/planningDays);var bonusWeekly=Math.ceil(goal*7/planningDays);var bonusMonthly=Math.ceil(goal/months);
+          el.planBonusNote.textContent="Para a meta do bônus de "+goal+", o ritmo inteiro seria "+bonusDaily+" por dia, "+bonusWeekly+" por semana ou "+bonusMonthly+" por mês.";
         }
       }
       function render(){
