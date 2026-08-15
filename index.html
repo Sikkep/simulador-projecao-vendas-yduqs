@@ -137,14 +137,14 @@
     .projection .metric-value{font-weight:700}.metric-partial .metric-value{font-weight:700}.total-value{font-weight:700}.metric-value .currency,.total-value .currency{font-weight:400}
     .footer{color:#91A4B8;font-size:11px}.footer-status,.footer-admin{font-weight:600}
     .kicker,.admin-section-label{font-weight:650;letter-spacing:.1em}.modal-head h2{font-weight:700}.admin-profile-tab,.admin-product-tab{font-weight:600}.btn-secondary,.btn-primary{font-weight:650}
-    /* Planejamento preenchido pelo usuário */
-    .planning-card{grid-column:1/-1;padding:28px 30px}.planning-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px}.planning-head .card-head{margin:0}.planning-note{max-width:430px;margin:0;color:#A9BACB;font-size:12px;line-height:1.55;text-align:right}
-    .personal-plan-grid{display:grid;grid-template-columns:minmax(210px,.72fr) minmax(360px,1.25fr) minmax(250px,.9fr);gap:24px;align-items:stretch}.plan-target{display:flex;min-width:0;flex-direction:column;justify-content:center;padding-right:24px;border-right:1px solid rgba(132,174,214,.18)}.plan-target>span{color:#82A2C0;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.plan-target strong{margin-top:7px;color:#F2F7FC;font-size:20px;font-weight:650;line-height:1.3}.plan-target strong span{color:#55D3DE;font-size:28px;font-weight:700}.plan-target p{margin:8px 0 0;color:#9FB2C6;font-size:12px;line-height:1.5}
-    .plan-fields{display:grid;grid-template-columns:minmax(130px,1fr) 30px minmax(150px,1fr);gap:12px;align-items:center}.plan-fields .field{margin:0}.plan-fields .helper{margin-top:7px}.plan-fields input[readonly]{color:#C9D7E5;background:rgba(18,29,66,.72);cursor:default;opacity:1}.plan-operator{display:grid;place-items:center;padding-top:21px;color:#73DCE5;font-size:10px;font-weight:650;letter-spacing:.05em;text-transform:uppercase}
-    .plan-result{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:20px 22px;border:1px solid rgba(27,174,190,.25);border-radius:14px;background:rgba(27,174,190,.07)}.plan-status{align-self:flex-start;padding:5px 8px;border-radius:999px;color:#AFC1D2;background:rgba(132,174,214,.1);font-size:9px;font-weight:650;letter-spacing:.06em;text-transform:uppercase}.plan-status.aligned{color:#102043;background:#62D9E2}.plan-status.under{color:#91D7E1;background:rgba(27,174,190,.12)}.plan-status.over{color:#D8F9FC;background:rgba(27,174,190,.2)}.plan-total{display:flex;align-items:baseline;gap:8px;margin-top:12px}.plan-total strong{color:#55D3DE;font-size:clamp(30px,3vw,42px);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}.plan-total small{color:#C0D0DE;font-size:11px;font-weight:500}.plan-summary{margin:10px 0 0;color:#AFC0D0;font-size:12px;line-height:1.55}
-    @media(max-width:1240px){.main{padding-right:26px;padding-left:310px}.workspace{grid-template-columns:1fr}.total-value{font-size:clamp(42px,5.2vw,50px)}.personal-plan-grid{grid-template-columns:minmax(190px,.8fr) minmax(340px,1.2fr)}.plan-target{grid-column:1/-1;padding:0 0 18px;border-right:0;border-bottom:1px solid rgba(132,174,214,.18)}}
-    @media(max-width:760px){.header{height:64px}.sidebar{top:64px}.main{padding:90px 16px 36px 246px}.hero h1{font-size:34px}.context-bar{display:grid;grid-template-columns:1fr;padding-bottom:12px}.context-item,.context-item:first-child,.context-item:last-child{padding:10px 0;border-right:0;border-bottom:1px solid rgba(104,160,205,.11)}.context-item:last-child{border-bottom:0}.secondary-fields{grid-template-columns:1fr}.input-card,.result-card,.planning-card{padding:22px}.projection{grid-template-columns:1fr;gap:11px;align-items:start;padding:22px 0}.metric-value{justify-content:flex-start;text-align:left}.total{align-items:flex-start;flex-direction:column;gap:14px;padding-top:27px}.total-value{justify-content:flex-start;font-size:42px;text-align:left}.progress-meta{align-items:flex-start;flex-direction:column;gap:5px}.planning-head{align-items:flex-start;flex-direction:column;gap:8px}.planning-note{text-align:left}.personal-plan-grid{grid-template-columns:1fr}.plan-target{grid-column:auto}.plan-result{padding:18px}}
-    @media(max-width:430px){.main{padding:86px 10px 30px 208px}.hero h1{font-size:28px}.input-card,.result-card,.planning-card{padding:16px;border-radius:14px}.card-head h2{font-size:18px}.metric-value,.metric-partial .metric-value{font-size:25px}.total-value{font-size:33px}.footer-actions{align-items:flex-end;flex-direction:column}.footer-admin{align-self:flex-end}.plan-fields{grid-template-columns:1fr}.plan-operator{height:12px;padding:0}.plan-total{align-items:flex-start;flex-direction:column;gap:4px}}
+    /* Planejamento automático baseado na pretensão e no prazo */
+    .planning-card{grid-column:1/-1;padding:28px 30px}.planning-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:20px}.planning-head .card-head{margin:0}.planning-note{max-width:470px;margin:0;color:#A9BACB;font-size:12px;line-height:1.55;text-align:right}
+    .plan-overview{display:grid;grid-template-columns:minmax(190px,.8fr) minmax(240px,1fr) minmax(180px,.72fr);gap:14px}.plan-overview-item{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:17px 18px;border:1px solid rgba(132,174,214,.14);border-radius:13px;background:rgba(17,29,66,.3)}.plan-overview-item>span{color:#86A5C2;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.plan-overview-item strong{margin-top:5px;color:#F1F7FC;font-size:22px;font-weight:700;line-height:1.2}.plan-target strong{color:#55D3DE}.plan-overview-item small{margin-top:6px;color:#9FB3C7;font-size:11px;line-height:1.45}
+    .synced-deadline{position:relative;padding-left:52px;border-color:rgba(27,174,190,.42);background:#111A3B;box-shadow:inset 3px 0 0 #1BAEBE}.sync-icon{position:absolute;left:17px;top:50%;width:23px;height:23px;display:grid;place-items:center;border-radius:7px;color:#63D8E2;background:rgba(27,174,190,.12);transform:translateY(-50%)}.sync-label{display:inline-flex;align-items:center;gap:6px;color:#70DCE5!important}.sync-label:after{content:"SINCRONIZADO";padding:3px 6px;border-radius:999px;color:#102043;background:#63D8E2;font-size:7px;font-weight:700;letter-spacing:.05em}.synced-deadline small{color:#B4C4D4}
+    .pace-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(132,174,214,.16)}.pace-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:12px}.pace-head span{color:#B9C9D8;font-size:12px;font-weight:650}.pace-head small{color:#88A1BA;font-size:10px}.pace-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.pace-card{min-width:0;padding:15px 16px;border:1px solid rgba(132,174,214,.14);border-radius:12px;background:rgba(17,29,66,.4)}.pace-card span{display:block;color:#86A5C2;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.pace-card strong{display:block;margin-top:6px;color:#F1F7FC;font-size:clamp(21px,2.2vw,29px);font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}.pace-card small{display:block;margin-top:5px;color:#9FB3C7;font-size:10px}.pace-card.featured{border-color:rgba(27,174,190,.34);background:rgba(27,174,190,.07)}.pace-card.featured strong{color:#55D3DE}.plan-summary{margin:13px 0 0;color:#B2C2D1;font-size:12px;line-height:1.55}.plan-bonus-note{display:block;margin-top:5px;color:#81D8E1;font-size:11px;font-weight:600;line-height:1.5}
+    @media(max-width:1240px){.main{padding-right:26px;padding-left:310px}.workspace{grid-template-columns:1fr}.total-value{font-size:clamp(42px,5.2vw,50px)}.plan-overview{grid-template-columns:1fr 1.2fr}.time-remaining{grid-column:1/-1}.pace-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:760px){.header{height:64px}.sidebar{top:64px}.main{padding:90px 16px 36px 246px}.hero h1{font-size:34px}.context-bar{display:grid;grid-template-columns:1fr;padding-bottom:12px}.context-item,.context-item:first-child,.context-item:last-child{padding:10px 0;border-right:0;border-bottom:1px solid rgba(104,160,205,.11)}.context-item:last-child{border-bottom:0}.secondary-fields{grid-template-columns:1fr}.input-card,.result-card,.planning-card{padding:22px}.projection{grid-template-columns:1fr;gap:11px;align-items:start;padding:22px 0}.metric-value{justify-content:flex-start;text-align:left}.total{align-items:flex-start;flex-direction:column;gap:14px;padding-top:27px}.total-value{justify-content:flex-start;font-size:42px;text-align:left}.progress-meta{align-items:flex-start;flex-direction:column;gap:5px}.planning-head{align-items:flex-start;flex-direction:column;gap:8px}.planning-note{text-align:left}.plan-overview{grid-template-columns:1fr}.time-remaining{grid-column:auto}.pace-head{align-items:flex-start;flex-direction:column;gap:3px}.pace-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:430px){.main{padding:86px 10px 30px 208px}.hero h1{font-size:28px}.input-card,.result-card,.planning-card{padding:16px;border-radius:14px}.card-head h2{font-size:18px}.metric-value,.metric-partial .metric-value{font-size:25px}.total-value{font-size:33px}.footer-actions{align-items:flex-end;flex-direction:column}.footer-admin{align-self:flex-end}.pace-grid{grid-template-columns:1fr}.sync-label:after{display:none}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -256,33 +256,37 @@
 
         <article class="card planning-card" aria-live="polite">
           <div class="planning-head">
-            <div class="card-head"><div><span class="section-kicker">PLANEJAMENTO PESSOAL</span><h2>Como você pretende chegar lá?</h2></div></div>
-            <p class="planning-note">Defina seu ritmo mensal. A duração do planejamento segue automaticamente a mesma data-limite informada acima.</p>
+            <div class="card-head"><div><span class="section-kicker">PLANEJAMENTO SUGERIDO</span><h2>Ritmo para alcançar sua pretensão</h2></div></div>
+            <p class="planning-note">As sugestões usam a quantidade de “Pretendo fazer” e são recalculadas automaticamente quando a data-limite muda.</p>
           </div>
-          <div class="personal-plan-grid">
-            <div class="plan-target">
-              <span>Seu objetivo informado</span>
+          <div class="plan-overview">
+            <div class="plan-overview-item plan-target">
+              <span>Base do planejamento</span>
               <strong><span id="planTarget">18</span> matrículas</strong>
-              <p id="planGoalContext">Meta para bônus: 30 matrículas até 31/08.</p>
+              <small>Quantidade informada em “Pretendo fazer”.</small>
             </div>
-            <div class="plan-fields">
-              <div class="field">
-                <label for="monthlyPace">Matrículas por mês</label>
-                <div class="input-wrap"><input id="monthlyPace" type="number" min="1" step="1" placeholder="Ex.: 10" inputmode="numeric"><span class="affix">por mês</span></div>
-                <small class="helper">Seu ritmo mensal.</small>
-              </div>
-              <span class="plan-operator" aria-hidden="true">até</span>
-              <div class="field">
-                <label for="planDeadline">Até a data-limite</label>
-                <div class="input-wrap"><input id="planDeadline" type="date" readonly aria-readonly="true"></div>
-                <small class="helper" id="planDuration">Período calculado pela data-limite.</small>
-              </div>
+            <div class="plan-overview-item synced-deadline">
+              <span class="sync-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/></svg></span>
+              <span class="sync-label">Data-limite refletida</span>
+              <strong id="planDeadlineText">31/08/2026</strong>
+              <small>Este prazo é o mesmo campo “Data-limite” exibido acima.</small>
             </div>
-            <div class="plan-result">
-              <span class="plan-status" id="planStatus">Preencha seu plano</span>
-              <div class="plan-total"><strong id="plannedTotal">--</strong><small>matrículas planejadas</small></div>
-              <p class="plan-summary" id="planSummary">Exemplo: 10 matrículas por mês durante 5 meses totalizam 50 matrículas.</p>
+            <div class="plan-overview-item time-remaining">
+              <span>Tempo restante</span>
+              <strong id="daysRemaining">-- dias</strong>
+              <small id="timeBreakdown">Calculando período disponível.</small>
             </div>
+          </div>
+          <div class="pace-section">
+            <div class="pace-head"><span>Sugestão de cadência</span><small>Médias necessárias para alcançar a pretensão até o prazo</small></div>
+            <div class="pace-grid">
+              <div class="pace-card"><span>Por mês</span><strong id="monthlySuggestion">--</strong><small>matrículas/mês</small></div>
+              <div class="pace-card"><span>Por semana</span><strong id="weeklySuggestion">--</strong><small>matrículas/semana</small></div>
+              <div class="pace-card"><span>Por dia</span><strong id="dailySuggestion">--</strong><small>matrículas/dia</small></div>
+              <div class="pace-card featured"><span>Cadência prática</span><strong id="cadenceSuggestion">--</strong><small id="cadenceUnit">dias por matrícula</small></div>
+            </div>
+            <p class="plan-summary" id="planSummary">Ajuste sua pretensão ou a data-limite para atualizar as sugestões.</p>
+            <span class="plan-bonus-note" id="planBonusNote"></span>
           </div>
         </article>
       </section>
@@ -375,7 +379,7 @@
         contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),saleValueText:$("#saleValueText"),
         quantityText:$("#quantityText"),baseText:$("#baseText"),goalText:$("#goalText"),bonusText:$("#bonusText"),
         dateText:$("#dateText"),progressTrack:$("#progressTrack"),progressFill:$("#progressFill"),progressText:$("#progressText"),progressDetail:$("#progressDetail"),
-        monthlyPace:$("#monthlyPace"),planDeadline:$("#planDeadline"),planDuration:$("#planDuration"),planTarget:$("#planTarget"),planGoalContext:$("#planGoalContext"),planStatus:$("#planStatus"),plannedTotal:$("#plannedTotal"),planSummary:$("#planSummary"),
+        planTarget:$("#planTarget"),planDeadlineText:$("#planDeadlineText"),daysRemaining:$("#daysRemaining"),timeBreakdown:$("#timeBreakdown"),monthlySuggestion:$("#monthlySuggestion"),weeklySuggestion:$("#weeklySuggestion"),dailySuggestion:$("#dailySuggestion"),cadenceSuggestion:$("#cadenceSuggestion"),cadenceUnit:$("#cadenceUnit"),planSummary:$("#planSummary"),planBonusNote:$("#planBonusNote"),
         totalText:$("#totalText"),bonusRow:$("#bonusRow"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
         loginModal:$("#loginModal"),loginPanel:$("#loginPanel"),loginForm:$("#loginForm"),adminPassword:$("#adminPassword"),
         passwordError:$("#passwordError"),adminModal:$("#adminModal"),adminForm:$("#adminForm"),adminProduct:$("#adminProduct"),
@@ -399,7 +403,7 @@
       var sellerInputs={};
       var adminDraft=null;
       var adminEditing=null;
-      Object.keys(products).forEach(function(key){var p=products[key];sellerInputs[key]={quantity:p.initialSales,goal:p.goal,date:p.closingDate,monthlyPace:""}});
+      Object.keys(products).forEach(function(key){var p=products[key];sellerInputs[key]={quantity:p.initialSales,goal:p.goal,date:p.closingDate}});
       function numberOnly(value){return new Intl.NumberFormat("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}).format(value)}
       function setMoney(element,value){
         var currency=element.querySelector(".currency");
@@ -409,6 +413,7 @@
         currency.textContent="R$";amount.textContent=numberOnly(value);
       }
       function shortDate(value){if(!value||!/^\d{4}-\d{2}-\d{2}$/.test(value))return"--/--";var parts=value.split("-");return parts[2]+"/"+parts[1]}
+      function fullDate(value){if(!value||!/^\d{4}-\d{2}-\d{2}$/.test(value))return"--/--/----";var parts=value.split("-");return parts[2]+"/"+parts[1]+"/"+parts[0]}
       function parseLocalDate(value){
         if(!value||!/^\d{4}-\d{2}-\d{2}$/.test(value))return null;
         var parts=value.split("-").map(Number);var date=new Date(parts[0],parts[1]-1,parts[2],12,0,0,0);
@@ -421,52 +426,60 @@
         var calendarMonths=(deadline.getFullYear()-start.getFullYear())*12+(deadline.getMonth()-start.getMonth());
         return Math.max(1,calendarMonths);
       }
+      function daysUntilDeadline(value,referenceDate){
+        var deadline=parseLocalDate(value);if(!deadline)return-1;
+        var now=referenceDate?new Date(referenceDate):new Date();var start=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12,0,0,0);
+        return Math.ceil((deadline-start)/(24*60*60*1000));
+      }
+      function rate(value){return new Intl.NumberFormat("pt-BR",{maximumFractionDigits:1}).format(value)}
       function enrollmentWord(value){return value===1?"matrícula":"matrículas"}
       function monthWord(value){return value===1?"mês":"meses"}
-      function renderPlanning(quantity,goal,date,monthlyPace){
-        var plannedMonths=monthsUntilDeadline(date);el.planDeadline.value=date;
-        el.planTarget.textContent=quantity;el.planGoalContext.textContent="Meta para bônus: "+goal+" "+enrollmentWord(goal)+" até "+shortDate(date)+".";
-        el.planStatus.className="plan-status";
-        if(plannedMonths<1){
-          el.planDuration.textContent="A data-limite já passou.";el.plannedTotal.textContent="--";el.planStatus.textContent="Revise a data-limite";
-          el.planSummary.textContent="Escolha uma data-limite igual ou posterior a hoje para calcular o período.";return;
+      function renderPlanning(quantity,goal,date){
+        var months=monthsUntilDeadline(date);var days=daysUntilDeadline(date);el.planTarget.textContent=quantity;el.planDeadlineText.textContent=fullDate(date);
+        if(days<0){
+          el.daysRemaining.textContent="Prazo encerrado";el.timeBreakdown.textContent="Escolha uma data-limite igual ou posterior a hoje.";
+          [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.cadenceSuggestion].forEach(function(item){item.textContent="--"});el.cadenceUnit.textContent="dias por matrícula";
+          el.planSummary.textContent="Não é possível calcular o ritmo porque a data-limite já passou.";el.planBonusNote.textContent="";return;
         }
-        el.planDuration.textContent=plannedMonths+" "+monthWord(plannedMonths)+" de planejamento até "+shortDate(date)+".";
-        if(monthlyPace<1){
-          el.plannedTotal.textContent="--";el.planStatus.textContent="Preencha seu plano";
-          el.planSummary.textContent="Informe quantas matrículas pretende fazer por mês. O período já está vinculado à data-limite.";return;
+        var planningDays=Math.max(1,days);var weeks=planningDays/7;
+        el.daysRemaining.textContent=days===0?"Hoje":days+" dias";
+        el.timeBreakdown.textContent=months+" "+monthWord(months)+" de calendário • "+rate(weeks)+" semanas";
+        if(quantity<1){
+          [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.cadenceSuggestion].forEach(function(item){item.textContent="0"});el.cadenceUnit.textContent="dias por matrícula";
+          el.planSummary.textContent="Informe uma quantidade em “Pretendo fazer” para gerar as sugestões.";el.planBonusNote.textContent="";return;
         }
-        var plannedTotal=monthlyPace*plannedMonths;var difference=plannedTotal-quantity;var bonusDifference=plannedTotal-goal;
-        var opening=monthlyPace+" "+enrollmentWord(monthlyPace)+" por mês durante "+plannedMonths+" "+monthWord(plannedMonths)+", até "+shortDate(date)+", totalizam "+plannedTotal+" "+enrollmentWord(plannedTotal)+". ";
-        el.plannedTotal.textContent=plannedTotal;
-        if(difference===0){el.planStatus.classList.add("aligned");el.planStatus.textContent="Plano alinhado";el.planSummary.textContent=opening+"Seu plano alcança exatamente o que você pretende fazer."}
-        else if(difference<0){el.planStatus.classList.add("under");el.planStatus.textContent="Plano abaixo da pretensão";el.planSummary.textContent=opening+"Ainda faltam "+Math.abs(difference)+" "+enrollmentWord(Math.abs(difference))+" para alcançar sua pretensão."}
-        else{el.planStatus.classList.add("over");el.planStatus.textContent="Plano acima da pretensão";el.planSummary.textContent=opening+"Seu plano supera sua pretensão em "+difference+" "+enrollmentWord(difference)+"."}
-        if(bonusDifference>=0)el.planSummary.textContent+=" Ele também atinge a meta do bônus.";
-        else el.planSummary.textContent+=" Para a meta do bônus, ainda faltariam "+Math.abs(bonusDifference)+" "+enrollmentWord(Math.abs(bonusDifference))+".";
+        var monthly=quantity/months;var weekly=quantity*7/planningDays;var daily=quantity/planningDays;var cadence=planningDays/quantity;
+        el.monthlySuggestion.textContent=rate(monthly);el.weeklySuggestion.textContent=rate(weekly);el.dailySuggestion.textContent=rate(daily);
+        if(cadence>=1){el.cadenceSuggestion.textContent="1 a cada "+rate(cadence);el.cadenceUnit.textContent=cadence===1?"dia":"dias"}
+        else{el.cadenceSuggestion.textContent=rate(1/cadence);el.cadenceUnit.textContent="matrículas por dia"}
+        el.planSummary.textContent="Para alcançar "+quantity+" "+enrollmentWord(quantity)+" até "+shortDate(date)+", mantenha em média "+rate(daily)+" por dia, "+rate(weekly)+" por semana ou "+rate(monthly)+" por mês.";
+        if(quantity>=goal)el.planBonusNote.textContent="Sua pretensão já cobre a meta do bônus de "+goal+" "+enrollmentWord(goal)+".";
+        else{
+          var bonusDaily=goal/planningDays;var bonusWeekly=goal*7/planningDays;var bonusMonthly=goal/months;
+          el.planBonusNote.textContent="Para a meta do bônus de "+goal+", o ritmo seria "+rate(bonusDaily)+" por dia, "+rate(bonusWeekly)+" por semana ou "+rate(bonusMonthly)+" por mês.";
+        }
       }
       function render(){
         var p=products[active];
         var quantity=Math.max(0,Math.floor(safeNumber(el.quantity.value,0)));
         var goal=Math.max(1,Math.floor(safeNumber(el.goal.value,p.goal)));
         var date=el.date.value||p.closingDate;
-        var monthlyPace=Math.max(0,Math.floor(safeNumber(el.monthlyPace.value,0)));
         var base=quantity*p.saleValue;
         var earned=quantity>=goal?p.bonus:0;
         var total=base+earned;
         var progress=Math.min(100,Math.round(quantity/goal*100));
-        sellerInputs[active]={quantity:quantity,goal:goal,date:date,monthlyPace:el.monthlyPace.value};
+        sellerInputs[active]={quantity:quantity,goal:goal,date:date};
         el.pageTitle.textContent="Projeção de Matrículas";
         el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
         setMoney(el.saleValueText,p.saleValue);el.quantityText.textContent=quantity;setMoney(el.baseText,base);
         el.goalText.textContent=goal+" "+enrollmentWord(goal);setMoney(el.bonusText,p.bonus);el.dateText.textContent=shortDate(date);setMoney(el.totalText,total);
         el.progressFill.style.width=progress+"%";el.progressText.textContent=quantity>=goal?"META DO BÔNUS ATINGIDA":progress+"% DA META DO BÔNUS";el.progressDetail.textContent=quantity+" pretendidas • meta "+goal;el.progressTrack.setAttribute("aria-valuenow",progress);
         el.bonusRow.classList.toggle("earned",earned>0);
-        renderPlanning(quantity,goal,date,monthlyPace);
+        renderPlanning(quantity,goal,date);
       }
       function loadProduct(key){
         active=key;localStorage.setItem(ACTIVE_KEY,key);
-        var inputs=sellerInputs[key];el.quantity.value=inputs.quantity;el.goal.value=inputs.goal;el.date.value=inputs.date;el.monthlyPace.value=inputs.monthlyPace||"";
+        var inputs=sellerInputs[key];el.quantity.value=inputs.quantity;el.goal.value=inputs.goal;el.date.value=inputs.date;
         $$(".product-btn").forEach(function(btn){var on=btn.dataset.product===active;btn.classList.toggle("active",on);btn.setAttribute("aria-current",on?"page":"false")});
         render();
       }
@@ -508,7 +521,7 @@
       function closeAdmin(){hideModal(el.adminModal);adminDraft=null;adminEditing=null;el.adminAccess.focus()}
       var toastTimer;
       function showToast(){clearTimeout(toastTimer);el.toast.classList.add("show");toastTimer=setTimeout(function(){el.toast.classList.remove("show")},2600)}
-      [el.quantity,el.goal,el.date,el.monthlyPace].forEach(function(input){input.addEventListener("input",render)});
+      [el.quantity,el.goal,el.date].forEach(function(input){input.addEventListener("input",render)});
       $$(".product-btn").forEach(function(btn){btn.addEventListener("click",function(){loadProduct(btn.dataset.product)})});
       el.menuDots.addEventListener("click",function(){
         el.sidebar.classList.remove("menu-pulse");void el.sidebar.offsetWidth;el.sidebar.classList.add("menu-pulse");
