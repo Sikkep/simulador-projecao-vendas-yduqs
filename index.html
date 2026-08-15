@@ -125,9 +125,27 @@
     .total{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-top:0;padding:31px 0 3px;border:0;border-radius:0;background:transparent;box-shadow:none}.total-copy{display:block}.total-label{color:#91AABD;font-size:10px;font-weight:850;line-height:1.35;letter-spacing:.12em}.total-copy small{display:block;margin-top:8px;color:#607F98;font-size:11px;line-height:1.45}.total-copy small strong{color:#91ACC0}.total-value{color:#39D0DA;font-size:clamp(42px,3.65vw,52px);font-weight:900;text-shadow:0 0 35px rgba(42,196,210,.13)}.total-value .currency{color:#67DCE5}
     .footer{margin-top:22px;padding-top:14px;border-top:1px solid rgba(132,174,214,.13)}
     .modal-bg{background:rgba(10,16,43,.82)}.modal{border-color:#3A4F7C;background:linear-gradient(145deg,#223362,#17234E)}.close{border-color:#3B507D;background:#1B2A57}.admin-profile-tab,.admin-product-tab{border-color:#3A4E7A;background:#152048}.admin-profile-tab.active,.admin-product-tab.active{border-color:rgba(27,174,190,.55);background:rgba(27,174,190,.16)}.btn-secondary{border-color:#3A507E;background:#18254F}.btn-primary{border-color:#2AC3D1;background:#1BAEBE;color:#17234E}.toast{background:#183B58}
-    @media(max-width:1050px){.main{padding-right:26px;padding-left:310px}.workspace{grid-template-columns:1fr}.total-value{font-size:clamp(42px,5.2vw,50px)}}
-    @media(max-width:760px){.header{height:64px}.sidebar{top:64px}.main{padding:90px 16px 36px 246px}.hero h1{font-size:34px}.context-bar{display:grid;grid-template-columns:1fr;padding-bottom:12px}.context-item,.context-item:first-child,.context-item:last-child{padding:10px 0;border-right:0;border-bottom:1px solid rgba(104,160,205,.11)}.context-item:last-child{border-bottom:0}.secondary-fields{grid-template-columns:1fr}.input-card,.result-card{padding:22px}.projection{grid-template-columns:1fr;gap:11px;align-items:start;padding:22px 0}.metric-value{justify-content:flex-start;text-align:left}.total{align-items:flex-start;flex-direction:column;gap:14px;padding-top:27px}.total-value{justify-content:flex-start;font-size:42px;text-align:left}.progress-meta{align-items:flex-start;flex-direction:column;gap:5px}}
-    @media(max-width:430px){.main{padding:86px 10px 30px 208px}.hero h1{font-size:28px}.input-card,.result-card{padding:16px;border-radius:14px}.card-head h2{font-size:17px}.metric-value,.metric-partial .metric-value{font-size:25px}.total-value{font-size:33px}.footer-actions{align-items:flex-end;flex-direction:column}.footer-admin{align-self:flex-end}}
+    /* Tipografia de alta legibilidade */
+    body{font-family:"Segoe UI Variable Text","Segoe UI",Roboto,Arial,sans-serif;font-size:16px;line-height:1.5}
+    .hero h1{font-size:clamp(34px,3.5vw,48px);font-weight:700;line-height:1.12;letter-spacing:-.028em}
+    .side-title strong{font-weight:700}.side-title small,.menu-label{color:#8EA7C1;font-weight:650;letter-spacing:.11em}.product-btn{font-weight:600}
+    .context-item small{font-size:9px;font-weight:650;letter-spacing:.09em}.context-item strong{font-size:13px;font-weight:600}
+    .card-head h2{font-size:21px;font-weight:700;letter-spacing:-.018em}.section-kicker{color:#7EA8C8;font-size:9px;font-weight:650;letter-spacing:.11em}
+    .field label{color:#C2D0DE;font-size:12px;font-weight:650}.input-wrap input{font-size:16px;font-weight:650}.affix{color:#91A9C2;font-size:11px;font-weight:600}.helper{color:#91A6BC;font-size:11px}
+    .progress-meta strong{font-size:11px;font-weight:700;letter-spacing:.06em}.progress-meta span{font-size:12px;font-weight:500}
+    .metric-label,.total-label{color:#B7C7D8;font-size:11px;font-weight:650;letter-spacing:.075em}.metric-copy small,.total-copy small{color:#9EB2C7;font-size:12px}.metric-copy small strong,.total-copy small strong{color:#C2D1DF;font-weight:650}
+    .metric-value{font-weight:750}.metric-partial .metric-value{font-weight:750}.total-value{font-weight:750}.metric-value .currency,.total-value .currency{font-weight:450}
+    .footer{color:#91A4B8;font-size:11px}.footer-status,.footer-admin{font-weight:600}
+    .kicker,.admin-section-label{font-weight:650;letter-spacing:.1em}.modal-head h2{font-weight:700}.admin-profile-tab,.admin-product-tab{font-weight:600}.btn-secondary,.btn-primary{font-weight:650}
+    /* Planejamento mensal */
+    .planning-card{grid-column:1/-1;padding:30px}.planning-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}.planning-head .card-head{margin:0}.planning-note{max-width:360px;margin:0;color:#9EB2C7;font-size:12px;line-height:1.55;text-align:right}
+    .planning-layout{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(440px,1.28fr);gap:34px;align-items:stretch}.planning-overview{display:grid;grid-template-columns:minmax(170px,.72fr) minmax(190px,1fr);gap:18px;align-items:stretch}.planning-overview .field{margin:0}.planning-overview .helper{max-width:250px}
+    .plan-highlight{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:4px 0 4px 22px;border-left:2px solid #1BAEBE}.plan-highlight>span{color:#91A9C2;font-size:10px;font-weight:650;letter-spacing:.09em;text-transform:uppercase}.plan-pace{display:flex;align-items:baseline;gap:8px;margin-top:5px;color:#46D0DC;font-size:clamp(30px,3vw,42px);font-weight:750;line-height:1;font-variant-numeric:tabular-nums}.plan-pace small{color:#C2D1DF;font-size:12px;font-weight:500;letter-spacing:0}.plan-summary{margin:10px 0 0;color:#AABCCF;font-size:12px;line-height:1.55}
+    .plan-schedule{min-width:0;padding-left:30px;border-left:1px solid rgba(132,174,214,.18)}.plan-schedule-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:13px}.plan-schedule-head span{color:#B7C7D8;font-size:12px;font-weight:650}.plan-schedule-head strong{color:#73DCE5;font-size:11px;font-weight:650}
+    .plan-months{display:grid;grid-template-columns:repeat(auto-fit,minmax(122px,1fr));gap:9px}.plan-month{min-width:0;padding:13px 14px;border:1px solid rgba(132,174,214,.16);border-radius:11px;background:rgba(17,29,66,.48)}.plan-month>span{display:block;color:#91A9C2;font-size:9px;font-weight:650;letter-spacing:.08em;text-transform:uppercase}.plan-month strong{display:block;margin-top:5px;color:#F3F7FC;font-size:23px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}.plan-month small{display:block;margin-top:4px;color:#A9BBCD;font-size:10px}.plan-month em{display:block;margin-top:8px;color:#7F9AB6;font-size:9px;font-style:normal}.plan-empty{grid-column:1/-1;padding:18px;border:1px dashed rgba(132,174,214,.24);border-radius:11px;color:#A9BBCD;font-size:12px;text-align:center}
+    @media(max-width:1180px){.main{padding-right:26px;padding-left:310px}.workspace{grid-template-columns:1fr}.total-value{font-size:clamp(42px,5.2vw,50px)}.planning-layout{grid-template-columns:1fr}.plan-schedule{padding:24px 0 0;border-top:1px solid rgba(132,174,214,.18);border-left:0}}
+    @media(max-width:760px){.header{height:64px}.sidebar{top:64px}.main{padding:90px 16px 36px 246px}.hero h1{font-size:34px}.context-bar{display:grid;grid-template-columns:1fr;padding-bottom:12px}.context-item,.context-item:first-child,.context-item:last-child{padding:10px 0;border-right:0;border-bottom:1px solid rgba(104,160,205,.11)}.context-item:last-child{border-bottom:0}.secondary-fields{grid-template-columns:1fr}.input-card,.result-card,.planning-card{padding:22px}.projection{grid-template-columns:1fr;gap:11px;align-items:start;padding:22px 0}.metric-value{justify-content:flex-start;text-align:left}.total{align-items:flex-start;flex-direction:column;gap:14px;padding-top:27px}.total-value{justify-content:flex-start;font-size:42px;text-align:left}.progress-meta{align-items:flex-start;flex-direction:column;gap:5px}.planning-head{align-items:flex-start;flex-direction:column;gap:9px}.planning-note{text-align:left}.planning-overview{grid-template-columns:1fr}.plan-highlight{padding:18px 0 0;border-top:1px solid rgba(132,174,214,.18);border-left:0}}
+    @media(max-width:430px){.main{padding:86px 10px 30px 208px}.hero h1{font-size:28px}.input-card,.result-card,.planning-card{padding:16px;border-radius:14px}.card-head h2{font-size:18px}.metric-value,.metric-partial .metric-value{font-size:25px}.total-value{font-size:33px}.footer-actions{align-items:flex-end;flex-direction:column}.footer-admin{align-self:flex-end}.plan-schedule-head{align-items:flex-start;flex-direction:column;gap:4px}.plan-months{grid-template-columns:1fr}.plan-pace{font-size:30px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -182,7 +200,7 @@
   <main class="main">
     <div class="wrap">
       <div class="hero">
-        <h1 id="pageTitle">Projeção de Vendas</h1>
+        <h1 id="pageTitle">Projeção de Matrículas</h1>
       </div>
 
       <section class="context-bar" aria-label="Contexto da simulação">
@@ -195,18 +213,18 @@
         <article class="card input-card">
           <div class="card-head"><div><span class="section-kicker">SIMULAÇÃO COMERCIAL</span><h2>Suas expectativas</h2></div></div>
           <div class="field quantity-field">
-            <label for="quantity">Quantidade de vendas</label>
-            <div class="input-wrap"><input id="quantity" type="number" min="0" step="1" value="18" inputmode="numeric"><span class="affix">vendas</span></div>
+            <label for="quantity">Quantidade de matrículas</label>
+            <div class="input-wrap"><input id="quantity" type="number" min="0" step="1" value="18" inputmode="numeric"><span class="affix">matrículas</span></div>
             <small class="helper">Informe quantas matrículas você espera realizar.</small>
             <div class="progress-block" aria-live="polite">
               <div class="progress-track" role="progressbar" aria-label="Percentual da meta atingida" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60" id="progressTrack"><span id="progressFill"></span></div>
-              <div class="progress-meta"><strong id="progressText">60% DA META ATINGIDA</strong><span id="progressDetail">18 de 30 vendas</span></div>
+              <div class="progress-meta"><strong id="progressText">60% DA META ATINGIDA</strong><span id="progressDetail">18 de 30 matrículas</span></div>
             </div>
           </div>
           <div class="secondary-fields">
             <div class="field">
               <label for="goal">Meta</label>
-              <div class="input-wrap"><input id="goal" type="number" min="1" step="1" value="30" inputmode="numeric"><span class="affix">vendas</span></div>
+              <div class="input-wrap"><input id="goal" type="number" min="1" step="1" value="30" inputmode="numeric"><span class="affix">matrículas</span></div>
             </div>
             <div class="field">
               <label for="date">Dia/Mês</label>
@@ -219,21 +237,46 @@
           <div class="card-head"><div><span class="section-kicker">REMUNERAÇÃO VARIÁVEL</span><h2>Resumo da Projeção</h2></div></div>
           <div class="projection-list">
             <div class="projection metric-unit">
-              <span class="metric-copy"><span class="metric-label">VALOR UNITÁRIO POR VENDA</span><small>Valor considerado para cada matrícula</small></span>
+              <span class="metric-copy"><span class="metric-label">VALOR UNITÁRIO POR MATRÍCULA</span><small>Valor considerado para cada matrícula</small></span>
               <strong class="metric-value" id="saleValueText"><span class="currency">R$</span><span class="amount">180,00</span></strong>
             </div>
             <div class="projection metric-partial">
-              <span class="metric-copy"><span class="metric-label">PROJEÇÃO DE GANHOS PARCIAIS</span><small>Com <strong id="quantityText">18</strong> vendas no período</small></span>
+              <span class="metric-copy"><span class="metric-label">PROJEÇÃO DE GANHOS PARCIAIS</span><small>Com <strong id="quantityText">18</strong> matrículas no período</small></span>
               <strong class="metric-value" id="baseText"><span class="currency">R$</span><span class="amount">3.240,00</span></strong>
             </div>
             <div class="projection" id="bonusRow">
-              <span class="metric-copy"><span class="metric-label">GANHOS ADICIONAIS NA META</span><small>Meta configurada em <strong id="goalText">30 vendas</strong></small></span>
+              <span class="metric-copy"><span class="metric-label">GANHOS ADICIONAIS NA META</span><small>Meta configurada em <strong id="goalText">30 matrículas</strong></small></span>
               <strong class="metric-value" id="bonusText"><span class="currency">R$</span><span class="amount">1.200,00</span></strong>
             </div>
           </div>
           <div class="total">
             <span class="total-copy"><span class="total-label">REMUNERAÇÃO TOTAL PROJETADA</span><small>Projeção calculada até <strong id="dateText">31/08</strong></small></span>
             <span class="total-value" id="totalText"><span class="currency">R$</span><span class="amount">3.240,00</span></span>
+          </div>
+        </article>
+
+        <article class="card planning-card" aria-live="polite">
+          <div class="planning-head">
+            <div class="card-head"><div><span class="section-kicker">PLANEJAMENTO MENSAL</span><h2>Ritmo para atingir a meta</h2></div></div>
+            <p class="planning-note">A distribuição é recalculada automaticamente quando a meta, o início ou a data de fechamento mudam.</p>
+          </div>
+          <div class="planning-layout">
+            <div class="planning-overview">
+              <div class="field">
+                <label for="planningStart">Início do planejamento</label>
+                <div class="input-wrap"><input id="planningStart" type="date"></div>
+                <small class="helper">Escolha quando o ciclo mensal começa.</small>
+              </div>
+              <div class="plan-highlight">
+                <span>Média mensal necessária</span>
+                <strong class="plan-pace"><span id="planPaceValue">--</span><small id="planPaceUnit">matrículas/mês</small></strong>
+                <p class="plan-summary" id="planSummary">Informe um período válido para gerar o planejamento.</p>
+              </div>
+            </div>
+            <div class="plan-schedule">
+              <div class="plan-schedule-head"><span>Distribuição sugerida</span><strong id="planPeriod">Aguardando período</strong></div>
+              <div class="plan-months" id="planMonths"><div class="plan-empty">O planejamento aparecerá aqui.</div></div>
+            </div>
           </div>
         </article>
       </section>
@@ -292,8 +335,8 @@
           </div>
           <div class="admin-banner">Editando parâmetros de <strong id="adminProduct">Consultor • Graduação</strong></div>
           <div class="form-grid">
-            <div class="field"><label for="adminSaleValue">Valor de cada venda</label><div class="input-wrap"><input id="adminSaleValue" type="number" min="0" step="0.01" required inputmode="decimal"><span class="affix">R$</span></div></div>
-            <div class="field"><label for="adminGoal">Quantidade da meta</label><div class="input-wrap"><input id="adminGoal" type="number" min="1" step="1" required inputmode="numeric"><span class="affix">vendas</span></div></div>
+            <div class="field"><label for="adminSaleValue">Valor de cada matrícula</label><div class="input-wrap"><input id="adminSaleValue" type="number" min="0" step="0.01" required inputmode="decimal"><span class="affix">R$</span></div></div>
+            <div class="field"><label for="adminGoal">Quantidade da meta</label><div class="input-wrap"><input id="adminGoal" type="number" min="1" step="1" required inputmode="numeric"><span class="affix">matrículas</span></div></div>
             <div class="field"><label for="adminBonus">Adicional ao bater a meta</label><div class="input-wrap"><input id="adminBonus" type="number" min="0" step="0.01" required inputmode="decimal"><span class="affix">R$</span></div></div>
             <div class="field"><label for="adminDate">Data de fechamento</label><div class="input-wrap"><input id="adminDate" type="date" required></div></div>
           </div>
@@ -326,6 +369,7 @@
         contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),saleValueText:$("#saleValueText"),
         quantityText:$("#quantityText"),baseText:$("#baseText"),goalText:$("#goalText"),bonusText:$("#bonusText"),
         dateText:$("#dateText"),progressTrack:$("#progressTrack"),progressFill:$("#progressFill"),progressText:$("#progressText"),progressDetail:$("#progressDetail"),
+        planningStart:$("#planningStart"),planPaceValue:$("#planPaceValue"),planPaceUnit:$("#planPaceUnit"),planSummary:$("#planSummary"),planPeriod:$("#planPeriod"),planMonths:$("#planMonths"),
         totalText:$("#totalText"),bonusRow:$("#bonusRow"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
         loginModal:$("#loginModal"),loginPanel:$("#loginPanel"),loginForm:$("#loginForm"),adminPassword:$("#adminPassword"),
         passwordError:$("#passwordError"),adminModal:$("#adminModal"),adminForm:$("#adminForm"),adminProduct:$("#adminProduct"),
@@ -334,6 +378,7 @@
       };
       function cloneDefaults(){return JSON.parse(JSON.stringify(defaults))}
       function safeNumber(value,fallback){var n=Number(value);return Number.isFinite(n)&&n>=0?n:(fallback||0)}
+      function todayISO(){var now=new Date();return new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10)}
       function loadProducts(){
         try{
           var stored=JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -349,7 +394,7 @@
       var sellerInputs={};
       var adminDraft=null;
       var adminEditing=null;
-      Object.keys(products).forEach(function(key){var p=products[key];sellerInputs[key]={quantity:p.initialSales,goal:p.goal,date:p.closingDate}});
+      Object.keys(products).forEach(function(key){var p=products[key];sellerInputs[key]={quantity:p.initialSales,goal:p.goal,date:p.closingDate,planningStart:todayISO()}});
       function numberOnly(value){return new Intl.NumberFormat("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}).format(value)}
       function setMoney(element,value){
         var currency=element.querySelector(".currency");
@@ -359,26 +404,65 @@
         currency.textContent="R$";amount.textContent=numberOnly(value);
       }
       function shortDate(value){if(!value||!/^\d{4}-\d{2}-\d{2}$/.test(value))return"--/--";var parts=value.split("-");return parts[2]+"/"+parts[1]}
+      function parseISODate(value){
+        if(!value||!/^\d{4}-\d{2}-\d{2}$/.test(value))return null;
+        var parts=value.split("-").map(Number);var date=new Date(Date.UTC(parts[0],parts[1]-1,parts[2]));
+        return date.getUTCFullYear()===parts[0]&&date.getUTCMonth()===parts[1]-1&&date.getUTCDate()===parts[2]?date:null;
+      }
+      function addMonthsClamped(date,amount){
+        var day=date.getUTCDate();var target=new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth()+amount,1));
+        var lastDay=new Date(Date.UTC(target.getUTCFullYear(),target.getUTCMonth()+1,0)).getUTCDate();target.setUTCDate(Math.min(day,lastDay));return target;
+      }
+      function formatPlanDate(date){return String(date.getUTCDate()).padStart(2,"0")+"/"+String(date.getUTCMonth()+1).padStart(2,"0")}
+      function enrollmentWord(value){return value===1?"matrícula":"matrículas"}
+      function clearPlanning(){while(el.planMonths.firstChild)el.planMonths.removeChild(el.planMonths.firstChild)}
+      function renderPlanning(goal,startValue,endValue){
+        var start=parseISODate(startValue);var end=parseISODate(endValue);clearPlanning();
+        if(!start||!end||end<start){
+          el.planningStart.setAttribute("aria-invalid","true");el.planPaceValue.textContent="--";el.planPaceUnit.textContent="matrículas/mês";
+          el.planPeriod.textContent="Revise o período";el.planSummary.textContent="A data de fechamento precisa ser igual ou posterior ao início do planejamento.";
+          var empty=document.createElement("div");empty.className="plan-empty";empty.textContent="Ajuste as datas para visualizar a distribuição mensal.";el.planMonths.appendChild(empty);return;
+        }
+        el.planningStart.removeAttribute("aria-invalid");
+        var monthLength=30.4375*24*60*60*1000;var months=Math.max(1,Math.ceil((end-start)/monthLength));
+        var average=goal/months;var base=Math.floor(goal/months);var remainder=goal%months;
+        el.planPaceValue.textContent=new Intl.NumberFormat("pt-BR",{maximumFractionDigits:1}).format(average);
+        el.planPaceUnit.textContent=average===1?"matrícula/mês":"matrículas/mês";
+        el.planPeriod.textContent=months+(months===1?" mês disponível":" meses disponíveis");
+        el.planSummary.textContent="Para alcançar "+goal+" "+enrollmentWord(goal)+" até "+formatPlanDate(end)+", mantenha esta média mensal.";
+        var fragment=document.createDocumentFragment();
+        for(var index=0;index<months;index++){
+          var periodStart=addMonthsClamped(start,index);var nextStart=addMonthsClamped(start,index+1);var periodEnd=index===months-1?end:new Date(nextStart.getTime()-86400000);
+          if(periodEnd>end)periodEnd=end;
+          var target=base+(index<remainder?1:0);var item=document.createElement("div");item.className="plan-month";
+          var label=document.createElement("span");label.textContent="MÊS "+(index+1);var value=document.createElement("strong");value.textContent=target;
+          var unit=document.createElement("small");unit.textContent=enrollmentWord(target);var range=document.createElement("em");range.textContent=formatPlanDate(periodStart)+" a "+formatPlanDate(periodEnd);
+          item.appendChild(label);item.appendChild(value);item.appendChild(unit);item.appendChild(range);fragment.appendChild(item);
+        }
+        el.planMonths.appendChild(fragment);
+      }
       function render(){
         var p=products[active];
         var quantity=Math.max(0,Math.floor(safeNumber(el.quantity.value,0)));
         var goal=Math.max(1,Math.floor(safeNumber(el.goal.value,p.goal)));
         var date=el.date.value||p.closingDate;
+        var planningStart=el.planningStart.value||todayISO();
         var base=quantity*p.saleValue;
         var earned=quantity>=goal?p.bonus:0;
         var total=base+earned;
         var progress=Math.min(100,Math.round(quantity/goal*100));
-        sellerInputs[active]={quantity:quantity,goal:goal,date:date};
-        el.pageTitle.textContent="Projeção de Vendas";
+        sellerInputs[active]={quantity:quantity,goal:goal,date:date,planningStart:planningStart};
+        el.pageTitle.textContent="Projeção de Matrículas";
         el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
         setMoney(el.saleValueText,p.saleValue);el.quantityText.textContent=quantity;setMoney(el.baseText,base);
-        el.goalText.textContent=goal+" vendas";setMoney(el.bonusText,p.bonus);el.dateText.textContent=shortDate(date);setMoney(el.totalText,total);
-        el.progressFill.style.width=progress+"%";el.progressText.textContent=progress+"% DA META ATINGIDA";el.progressDetail.textContent=quantity+" de "+goal+" vendas";el.progressTrack.setAttribute("aria-valuenow",progress);
+        el.goalText.textContent=goal+" "+enrollmentWord(goal);setMoney(el.bonusText,p.bonus);el.dateText.textContent=shortDate(date);setMoney(el.totalText,total);
+        el.progressFill.style.width=progress+"%";el.progressText.textContent=progress+"% DA META ATINGIDA";el.progressDetail.textContent=quantity+" de "+goal+" matrículas";el.progressTrack.setAttribute("aria-valuenow",progress);
         el.bonusRow.classList.toggle("earned",earned>0);
+        renderPlanning(goal,planningStart,date);
       }
       function loadProduct(key){
         active=key;localStorage.setItem(ACTIVE_KEY,key);
-        var inputs=sellerInputs[key];el.quantity.value=inputs.quantity;el.goal.value=inputs.goal;el.date.value=inputs.date;
+        var inputs=sellerInputs[key];el.quantity.value=inputs.quantity;el.goal.value=inputs.goal;el.date.value=inputs.date;el.planningStart.value=inputs.planningStart||todayISO();
         $$(".product-btn").forEach(function(btn){var on=btn.dataset.product===active;btn.classList.toggle("active",on);btn.setAttribute("aria-current",on?"page":"false")});
         render();
       }
@@ -420,7 +504,7 @@
       function closeAdmin(){hideModal(el.adminModal);adminDraft=null;adminEditing=null;el.adminAccess.focus()}
       var toastTimer;
       function showToast(){clearTimeout(toastTimer);el.toast.classList.add("show");toastTimer=setTimeout(function(){el.toast.classList.remove("show")},2600)}
-      [el.quantity,el.goal,el.date].forEach(function(input){input.addEventListener("input",render)});
+      [el.quantity,el.goal,el.date,el.planningStart].forEach(function(input){input.addEventListener("input",render)});
       $$(".product-btn").forEach(function(btn){btn.addEventListener("click",function(){loadProduct(btn.dataset.product)})});
       el.menuDots.addEventListener("click",function(){
         el.sidebar.classList.remove("menu-pulse");void el.sidebar.offsetWidth;el.sidebar.classList.add("menu-pulse");
