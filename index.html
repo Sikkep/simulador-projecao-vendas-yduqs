@@ -287,12 +287,12 @@
             </div>
           </div>
           <div class="pace-section">
-            <div class="pace-head"><span>Sugestão de cadência</span><small>Valores mínimos inteiros para alcançar o objetivo até o prazo</small></div>
+            <div class="pace-head"><span>Sugestão de ritmo</span><small>Valores mínimos inteiros para alcançar o objetivo até o prazo</small></div>
             <div class="pace-grid">
               <div class="pace-card"><span>Por mês</span><strong id="monthlySuggestion">--</strong><small>matrículas/mês</small></div>
               <div class="pace-card"><span>Por semana</span><strong id="weeklySuggestion">--</strong><small>matrículas/semana</small></div>
               <div class="pace-card"><span>Por dia</span><strong id="dailySuggestion">--</strong><small>matrículas/dia</small></div>
-              <div class="pace-card featured"><span>Cadência prática</span><strong id="cadenceSuggestion">--</strong><small id="cadenceUnit">dias por matrícula</small></div>
+              <div class="pace-card featured"><span>Ritmo prático</span><strong id="rhythmSuggestion">--</strong><small id="rhythmUnit">dias por matrícula</small></div>
             </div>
             <p class="plan-summary" id="planSummary">Ajuste seu objetivo ou a data-limite para atualizar as sugestões.</p>
             <span class="plan-prize-note" id="planPrizeNote"></span>
@@ -389,7 +389,7 @@
         contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),saleValueText:$("#saleValueText"),
         quantityText:$("#quantityText"),baseText:$("#baseText"),goalText:$("#goalText"),bonusText:$("#bonusText"),
         dateText:$("#dateText"),progressTrack:$("#progressTrack"),progressFill:$("#progressFill"),progressText:$("#progressText"),progressDetail:$("#progressDetail"),
-        planRemaining:$("#planRemaining"),planTargetContext:$("#planTargetContext"),planDeadlineText:$("#planDeadlineText"),daysRemaining:$("#daysRemaining"),timeBreakdown:$("#timeBreakdown"),monthlySuggestion:$("#monthlySuggestion"),weeklySuggestion:$("#weeklySuggestion"),dailySuggestion:$("#dailySuggestion"),cadenceSuggestion:$("#cadenceSuggestion"),cadenceUnit:$("#cadenceUnit"),planSummary:$("#planSummary"),planPrizeNote:$("#planPrizeNote"),
+        planRemaining:$("#planRemaining"),planTargetContext:$("#planTargetContext"),planDeadlineText:$("#planDeadlineText"),daysRemaining:$("#daysRemaining"),timeBreakdown:$("#timeBreakdown"),monthlySuggestion:$("#monthlySuggestion"),weeklySuggestion:$("#weeklySuggestion"),dailySuggestion:$("#dailySuggestion"),rhythmSuggestion:$("#rhythmSuggestion"),rhythmUnit:$("#rhythmUnit"),planSummary:$("#planSummary"),planPrizeNote:$("#planPrizeNote"),
         totalText:$("#totalText"),bonusRow:$("#bonusRow"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
         loginModal:$("#loginModal"),loginPanel:$("#loginPanel"),loginForm:$("#loginForm"),adminPassword:$("#adminPassword"),
         passwordError:$("#passwordError"),adminModal:$("#adminModal"),adminForm:$("#adminForm"),adminProduct:$("#adminProduct"),
@@ -453,20 +453,20 @@
         el.planRemaining.textContent=remaining;el.planTargetContext.textContent=achieved+" realizadas de um objetivo de "+quantity+".";el.planDeadlineText.textContent=fullDate(date);
         if(days<0){
           el.daysRemaining.textContent="Prazo encerrado";el.timeBreakdown.textContent="Escolha uma data-limite igual ou posterior a hoje.";
-          [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.cadenceSuggestion].forEach(function(item){item.textContent="--"});el.cadenceUnit.textContent="dias por matrícula";
+          [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.rhythmSuggestion].forEach(function(item){item.textContent="--"});el.rhythmUnit.textContent="dias por matrícula";
           el.planSummary.textContent="Não é possível calcular o ritmo porque a data-limite já passou.";el.planPrizeNote.textContent="";return;
         }
         var planningDays=Math.max(1,days);var weeks=planningDays/7;
         el.daysRemaining.textContent=days===0?"Hoje":days+" dias";
         el.timeBreakdown.textContent=rate(weeks)+" "+weekWord(weeks);
         if(remaining<1){
-          [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.cadenceSuggestion].forEach(function(item){item.textContent="0"});el.cadenceUnit.textContent="dias por matrícula";
+          [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.rhythmSuggestion].forEach(function(item){item.textContent="0"});el.rhythmUnit.textContent="dias por matrícula";
           el.planSummary.textContent=quantity<1?"Informe seu objetivo de matrículas para gerar as sugestões.":"Seu objetivo de "+quantity+" "+enrollmentWord(quantity)+" já foi alcançado.";
         }else{
-          var pace=paceFor(remaining,months,planningDays);var cadence=planningDays/remaining;
+          var pace=paceFor(remaining,months,planningDays);var rhythmInterval=planningDays/remaining;
           el.monthlySuggestion.textContent=pace.monthly;el.weeklySuggestion.textContent=pace.weekly;el.dailySuggestion.textContent=pace.daily;
-          if(cadence>=1){var cadenceDays=Math.max(1,Math.floor(cadence));el.cadenceSuggestion.textContent="1 a cada "+cadenceDays;el.cadenceUnit.textContent=cadenceDays===1?"dia":"dias"}
-          else{el.cadenceSuggestion.textContent=pace.daily;el.cadenceUnit.textContent=pace.daily===1?"matrícula por dia":"matrículas por dia"}
+          if(rhythmInterval>=1){var rhythmDays=Math.max(1,Math.floor(rhythmInterval));el.rhythmSuggestion.textContent="1 a cada "+rhythmDays;el.rhythmUnit.textContent=rhythmDays===1?"dia":"dias"}
+          else{el.rhythmSuggestion.textContent=pace.daily;el.rhythmUnit.textContent=pace.daily===1?"matrícula por dia":"matrículas por dia"}
           el.planSummary.textContent="Para fazer as "+remaining+" "+enrollmentWord(remaining)+" restantes e chegar a "+quantity+" até "+shortDate(date)+", o ritmo mínimo inteiro é "+pace.daily+" por dia, "+pace.weekly+" por semana ou "+pace.monthly+" por mês.";
         }
         if(prizeRemaining<1)el.planPrizeNote.textContent="Você já atingiu a meta do prêmio de "+goal+" "+enrollmentWord(goal)+".";
