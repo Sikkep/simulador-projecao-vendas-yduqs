@@ -225,8 +225,8 @@
               </div>
             </div>
             <div class="progress-block" aria-live="polite">
-              <div class="progress-track" role="progressbar" aria-label="Percentual realizado da pretensão pessoal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><span id="progressFill"></span></div>
-              <div class="progress-meta"><strong id="progressText">0% DA PRETENSÃO REALIZADA</strong><span id="progressDetail">0 de 18 matrículas</span></div>
+              <div class="progress-track" role="progressbar" aria-label="Percentual da meta pessoal alcançada" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><span id="progressFill"></span></div>
+              <div class="progress-meta"><strong id="progressText">0% DE META ALCANÇADA</strong><span id="progressDetail">0 de 18 matrículas</span></div>
             </div>
           </div>
           <div class="secondary-fields">
@@ -486,7 +486,7 @@
         el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
         setMoney(el.saleValueText,p.saleValue);el.quantityText.textContent=quantity;setMoney(el.baseText,base);
         el.goalText.textContent=goal+" "+enrollmentWord(goal);setMoney(el.bonusText,p.bonus);el.dateText.textContent=shortDate(date);setMoney(el.totalText,total);
-        el.progressFill.style.width=progress+"%";el.progressText.textContent=quantity>0&&achieved>=quantity?"PRETENSÃO ALCANÇADA":progress+"% DA PRETENSÃO REALIZADA";el.progressDetail.textContent=achieved+" de "+quantity+" matrículas";el.progressTrack.setAttribute("aria-valuenow",progress);
+        el.progressFill.style.width=progress+"%";el.progressText.textContent=progress+"% DE META ALCANÇADA";el.progressDetail.textContent=achieved+" de "+quantity+" matrículas";el.progressTrack.setAttribute("aria-valuenow",progress);
         el.bonusRow.classList.toggle("earned",earned>0);
         renderPlanning(quantity,achieved,goal,date);
       }
