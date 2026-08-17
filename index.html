@@ -444,6 +444,7 @@
         return Math.ceil((deadline-start)/(24*60*60*1000));
       }
       function rate(value){return new Intl.NumberFormat("pt-BR",{maximumFractionDigits:1}).format(value)}
+      function percent(value){return new Intl.NumberFormat("pt-BR",{maximumFractionDigits:2}).format(value)}
       function enrollmentWord(value){return value===1?"matrícula":"matrículas"}
       function monthWord(value){return value===1?"mês":"meses"}
       function paceFor(target,months,days){return{monthly:Math.ceil(target/months),weekly:Math.ceil(target*7/days),daily:Math.ceil(target/days)}}
@@ -480,13 +481,13 @@
         var base=quantity*p.saleValue;
         var earned=quantity>=goal?p.bonus:0;
         var total=base+earned;
-        var progress=quantity>0?Math.min(100,Math.round(achieved/quantity*100)):0;
+        var progress=quantity>0?achieved/quantity*100:0;var visualProgress=Math.min(100,progress);var accessibleProgress=Number(progress.toFixed(2));
         sellerInputs[active]={quantity:quantity,achieved:achieved,goal:goal,date:date};persistTracking();
         el.pageTitle.textContent="Projeção de Matrículas";
         el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
         setMoney(el.saleValueText,p.saleValue);el.quantityText.textContent=quantity;setMoney(el.baseText,base);
         el.goalText.textContent=goal+" "+enrollmentWord(goal);setMoney(el.bonusText,p.bonus);el.dateText.textContent=shortDate(date);setMoney(el.totalText,total);
-        el.progressFill.style.width=progress+"%";el.progressText.textContent=progress+"% DE META ALCANÇADA";el.progressDetail.textContent=achieved+" de "+quantity+" matrículas";el.progressTrack.setAttribute("aria-valuenow",progress);
+        el.progressFill.style.width=visualProgress+"%";el.progressText.textContent=percent(progress)+"% DE META ALCANÇADA";el.progressDetail.textContent=achieved+" de "+quantity+" matrículas";el.progressTrack.setAttribute("aria-valuenow",accessibleProgress);el.progressTrack.setAttribute("aria-valuemax",Math.max(100,accessibleProgress));
         el.bonusRow.classList.toggle("earned",earned>0);
         renderPlanning(quantity,achieved,goal,date);
       }
