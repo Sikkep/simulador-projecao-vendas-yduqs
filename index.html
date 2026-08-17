@@ -116,7 +116,7 @@
     .card{border:1px solid rgba(118,160,205,.12);border-radius:18px;background:rgba(27,41,87,.92);box-shadow:0 24px 75px rgba(5,10,35,.17)}.input-card,.result-card{padding:30px}
     .card-head{margin-bottom:26px}.card-head h2{font-size:20px;font-weight:760;letter-spacing:-.03em}.section-kicker{display:block;margin-bottom:7px;color:#4F7899;font-size:8px;font-weight:900;letter-spacing:.18em}
     .field{margin-bottom:18px}.field label{margin-bottom:8px;color:#B7C8DB;font-size:10px;letter-spacing:.03em}.input-wrap input{height:52px;border-color:rgba(126,168,210,.25);border-radius:9px;background:#121D42;font-size:15px}.input-wrap input:hover{border-color:rgba(27,174,190,.55)}
-    .quantity-field{margin-bottom:25px}.expectation-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.expectation-fields .field{margin:0}.secondary-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.secondary-fields .field{margin:0}.secondary-fields .helper{display:none}.locked-input input{padding-right:76px;border-color:rgba(126,168,210,.25);background:#121D42;cursor:default}.locked-input .affix{color:#91A9C2}
+    .quantity-field{margin-bottom:25px}.expectation-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.expectation-fields .field{margin:0}.secondary-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.secondary-fields .field{margin:0}.secondary-fields .helper{display:none}
     .progress-block{margin-top:22px}.progress-track{height:7px;overflow:hidden;border-radius:999px;background:rgba(127,169,211,.16)}.progress-track span{display:block;width:60%;height:100%;border-radius:inherit;background:#1BAEBE;box-shadow:0 0 20px rgba(27,174,190,.38);transition:width .28s ease}.progress-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:11px}.progress-meta strong{color:#75DFE8;font-size:10px;font-weight:850;letter-spacing:.09em}.progress-meta span{color:#98ADC5;font-size:11px;font-weight:600}
     .result-card{overflow:visible;background:rgba(30,46,94,.94)}.result-card:after{display:none}.projection-list{display:block}
     .projection{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:center;min-height:0;padding:25px 0;border:0;border-bottom:1px solid rgba(92,148,194,.13);border-radius:0;background:transparent}.projection:first-child{padding-top:7px}.projection.earned{border-color:rgba(42,196,210,.28);background:transparent}.projection-number{display:none}
@@ -232,7 +232,7 @@
           <div class="secondary-fields">
             <div class="field">
               <label for="goal">Meta para receber prêmio</label>
-              <div class="input-wrap locked-input"><input id="goal" type="text" value="30" readonly aria-readonly="true"><span class="affix">matrículas</span></div>
+              <div class="input-wrap"><input id="goal" type="number" min="1" step="1" value="30" inputmode="numeric"><span class="affix">matrículas</span></div>
             </div>
             <div class="field">
               <label for="date">Data-limite</label>
@@ -414,8 +414,8 @@
       var adminDraft=null;
       var adminEditing=null;
       var savedTracking={};try{savedTracking=JSON.parse(localStorage.getItem(PERSONAL_KEY))||{}}catch(error){savedTracking={}}
-      Object.keys(products).forEach(function(key){var p=products[key];var saved=savedTracking[key]||{};sellerInputs[key]={quantity:Math.floor(safeNumber(saved.quantity,p.initialSales)),achieved:Math.floor(safeNumber(saved.achieved,0)),goal:p.goal,date:p.closingDate}});
-      function persistTracking(){try{var data={};Object.keys(sellerInputs).forEach(function(key){data[key]={quantity:sellerInputs[key].quantity,achieved:sellerInputs[key].achieved}});localStorage.setItem(PERSONAL_KEY,JSON.stringify(data))}catch(error){}}
+      Object.keys(products).forEach(function(key){var p=products[key];var saved=savedTracking[key]||{};sellerInputs[key]={quantity:Math.floor(safeNumber(saved.quantity,p.initialSales)),achieved:Math.floor(safeNumber(saved.achieved,0)),goal:Math.max(1,Math.floor(safeNumber(saved.goal,p.goal))),date:p.closingDate}});
+      function persistTracking(){try{var data={};Object.keys(sellerInputs).forEach(function(key){data[key]={quantity:sellerInputs[key].quantity,achieved:sellerInputs[key].achieved,goal:sellerInputs[key].goal}});localStorage.setItem(PERSONAL_KEY,JSON.stringify(data))}catch(error){}}
       function numberOnly(value){return new Intl.NumberFormat("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}).format(value)}
       function setMoney(element,value){
         var currency=element.querySelector(".currency");
@@ -446,7 +446,7 @@
       function rate(value){return new Intl.NumberFormat("pt-BR",{maximumFractionDigits:1}).format(value)}
       function percent(value){return new Intl.NumberFormat("pt-BR",{maximumFractionDigits:2}).format(value)}
       function enrollmentWord(value){return value===1?"matrícula":"matrículas"}
-      function monthWord(value){return value===1?"mês":"meses"}
+      function weekWord(value){return value===1?"semana":"semanas"}
       function paceFor(target,months,days){return{monthly:Math.ceil(target/months),weekly:Math.ceil(target*7/days),daily:Math.ceil(target/days)}}
       function renderPlanning(quantity,achieved,goal,date){
         var months=monthsUntilDeadline(date);var days=daysUntilDeadline(date);var remaining=Math.max(0,quantity-achieved);var prizeRemaining=Math.max(0,goal-achieved);
@@ -458,7 +458,7 @@
         }
         var planningDays=Math.max(1,days);var weeks=planningDays/7;
         el.daysRemaining.textContent=days===0?"Hoje":days+" dias";
-        el.timeBreakdown.textContent=months+" "+monthWord(months)+" de calendário • "+rate(weeks)+" semanas";
+        el.timeBreakdown.textContent=rate(weeks)+" "+weekWord(weeks);
         if(remaining<1){
           [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.cadenceSuggestion].forEach(function(item){item.textContent="0"});el.cadenceUnit.textContent="dias por matrícula";
           el.planSummary.textContent=quantity<1?"Informe seu objetivo de matrículas para gerar as sugestões.":"Seu objetivo de "+quantity+" "+enrollmentWord(quantity)+" já foi alcançado.";
@@ -535,7 +535,7 @@
       function closeAdmin(){hideModal(el.adminModal);adminDraft=null;adminEditing=null;el.adminAccess.focus()}
       var toastTimer;
       function showToast(){clearTimeout(toastTimer);el.toast.classList.add("show");toastTimer=setTimeout(function(){el.toast.classList.remove("show")},2600)}
-      [el.quantity,el.achieved,el.date].forEach(function(input){input.addEventListener("input",render)});
+      [el.quantity,el.achieved,el.goal,el.date].forEach(function(input){input.addEventListener("input",render)});
       $$(".product-btn").forEach(function(btn){btn.addEventListener("click",function(){loadProduct(btn.dataset.product)})});
       el.menuDots.addEventListener("click",function(){
         el.sidebar.classList.remove("menu-pulse");void el.sidebar.offsetWidth;el.sidebar.classList.add("menu-pulse");
