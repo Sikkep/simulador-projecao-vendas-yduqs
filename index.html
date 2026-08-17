@@ -145,13 +145,53 @@
     @media(max-width:1240px){.main{padding-right:26px;padding-left:310px}.workspace{grid-template-columns:1fr}.total-value{font-size:clamp(42px,5.2vw,50px)}.plan-overview{grid-template-columns:1fr 1.2fr}.time-remaining{grid-column:1/-1}.pace-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:760px){.header{height:64px}.sidebar{top:64px}.main{padding:90px 16px 36px 246px}.hero h1{font-size:34px}.context-bar{display:grid;grid-template-columns:1fr;padding-bottom:12px}.context-item,.context-item:first-child,.context-item:last-child{padding:10px 0;border-right:0;border-bottom:1px solid rgba(104,160,205,.11)}.context-item:last-child{border-bottom:0}.secondary-fields{grid-template-columns:1fr}.input-card,.result-card,.planning-card{padding:22px}.projection{grid-template-columns:1fr;gap:11px;align-items:start;padding:22px 0}.metric-value{justify-content:flex-start;text-align:left}.total{align-items:flex-start;flex-direction:column;gap:14px;padding-top:27px}.total-value{justify-content:flex-start;font-size:42px;text-align:left}.progress-meta{align-items:flex-start;flex-direction:column;gap:5px}.planning-head{align-items:flex-start;flex-direction:column;gap:8px}.planning-note{text-align:left}.plan-overview{grid-template-columns:1fr}.time-remaining{grid-column:auto}.pace-head{align-items:flex-start;flex-direction:column;gap:3px}.pace-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:430px){.main{padding:86px 10px 30px 208px}.hero h1{font-size:28px}.input-card,.result-card,.planning-card{padding:16px;border-radius:14px}.card-head h2{font-size:18px}.metric-value,.metric-partial .metric-value{font-size:25px}.total-value{font-size:33px}.footer-actions{align-items:flex-end;flex-direction:column}.footer-admin{align-self:flex-end}.expectation-fields{grid-template-columns:1fr}.pace-grid{grid-template-columns:1fr}.sync-label:after{display:none}}
+    /* Navegação responsiva e composição mobile compacta */
+    .menu-dots,.menu-overlay{display:none}
+    @media(min-width:761px){
+      .sidebar{width:270px;padding-right:16px;padding-left:16px}
+      .main{padding-left:306px}
+    }
+    @media(min-width:761px) and (max-width:1240px){.main{padding-left:296px}}
+    @media(max-width:760px){
+      body.mobile-menu-open{overflow:hidden}
+      .header{height:64px;padding:0 14px}
+      .brand{gap:7px}.menu-dots{display:grid;width:42px;height:42px}.menu-dots[aria-expanded="true"]{background:rgba(255,255,255,.26);box-shadow:inset 0 0 0 1px rgba(38,42,77,.12)}
+      .q-secret{width:34px;height:40px}.q-symbol{width:25px;height:25px;border-width:6px}
+      .sidebar{z-index:80;top:64px;left:0;bottom:0;width:min(88vw,340px);padding:16px 14px 24px;border-right:1px solid rgba(99,216,226,.22);overflow-x:hidden;overflow-y:auto;visibility:hidden;pointer-events:none;transform:translateX(-104%);transition:transform .25s cubic-bezier(.2,.75,.25,1),visibility .25s;box-shadow:22px 0 60px rgba(4,9,32,.42)}
+      .sidebar.mobile-open{visibility:visible;pointer-events:auto;transform:translateX(0)}
+      .menu-overlay{position:fixed;z-index:70;inset:64px 0 0;display:block;padding:0;border:0;background:rgba(5,10,31,.63);backdrop-filter:blur(4px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility .22s}
+      .menu-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
+      .side-title{gap:10px;padding:0 4px 14px}.side-title-icon{width:36px;height:36px}.side-title strong{font-size:16px}.side-title small{font-size:9px}
+      #productMenu{min-height:auto;flex:0 0 auto;overflow:visible}.menu-label{margin:15px 4px 8px}.role-menu-label{margin-top:15px}
+      .product-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+      .product-btn{display:flex;min-height:88px;min-width:0;flex-direction:column;justify-content:center;gap:7px;padding:9px 5px;border:1px solid rgba(116,181,224,.1);border-radius:12px;font-size:11px;line-height:1.18;text-align:center}
+      .product-btn>span:nth-child(2){display:block;width:100%;overflow:visible;text-overflow:clip;white-space:normal}.product-icon{width:32px;height:32px}.product-chevron{display:none}
+      .main{min-height:100vh;padding:86px 14px 30px}.wrap{max-width:none}.hero{margin-bottom:17px}.hero h1{font-size:30px;line-height:1.12}
+      .context-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:15px;padding:0;border:0}
+      .context-item,.context-item:first-child,.context-item:last-child{display:block;min-width:0;padding:9px 8px;border:1px solid rgba(116,181,224,.14);border-radius:10px;background:rgba(20,33,76,.6)}
+      .context-icon{display:none}.context-item small{overflow:hidden;font-size:7px;letter-spacing:.07em;text-overflow:ellipsis;white-space:nowrap}.context-item strong{overflow:hidden;margin-top:3px;font-size:11px;text-overflow:ellipsis;white-space:nowrap}
+      .workspace{grid-template-columns:1fr;gap:14px}.card{border-radius:15px}.input-card,.result-card,.planning-card{padding:18px}.card-head{margin-bottom:18px}.card-head h2{font-size:19px}.section-kicker{margin-bottom:5px;font-size:9px}
+      .expectation-fields,.secondary-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.expectation-fields .field,.secondary-fields .field{min-width:0}.field label{display:flex;min-height:34px;align-items:flex-end;margin-bottom:6px;font-size:11px;line-height:1.35}
+      .input-wrap input{height:48px;padding-right:56px;padding-left:11px;font-size:15px}.input-wrap input[type="date"]{padding-right:8px;padding-left:9px;font-size:13px}.affix{right:9px;font-size:9px}.helper{min-height:31px;font-size:10px}.quantity-field{margin-bottom:19px}
+      .progress-block{margin-top:16px}.progress-meta{align-items:center;flex-direction:row;gap:8px}.progress-meta strong{font-size:9px;line-height:1.3}.progress-meta span{font-size:10px;text-align:right}
+      .projection{grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:16px 0}.projection:first-child{padding-top:2px}.metric-label{font-size:9px}.metric-copy small{margin-top:4px;font-size:10px}.metric-value,.metric-partial .metric-value{justify-content:flex-end;font-size:24px;text-align:right}
+      .total{align-items:center;flex-direction:row;gap:12px;padding-top:20px}.total-copy{min-width:0}.total-label{font-size:9px}.total-copy small{margin-top:5px;font-size:10px}.total-value{justify-content:flex-end;font-size:31px;text-align:right}
+      .planning-head{gap:6px;margin-bottom:15px}.planning-note{font-size:11px}.plan-overview{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.plan-overview-item{padding:13px 12px}.plan-overview-item>span{font-size:8px}.plan-overview-item strong{font-size:18px}.plan-overview-item small{font-size:10px}.plan-target{grid-column:1;grid-row:1}.time-remaining{grid-column:2;grid-row:1}.synced-deadline{grid-column:1/-1;grid-row:2;padding-left:45px}.sync-icon{left:13px}.sync-label:after{display:inline-block}
+      .pace-section{margin-top:14px;padding-top:14px}.pace-head{gap:3px;margin-bottom:9px}.pace-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.pace-card{padding:12px}.pace-card strong{font-size:23px}.plan-summary{font-size:11px}.plan-prize-note{font-size:10px}
+      .footer{align-items:center;flex-direction:row;flex-wrap:wrap;gap:8px;margin-top:16px}.footer-note{flex:1 1 180px}.footer-actions{width:auto;margin-left:auto}.footer-admin{align-self:auto}
+      .modal-bg{padding:12px}.modal{max-height:calc(100vh - 24px)}.modal-head{padding:18px}.modal-body{padding:18px 18px 5px}.modal-foot{padding:14px 18px 18px}.admin-product-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.admin-product-tab{font-size:9px}.form-grid{grid-template-columns:1fr 1fr;gap:0 10px}
+    }
+    @media(max-width:380px){
+      .main{padding-right:10px;padding-left:10px}.hero h1{font-size:27px}.input-card,.result-card,.planning-card{padding:15px}.product-btn{min-height:82px;padding-right:3px;padding-left:3px;font-size:10px}.product-icon{width:29px;height:29px}
+      .context-item{padding-right:6px!important;padding-left:6px!important}.field label{font-size:10px}.input-wrap input{padding-right:50px;font-size:14px}.affix{font-size:8px}.metric-value,.metric-partial .metric-value{font-size:21px}.total-value{font-size:28px}.sync-label:after{display:none}.form-grid{grid-template-columns:1fr}
+    }
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
 <body>
   <header class="header">
     <div class="brand">
-      <button class="menu-dots" id="menuDots" type="button" aria-label="Ir para o menu de produtos" aria-controls="productMenu">
+      <button class="menu-dots" id="menuDots" type="button" aria-label="Abrir menu de simulações" aria-controls="sidebar" aria-expanded="false">
         <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
       </button>
       <button class="q-secret" id="qSecret" type="button" aria-label="YDUQS">
@@ -195,6 +235,7 @@
     </div>
     <div class="side-footer"><strong>Ambiente de projeção</strong>Os parâmetros de cada produto são carregados automaticamente.</div>
   </aside>
+  <button class="menu-overlay" id="menuOverlay" type="button" aria-label="Fechar menu de simulações" tabindex="-1"></button>
 
   <main class="main">
     <div class="wrap">
@@ -390,7 +431,7 @@
         quantityText:$("#quantityText"),baseText:$("#baseText"),goalText:$("#goalText"),bonusText:$("#bonusText"),
         dateText:$("#dateText"),progressTrack:$("#progressTrack"),progressFill:$("#progressFill"),progressText:$("#progressText"),progressDetail:$("#progressDetail"),
         planRemaining:$("#planRemaining"),planTargetContext:$("#planTargetContext"),planDeadlineText:$("#planDeadlineText"),daysRemaining:$("#daysRemaining"),timeBreakdown:$("#timeBreakdown"),monthlySuggestion:$("#monthlySuggestion"),weeklySuggestion:$("#weeklySuggestion"),dailySuggestion:$("#dailySuggestion"),rhythmSuggestion:$("#rhythmSuggestion"),rhythmUnit:$("#rhythmUnit"),planSummary:$("#planSummary"),planPrizeNote:$("#planPrizeNote"),
-        totalText:$("#totalText"),bonusRow:$("#bonusRow"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
+        totalText:$("#totalText"),bonusRow:$("#bonusRow"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),menuOverlay:$("#menuOverlay"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
         loginModal:$("#loginModal"),loginPanel:$("#loginPanel"),loginForm:$("#loginForm"),adminPassword:$("#adminPassword"),
         passwordError:$("#passwordError"),adminModal:$("#adminModal"),adminForm:$("#adminForm"),adminProduct:$("#adminProduct"),
         adminSaleValue:$("#adminSaleValue"),adminGoal:$("#adminGoal"),adminBonus:$("#adminBonus"),adminDate:$("#adminDate"),
@@ -535,12 +576,22 @@
       function closeAdmin(){hideModal(el.adminModal);adminDraft=null;adminEditing=null;el.adminAccess.focus()}
       var toastTimer;
       function showToast(){clearTimeout(toastTimer);el.toast.classList.add("show");toastTimer=setTimeout(function(){el.toast.classList.remove("show")},2600)}
+      var mobileMenuQuery=window.matchMedia("(max-width: 760px)");
+      function setMobileMenu(open,returnFocus){
+        var isMobile=mobileMenuQuery.matches;var shouldOpen=isMobile&&open;
+        el.sidebar.classList.toggle("mobile-open",shouldOpen);el.menuOverlay.classList.toggle("open",shouldOpen);document.body.classList.toggle("mobile-menu-open",shouldOpen);
+        el.menuDots.setAttribute("aria-expanded",shouldOpen?"true":"false");el.menuDots.setAttribute("aria-label",shouldOpen?"Fechar menu de simulações":"Abrir menu de simulações");el.sidebar.setAttribute("aria-hidden",isMobile&&!shouldOpen?"true":"false");
+        if(shouldOpen)setTimeout(function(){var current=$(".product-btn.active");if(current)current.focus()},180);
+        else if(returnFocus&&isMobile)el.menuDots.focus();
+      }
+      function syncMobileMenu(){setMobileMenu(false,false)}
       [el.quantity,el.achieved,el.goal,el.date].forEach(function(input){input.addEventListener("input",render)});
-      $$(".product-btn").forEach(function(btn){btn.addEventListener("click",function(){loadProduct(btn.dataset.product)})});
+      $$(".product-btn").forEach(function(btn){btn.addEventListener("click",function(){loadProduct(btn.dataset.product);if(mobileMenuQuery.matches)setMobileMenu(false,true)})});
       el.menuDots.addEventListener("click",function(){
-        el.sidebar.classList.remove("menu-pulse");void el.sidebar.offsetWidth;el.sidebar.classList.add("menu-pulse");
-        $(".product-btn.active").focus();setTimeout(function(){el.sidebar.classList.remove("menu-pulse")},520);
+        if(!mobileMenuQuery.matches)return;setMobileMenu(!el.sidebar.classList.contains("mobile-open"),false);
       });
+      el.menuOverlay.addEventListener("click",function(){setMobileMenu(false,true)});
+      if(mobileMenuQuery.addEventListener)mobileMenuQuery.addEventListener("change",syncMobileMenu);else mobileMenuQuery.addListener(syncMobileMenu);
       el.adminAccess.addEventListener("click",requestAdminAccess);
       el.qSecret.addEventListener("dblclick",requestAdminAccess);
       $$(".admin-profile-tab").forEach(function(btn){btn.addEventListener("click",function(){
@@ -567,10 +618,15 @@
         el.lastUpdate.textContent="Parâmetros atualizados agora";showToast();
       });
       document.addEventListener("keydown",function(event){
+        if(el.sidebar.classList.contains("mobile-open")&&event.key==="Tab"){
+          var menuItems=$$(".sidebar .product-btn");var firstItem=menuItems[0];var lastItem=menuItems[menuItems.length-1];
+          if(event.shiftKey&&document.activeElement===firstItem){event.preventDefault();lastItem.focus()}
+          else if(!event.shiftKey&&document.activeElement===lastItem){event.preventDefault();firstItem.focus()}
+        }
         if(event.ctrlKey&&event.shiftKey&&event.key.toLowerCase()==="a"){event.preventDefault();requestAdminAccess();return}
-        if(event.key==="Escape"){if(el.adminModal.classList.contains("open"))closeAdmin();else if(el.loginModal.classList.contains("open"))closeLogin()}
+        if(event.key==="Escape"){if(el.sidebar.classList.contains("mobile-open")){setMobileMenu(false,true);return}if(el.adminModal.classList.contains("open"))closeAdmin();else if(el.loginModal.classList.contains("open"))closeLogin()}
       });
-      loadProduct(active);
+      syncMobileMenu();loadProduct(active);
     })();
   </script>
 </body>
