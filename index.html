@@ -137,7 +137,7 @@
     .projection .metric-value{font-weight:700}.metric-partial .metric-value{font-weight:700}.total-value{font-weight:700}.metric-value .currency,.total-value .currency{font-weight:400}
     .footer{color:#91A4B8;font-size:11px}.footer-status,.footer-admin{font-weight:600}
     .kicker,.admin-section-label{font-weight:650;letter-spacing:.1em}.modal-head h2{font-weight:700}.admin-profile-tab,.admin-product-tab{font-weight:600}.btn-secondary,.btn-primary{font-weight:650}
-    /* Planejamento automático baseado na pretensão e no prazo */
+    /* Planejamento automático baseado no objetivo e no prazo */
     .planning-card{grid-column:1/-1;padding:28px 30px}.planning-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:20px}.planning-head .card-head{margin:0}.planning-note{max-width:470px;margin:0;color:#A9BACB;font-size:12px;line-height:1.55;text-align:right}
     .plan-overview{display:grid;grid-template-columns:minmax(190px,.8fr) minmax(240px,1fr) minmax(180px,.72fr);gap:14px}.plan-overview-item{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:17px 18px;border:1px solid rgba(132,174,214,.14);border-radius:13px;background:rgba(17,29,66,.3)}.plan-overview-item>span{color:#86A5C2;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.plan-overview-item strong{margin-top:5px;color:#F1F7FC;font-size:22px;font-weight:700;line-height:1.2}.plan-target strong{color:#55D3DE}.plan-overview-item small{margin-top:6px;color:#9FB3C7;font-size:11px;line-height:1.45}
     .synced-deadline{position:relative;padding-left:52px;border-color:rgba(27,174,190,.42);background:#111A3B;box-shadow:inset 3px 0 0 #1BAEBE}.sync-icon{position:absolute;left:17px;top:50%;width:23px;height:23px;display:grid;place-items:center;border-radius:7px;color:#63D8E2;background:rgba(27,174,190,.12);transform:translateY(-50%)}.sync-label{display:inline-flex;align-items:center;gap:6px;color:#70DCE5!important}.sync-label:after{content:"SINCRONIZADO";padding:3px 6px;border-radius:999px;color:#102043;background:#63D8E2;font-size:7px;font-weight:700;letter-spacing:.05em}.synced-deadline small{color:#B4C4D4}
@@ -214,9 +214,9 @@
           <div class="quantity-field">
             <div class="expectation-fields">
               <div class="field">
-                <label for="quantity">Pretendo fazer</label>
+                <label for="quantity">Objetivo de matrículas</label>
                 <div class="input-wrap"><input id="quantity" type="number" min="0" step="1" value="18" inputmode="numeric"><span class="affix">matrículas</span></div>
-                <small class="helper">Sua pretensão final para o período.</small>
+                <small class="helper">Seu objetivo final para o período.</small>
               </div>
               <div class="field">
                 <label for="achieved">Matrículas realizadas</label>
@@ -265,14 +265,14 @@
 
         <article class="card planning-card" aria-live="polite">
           <div class="planning-head">
-            <div class="card-head"><div><span class="section-kicker">PLANEJAMENTO SUGERIDO</span><h2>Ritmo para alcançar sua pretensão</h2></div></div>
-            <p class="planning-note">As sugestões usam o que ainda falta entre as matrículas realizadas e a pretensão final, sempre dentro da data-limite.</p>
+            <div class="card-head"><div><span class="section-kicker">PLANEJAMENTO SUGERIDO</span><h2>Ritmo para alcançar seu objetivo</h2></div></div>
+            <p class="planning-note">As sugestões usam o que ainda falta entre as matrículas realizadas e o objetivo final, sempre dentro da data-limite.</p>
           </div>
           <div class="plan-overview">
             <div class="plan-overview-item plan-target">
-              <span>Falta para sua pretensão</span>
+              <span>Falta para seu objetivo</span>
               <strong><span id="planRemaining">18</span> matrículas</strong>
-              <small id="planTargetContext">0 realizadas de 18 pretendidas.</small>
+              <small id="planTargetContext">0 realizadas de um objetivo de 18.</small>
             </div>
             <div class="plan-overview-item synced-deadline">
               <span class="sync-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/></svg></span>
@@ -287,14 +287,14 @@
             </div>
           </div>
           <div class="pace-section">
-            <div class="pace-head"><span>Sugestão de cadência</span><small>Valores mínimos inteiros para alcançar a pretensão até o prazo</small></div>
+            <div class="pace-head"><span>Sugestão de cadência</span><small>Valores mínimos inteiros para alcançar o objetivo até o prazo</small></div>
             <div class="pace-grid">
               <div class="pace-card"><span>Por mês</span><strong id="monthlySuggestion">--</strong><small>matrículas/mês</small></div>
               <div class="pace-card"><span>Por semana</span><strong id="weeklySuggestion">--</strong><small>matrículas/semana</small></div>
               <div class="pace-card"><span>Por dia</span><strong id="dailySuggestion">--</strong><small>matrículas/dia</small></div>
               <div class="pace-card featured"><span>Cadência prática</span><strong id="cadenceSuggestion">--</strong><small id="cadenceUnit">dias por matrícula</small></div>
             </div>
-            <p class="plan-summary" id="planSummary">Ajuste sua pretensão ou a data-limite para atualizar as sugestões.</p>
+            <p class="plan-summary" id="planSummary">Ajuste seu objetivo ou a data-limite para atualizar as sugestões.</p>
             <span class="plan-prize-note" id="planPrizeNote"></span>
           </div>
         </article>
@@ -450,7 +450,7 @@
       function paceFor(target,months,days){return{monthly:Math.ceil(target/months),weekly:Math.ceil(target*7/days),daily:Math.ceil(target/days)}}
       function renderPlanning(quantity,achieved,goal,date){
         var months=monthsUntilDeadline(date);var days=daysUntilDeadline(date);var remaining=Math.max(0,quantity-achieved);var prizeRemaining=Math.max(0,goal-achieved);
-        el.planRemaining.textContent=remaining;el.planTargetContext.textContent=achieved+" realizadas de "+quantity+" pretendidas.";el.planDeadlineText.textContent=fullDate(date);
+        el.planRemaining.textContent=remaining;el.planTargetContext.textContent=achieved+" realizadas de um objetivo de "+quantity+".";el.planDeadlineText.textContent=fullDate(date);
         if(days<0){
           el.daysRemaining.textContent="Prazo encerrado";el.timeBreakdown.textContent="Escolha uma data-limite igual ou posterior a hoje.";
           [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.cadenceSuggestion].forEach(function(item){item.textContent="--"});el.cadenceUnit.textContent="dias por matrícula";
@@ -461,7 +461,7 @@
         el.timeBreakdown.textContent=months+" "+monthWord(months)+" de calendário • "+rate(weeks)+" semanas";
         if(remaining<1){
           [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.cadenceSuggestion].forEach(function(item){item.textContent="0"});el.cadenceUnit.textContent="dias por matrícula";
-          el.planSummary.textContent=quantity<1?"Informe uma quantidade em “Pretendo fazer” para gerar as sugestões.":"Sua pretensão final de "+quantity+" "+enrollmentWord(quantity)+" já foi alcançada.";
+          el.planSummary.textContent=quantity<1?"Informe seu objetivo de matrículas para gerar as sugestões.":"Seu objetivo de "+quantity+" "+enrollmentWord(quantity)+" já foi alcançado.";
         }else{
           var pace=paceFor(remaining,months,planningDays);var cadence=planningDays/remaining;
           el.monthlySuggestion.textContent=pace.monthly;el.weeklySuggestion.textContent=pace.weekly;el.dailySuggestion.textContent=pace.daily;
