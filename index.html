@@ -484,10 +484,14 @@
         var now=referenceDate?new Date(referenceDate):new Date();var start=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12,0,0,0);
         return Math.ceil((deadline-start)/(24*60*60*1000));
       }
-      function rate(value){return new Intl.NumberFormat("pt-BR",{maximumFractionDigits:1}).format(value)}
       function percent(value){return new Intl.NumberFormat("pt-BR",{maximumFractionDigits:2}).format(value)}
       function enrollmentWord(value){return value===1?"matrícula":"matrículas"}
-      function weekWord(value){return value===1?"semana":"semanas"}
+      function formatRemainingPeriod(days){
+        var fullWeeks=Math.floor(days/7);var extraDays=days%7;var parts=[];
+        if(fullWeeks>0)parts.push(fullWeeks===1?"uma semana":fullWeeks+" semanas");
+        if(extraDays>0)parts.push(extraDays===1?"1 dia":extraDays+" dias");
+        return parts.length?parts.join(" e "):"0 dias";
+      }
       function paceFor(target,months,days){return{monthly:Math.ceil(target/months),weekly:Math.ceil(target*7/days),daily:Math.ceil(target/days)}}
       function renderPlanning(quantity,achieved,goal,date){
         var months=monthsUntilDeadline(date);var days=daysUntilDeadline(date);var remaining=Math.max(0,quantity-achieved);var prizeRemaining=Math.max(0,goal-achieved);
@@ -497,9 +501,9 @@
           [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.rhythmSuggestion].forEach(function(item){item.textContent="--"});el.rhythmUnit.textContent="dias por matrícula";
           el.planSummary.textContent="Não é possível calcular o ritmo porque a data-limite já passou.";el.planPrizeNote.textContent="";return;
         }
-        var planningDays=Math.max(1,days);var weeks=planningDays/7;
+        var planningDays=Math.max(1,days);
         el.daysRemaining.textContent=days===0?"Hoje":days+" dias";
-        el.timeBreakdown.textContent=rate(weeks)+" "+weekWord(weeks);
+        el.timeBreakdown.textContent=formatRemainingPeriod(days);
         if(remaining<1){
           [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.rhythmSuggestion].forEach(function(item){item.textContent="0"});el.rhythmUnit.textContent="dias por matrícula";
           el.planSummary.textContent=quantity<1?"Informe seu objetivo de matrículas para gerar as sugestões.":"Seu objetivo de "+quantity+" "+enrollmentWord(quantity)+" já foi alcançado.";
