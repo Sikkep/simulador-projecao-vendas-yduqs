@@ -212,7 +212,12 @@
     .metric-modality-name{display:block;margin-top:2px;color:#F1F7FC;font-size:14px;font-weight:650;line-height:1.25;letter-spacing:-.01em}
     .metric-modality .metric-value{font-size:clamp(23px,2vw,28px);font-weight:650;letter-spacing:-.025em}.metric-modality .metric-value .currency{color:#91A9C2}
     #bonusRow .metric-label,.total-label{font-weight:650;letter-spacing:.045em;text-transform:none}#bonusRow .metric-value{font-size:clamp(23px,2vw,28px);font-weight:650}.total-value{font-size:clamp(32px,3vw,40px)}
+    .production-card-head,.summary-card-head{align-items:flex-start}.month-selector{display:grid;flex:0 0 142px;gap:4px}.month-selector label{color:#88A3BC;font-size:8px;font-weight:650;letter-spacing:.06em;text-transform:uppercase}.month-selector input{width:100%;height:34px;padding:0 8px;border:1px solid rgba(126,168,210,.24);border-radius:8px;color:#F1F7FC;background:#121D42;font-size:11px;font-weight:650;color-scheme:dark;outline:0}.month-selector input:focus{border-color:#55D3DE;box-shadow:0 0 0 3px rgba(27,174,190,.1)}
+    .summary-view-toggle{display:inline-grid;grid-template-columns:1fr 1fr;padding:3px;border:1px solid rgba(126,168,210,.18);border-radius:9px;background:rgba(17,29,66,.6)}.summary-view-btn{min-width:65px;height:27px;padding:0 8px;border:0;border-radius:6px;color:#8DA5BC;background:transparent;font-size:9px;font-weight:650;transition:.16s}.summary-view-btn:hover{color:#E9F3FA}.summary-view-btn.active{color:#102043;background:#55D3DE;box-shadow:0 5px 15px rgba(27,174,190,.14)}
+    .summary-period{margin:-7px 0 10px;color:#88A3BC;font-size:10px;font-weight:600}.financial-breakdown{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;overflow:hidden;margin-bottom:5px;border:1px solid rgba(126,168,210,.14);border-radius:10px;background:rgba(126,168,210,.12)}.financial-breakdown>div{min-width:0;padding:8px 9px;background:#182650}.financial-breakdown span{display:block;overflow:hidden;color:#819BB4;font-size:8px;font-weight:600;line-height:1.3;text-overflow:ellipsis;white-space:nowrap}.financial-breakdown strong{display:block;margin-top:3px;overflow:hidden;color:#F1F7FC;font-size:12px;font-weight:650;line-height:1.2;text-overflow:ellipsis;white-space:nowrap}.financial-breakdown .retained strong{color:#6CD9E3}
+    .result-card .projection-list{margin-top:2px}.result-card .projection{padding-top:11px;padding-bottom:11px}.result-card .total{padding-top:14px}
     @media(max-width:760px){.metric-modality-name{font-size:13px}.metric-modality:before{top:13px;bottom:13px}.metric-modality .metric-value{font-size:22px}#bonusRow .metric-value{font-size:23px}.total-value{font-size:30px}}
+    @media(max-width:430px){.production-card-head,.summary-card-head{gap:10px}.month-selector{flex-basis:128px}.summary-view-btn{min-width:58px;padding:0 6px}.financial-breakdown{grid-template-columns:1fr}.financial-breakdown>div{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 9px}.financial-breakdown strong{margin-top:0}.summary-period{margin-top:-3px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -279,7 +284,10 @@
 
       <section class="workspace" aria-label="Calculadora de projeção">
         <article class="card input-card">
-          <div class="card-head"><div><span class="section-kicker">SIMULAÇÃO COMERCIAL</span><h2>Produção e meta</h2></div></div>
+          <div class="card-head production-card-head">
+            <div><span class="section-kicker">SIMULAÇÃO COMERCIAL</span><h2>Produção e meta</h2></div>
+            <div class="month-selector"><label for="referenceMonth">Mês de referência</label><input id="referenceMonth" type="month" value="2026-08" aria-label="Selecionar mês do histórico"></div>
+          </div>
           <div class="quantity-field">
             <div class="expectation-fields goal-deadline-fields">
               <div class="field">
@@ -307,16 +315,28 @@
         </article>
 
         <article class="card result-card" aria-live="polite">
-          <div class="card-head"><div><span class="section-kicker">REMUNERAÇÃO VARIÁVEL</span><h2>Resumo da Projeção</h2></div></div>
+          <div class="card-head summary-card-head">
+            <div><span class="section-kicker">REMUNERAÇÃO VARIÁVEL</span><h2>Resumo da Projeção</h2></div>
+            <div class="summary-view-toggle" role="tablist" aria-label="Período do resumo">
+              <button class="summary-view-btn active" type="button" role="tab" aria-selected="true" data-summary-view="monthly">Mensal</button>
+              <button class="summary-view-btn" type="button" role="tab" aria-selected="false" data-summary-view="semester">Semestral</button>
+            </div>
+          </div>
+          <div class="summary-period" id="summaryPeriod">Agosto de 2026</div>
+          <div class="financial-breakdown" aria-label="Distribuição da remuneração">
+            <div><span id="grossLabel">Base bruta do mês</span><strong id="grossValue">R$ 0,00</strong></div>
+            <div><span id="releasedLabel">Liberado agora · 60%</span><strong id="releasedValue">R$ 0,00</strong></div>
+            <div class="retained"><span id="retainedLabel">Retido · 40%</span><strong id="retainedValue">R$ 0,00</strong></div>
+          </div>
           <div class="projection-list">
             <div id="modalityEarningsRows"></div>
             <div class="projection" id="bonusRow">
-              <span class="metric-copy"><span class="metric-label">Prêmio ao atingir a meta</span><small>Meta configurada em <strong id="goalText">30 MatFin</strong></small></span>
+              <span class="metric-copy"><span class="metric-label" id="bonusLabel">Prêmio ao atingir a meta</span><small id="bonusCaption">Meta configurada em <strong id="goalText">30 MatFin</strong></small></span>
               <strong class="metric-value" id="bonusText"><span class="currency">R$</span><span class="amount">1.200,00</span></strong>
             </div>
           </div>
           <div class="total">
-            <span class="total-copy"><span class="total-label">Remuneração total projetada</span><small>Projeção calculada até <strong id="dateText">31/08</strong></small></span>
+            <span class="total-copy"><span class="total-label" id="totalLabel">Total a receber no mês</span><small id="totalCaption">Projeção calculada até <strong id="dateText">31/08</strong></small></span>
             <span class="total-value" id="totalText"><span class="currency">R$</span><span class="amount">3.240,00</span></span>
           </div>
         </article>
@@ -446,8 +466,9 @@
       var $=function(s){return document.querySelector(s)};
       var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
       var el={
-        goal:$("#goal"),date:$("#date"),pageTitle:$("#pageTitle"),productionRows:$("#productionRows"),productionPanelTitle:$("#productionPanelTitle"),productionHint:$("#productionHint"),totalInscritos:$("#totalInscritos"),totalMatFin:$("#totalMatFin"),
-        contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),modalityEarningsRows:$("#modalityEarningsRows"),goalText:$("#goalText"),bonusText:$("#bonusText"),
+        goal:$("#goal"),date:$("#date"),referenceMonth:$("#referenceMonth"),pageTitle:$("#pageTitle"),productionRows:$("#productionRows"),productionPanelTitle:$("#productionPanelTitle"),productionHint:$("#productionHint"),totalInscritos:$("#totalInscritos"),totalMatFin:$("#totalMatFin"),
+        contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),modalityEarningsRows:$("#modalityEarningsRows"),goalText:$("#goalText"),bonusText:$("#bonusText"),bonusLabel:$("#bonusLabel"),bonusCaption:$("#bonusCaption"),
+        summaryPeriod:$("#summaryPeriod"),grossLabel:$("#grossLabel"),grossValue:$("#grossValue"),releasedLabel:$("#releasedLabel"),releasedValue:$("#releasedValue"),retainedLabel:$("#retainedLabel"),retainedValue:$("#retainedValue"),totalLabel:$("#totalLabel"),totalCaption:$("#totalCaption"),
         dateText:$("#dateText"),progressTrack:$("#progressTrack"),progressFill:$("#progressFill"),progressText:$("#progressText"),progressDetail:$("#progressDetail"),
         planRemaining:$("#planRemaining"),planTargetContext:$("#planTargetContext"),planDeadlineText:$("#planDeadlineText"),daysRemaining:$("#daysRemaining"),timeBreakdown:$("#timeBreakdown"),monthlySuggestion:$("#monthlySuggestion"),weeklySuggestion:$("#weeklySuggestion"),dailySuggestion:$("#dailySuggestion"),planSummary:$("#planSummary"),planPrizeNote:$("#planPrizeNote"),
         totalText:$("#totalText"),bonusRow:$("#bonusRow"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),menuOverlay:$("#menuOverlay"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
@@ -476,17 +497,30 @@
       var active=localStorage.getItem(ACTIVE_KEY);
       if(!products[active])active="consultor_graduacao";
       var sellerInputs={};
+      var summaryView="monthly";
       var adminDraft=null;
       var adminEditing=null;
       var savedTracking={};try{savedTracking=JSON.parse(localStorage.getItem(PERSONAL_KEY))||{}}catch(error){savedTracking={}}
-      function normalizeProduction(product,savedProduction,legacyAchieved){
+      function validMonthKey(value){return typeof value==="string"&&/^\d{4}-\d{2}$/.test(value)&&Number(value.slice(5,7))>=1&&Number(value.slice(5,7))<=12}
+      function defaultMonthKey(product){return validMonthKey(product.closingDate.slice(0,7))?product.closingDate.slice(0,7):new Date().toISOString().slice(0,7)}
+      function dateForMonth(product,monthKey){var parts=monthKey.split("-").map(Number);var configuredDay=safeInteger(String(product.closingDate||"").slice(8,10),31)||31;var lastDay=new Date(parts[0],parts[1],0).getDate();return monthKey+"-"+String(Math.min(configuredDay,lastDay)).padStart(2,"0")}
+      function normalizeProduction(product,savedProduction,legacyAchieved,useInitial){
         var result={};var hasSaved=savedProduction&&typeof savedProduction==="object"&&Object.keys(savedProduction).length>0;var keys=Object.keys(product.rates);
-        keys.forEach(function(key){var source=hasSaved?(savedProduction[key]||{}):(product.initialProduction[key]||{});result[key]={inscritos:safeInteger(source.inscritos,0),matfin:safeInteger(source.matfin,0)}});
+        keys.forEach(function(key){var source=hasSaved?(savedProduction[key]||{}):(useInitial?(product.initialProduction[key]||{}):{});result[key]={inscritos:safeInteger(source.inscritos,0),matfin:safeInteger(source.matfin,0)}});
         if(!hasSaved&&safeInteger(legacyAchieved,0)>0&&keys.length)result[keys[0]].matfin=safeInteger(legacyAchieved,0);
         return result;
       }
-      Object.keys(products).forEach(function(key){var p=products[key];var saved=savedTracking[key]||{};sellerInputs[key]={goal:Math.max(1,safeInteger(saved.goal,p.goal)),date:saved.date||p.closingDate,production:normalizeProduction(p,saved.production,saved.achieved)}});
-      function persistTracking(){try{var data={};Object.keys(sellerInputs).forEach(function(key){var item=sellerInputs[key];data[key]={goal:item.goal,date:item.date,production:item.production,achieved:productionTotals(products[key],item.production).matfinCount}});localStorage.setItem(PERSONAL_KEY,JSON.stringify(data))}catch(error){}}
+      function normalizeMonthState(product,monthKey,saved,useInitial){saved=saved||{};return{goal:Math.max(1,safeInteger(saved.goal,product.goal)),date:saved.date||dateForMonth(product,monthKey),production:normalizeProduction(product,saved.production,saved.achieved,useInitial),rates:mergeRates(product.rates,saved.rates||product.rates),bonus:safeNumber(saved.bonus,product.bonus)}}
+      Object.keys(products).forEach(function(key){
+        var p=products[key];var saved=savedTracking[key]||{};var baseMonth=defaultMonthKey(p);var selected=validMonthKey(saved.selectedMonth)?saved.selectedMonth:baseMonth;var months={};
+        if(saved.months&&typeof saved.months==="object")Object.keys(saved.months).forEach(function(monthKey){if(validMonthKey(monthKey))months[monthKey]=normalizeMonthState(p,monthKey,saved.months[monthKey],false)});
+        else months[selected]=normalizeMonthState(p,selected,saved,true);
+        if(!months[selected])months[selected]=normalizeMonthState(p,selected,null,false);
+        sellerInputs[key]={selectedMonth:selected,months:months};
+      });
+      function ensureMonthState(productKey,monthKey){var record=sellerInputs[productKey];if(!record.months[monthKey])record.months[monthKey]=normalizeMonthState(products[productKey],monthKey,null,false);return record.months[monthKey]}
+      function activeTracking(){var record=sellerInputs[active];return ensureMonthState(active,record.selectedMonth)}
+      function persistTracking(){try{localStorage.setItem(PERSONAL_KEY,JSON.stringify(sellerInputs))}catch(error){}}
       function numberOnly(value){return new Intl.NumberFormat("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}).format(value)}
       function setMoney(element,value){
         var currency=element.querySelector(".currency");
@@ -522,21 +556,36 @@
         return parts.length?parts.join(" e "):"0 dias";
       }
       function paceFor(target,months,days){return{monthly:Math.ceil(target/months),weekly:Math.ceil(target*7/days),daily:Math.ceil(target/days)}}
-      function productionTotals(product,production){
-        var totals={inscritoCount:0,matfinCount:0,inscritoEarnings:0,matfinEarnings:0};Object.keys(product.rates).forEach(function(key){var rate=product.rates[key];var count=production[key]||{inscritos:0,matfin:0};totals.inscritoCount+=safeInteger(count.inscritos,0);totals.matfinCount+=safeInteger(count.matfin,0);totals.inscritoEarnings+=safeInteger(count.inscritos,0)*rate.inscrito;totals.matfinEarnings+=safeInteger(count.matfin,0)*rate.matfin});return totals;
+      function productionTotals(product,production,storedRates){
+        var rates=mergeRates(product.rates,storedRates||product.rates);var totals={inscritoCount:0,matfinCount:0,matfinEarnings:0};Object.keys(product.rates).forEach(function(key){var rate=rates[key];var count=production[key]||{inscritos:0,matfin:0};totals.inscritoCount+=safeInteger(count.inscritos,0);totals.matfinCount+=safeInteger(count.matfin,0);totals.matfinEarnings+=safeInteger(count.matfin,0)*rate.matfin});return totals;
       }
-      function renderModalityEarnings(product,production){
-        el.modalityEarningsRows.innerHTML=Object.keys(product.rates).map(function(key){
-          var rate=product.rates[key];var count=safeInteger((production[key]||{}).matfin,0);var value=count*rate.matfin;
-          return '<div class="projection metric-modality"><span class="metric-copy"><span class="metric-label">Valor a receber</span><strong class="metric-modality-name">'+escapeHTML(rate.label)+'</strong><small><strong>'+count+' MatFin</strong> × R$ '+numberOnly(rate.matfin)+'</small></span><strong class="metric-value"><span class="currency">R$</span><span class="amount">'+numberOnly(value)+'</span></strong></div>';
-        }).join("");
+      function monthLabel(monthKey){var parts=monthKey.split("-").map(Number);var label=new Intl.DateTimeFormat("pt-BR",{month:"long",year:"numeric"}).format(new Date(parts[0],parts[1]-1,1,12));return label.charAt(0).toUpperCase()+label.slice(1)}
+      function semesterMeta(monthKey){var year=Number(monthKey.slice(0,4));var month=Number(monthKey.slice(5,7));var number=month<=6?1:2;var start=number===1?1:7;return{year:year,number:number,start:start,end:start+5,label:number+"º semestre de "+year}}
+      function monthlyFinancialData(product,state){
+        var rates=mergeRates(product.rates,state.rates);var totals=productionTotals(product,state.production,rates);var entries=Object.keys(product.rates).map(function(key){var count=safeInteger((state.production[key]||{}).matfin,0);var gross=count*rates[key].matfin;return{key:key,label:product.rates[key].label,count:count,rate:rates[key].matfin,gross:gross,value:gross*.6}});var prize=totals.matfinCount>=state.goal?state.bonus:0;
+        return{entries:entries,gross:totals.matfinEarnings,released:totals.matfinEarnings*.6,retained:totals.matfinEarnings*.4,prize:prize,total:totals.matfinEarnings*.6+prize,totals:totals};
+      }
+      function semesterFinancialData(product,record){
+        var meta=semesterMeta(record.selectedMonth);var entries={};Object.keys(product.rates).forEach(function(key){entries[key]={key:key,label:product.rates[key].label,count:0,gross:0,value:0}});var gross=0;var prize=0;var monthsWithProduction=0;var monthsWithPrize=0;
+        Object.keys(record.months).sort().forEach(function(monthKey){var month=Number(monthKey.slice(5,7));if(Number(monthKey.slice(0,4))!==meta.year||month<meta.start||month>meta.end)return;var state=record.months[monthKey];var rates=mergeRates(product.rates,state.rates);var totals=productionTotals(product,state.production,rates);if(totals.inscritoCount>0||totals.matfinCount>0)monthsWithProduction++;Object.keys(product.rates).forEach(function(key){var count=safeInteger((state.production[key]||{}).matfin,0);var value=count*rates[key].matfin;entries[key].count+=count;entries[key].gross+=value;gross+=value});if(totals.matfinCount>=state.goal){prize+=state.bonus;monthsWithPrize++}});
+        var list=Object.keys(product.rates).map(function(key){entries[key].value=entries[key].gross*.4;return entries[key]});return{entries:list,gross:gross,released:gross*.6,retained:gross*.4,prize:prize,total:gross*.4,monthsWithProduction:monthsWithProduction,monthsWithPrize:monthsWithPrize,meta:meta};
+      }
+      function renderFinancialSummary(product,record,state){
+        var semester=summaryView==="semester";var data=semester?semesterFinancialData(product,record):monthlyFinancialData(product,state);
+        el.summaryPeriod.textContent=semester?data.meta.label+" • "+data.monthsWithProduction+(data.monthsWithProduction===1?" mês com produção":" meses com produção"):monthLabel(record.selectedMonth);
+        el.grossLabel.textContent=semester?"Base bruta acumulada":"Base bruta do mês";el.releasedLabel.textContent=semester?"Já liberado nos meses · 60%":"Liberado no mês · 60%";el.retainedLabel.textContent=semester?"Saldo retido · 40%":"Retido para o semestre · 40%";
+        el.grossValue.textContent="R$ "+numberOnly(data.gross);el.releasedValue.textContent="R$ "+numberOnly(data.released);el.retainedValue.textContent="R$ "+numberOnly(data.retained);
+        el.modalityEarningsRows.innerHTML=data.entries.map(function(entry){var detail=semester?entry.count+" MatFin acumulados • 40% retidos":entry.count+" MatFin • base de R$ "+numberOnly(entry.gross);var label=semester?"Retido no semestre":"Valor a receber no mês";return '<div class="projection metric-modality"><span class="metric-copy"><span class="metric-label">'+label+'</span><strong class="metric-modality-name">'+escapeHTML(entry.label)+'</strong><small><strong>'+detail+'</strong></small></span><strong class="metric-value"><span class="currency">R$</span><span class="amount">'+numberOnly(entry.value)+'</span></strong></div>'}).join("");
+        if(semester){el.bonusLabel.textContent="Prêmios recebidos nos meses";el.bonusCaption.textContent=data.monthsWithPrize+(data.monthsWithPrize===1?" mês com meta atingida":" meses com meta atingida")+" • não compõe o saldo retido";el.totalLabel.textContent="Saldo para pagamento semestral";el.totalCaption.textContent="Pagamento dos 40% retidos ao fim do "+data.meta.label}
+        else{el.bonusLabel.textContent="Prêmio do mês";el.bonusCaption.textContent=data.prize>0?"Meta de "+state.goal+" MatFin atingida":"Disponível ao atingir "+state.goal+" MatFin";el.totalLabel.textContent="Total a receber no mês";el.totalCaption.textContent="60% liberados + prêmio atingido • fechamento "+shortDate(state.date)}
+        setMoney(el.bonusText,data.prize);setMoney(el.totalText,data.total);el.bonusRow.classList.toggle("earned",data.prize>0);return data;
       }
       function renderProductionRows(product,production){
         var isGraduation=product.productKey==="graduacao";el.productionPanelTitle.textContent=isGraduation?"Produção por modalidade":"Produção geral";el.productionHint.textContent=isGraduation?"Informe os Inscritos e MatFin de cada modalidade.":"Informe os totais gerais de Inscritos e MatFin.";
         el.productionRows.innerHTML=Object.keys(product.rates).map(function(key){var label=product.rates[key].label;var count=production[key];return '<div class="production-row"><strong>'+escapeHTML(label)+'</strong>'+counterMarkup(key,"inscritos",count.inscritos,"Inscritos — "+label)+counterMarkup(key,"matfin",count.matfin,"MatFin — "+label)+'</div>'}).join("");
       }
       function counterMarkup(modality,metric,value,label){return '<div class="counter-control"><button class="counter-btn" type="button" data-modality="'+modality+'" data-metric="'+metric+'" data-delta="-1" aria-label="Diminuir '+escapeHTML(label)+'">−</button><input class="counter-input" type="number" min="0" step="1" inputmode="numeric" value="'+safeInteger(value,0)+'" data-modality="'+modality+'" data-metric="'+metric+'" aria-label="'+escapeHTML(label)+'"><button class="counter-btn" type="button" data-modality="'+modality+'" data-metric="'+metric+'" data-delta="1" aria-label="Aumentar '+escapeHTML(label)+'">+</button></div>'}
-      function syncProductionFromDOM(){var production=sellerInputs[active].production;$$('.counter-input').forEach(function(input){var modality=input.dataset.modality;var metric=input.dataset.metric;if(production[modality])production[modality][metric]=safeInteger(input.value,0)})}
+      function syncProductionFromDOM(){var production=activeTracking().production;$$('.counter-input').forEach(function(input){var modality=input.dataset.modality;var metric=input.dataset.metric;if(production[modality])production[modality][metric]=safeInteger(input.value,0)})}
       function renderPlanning(goal,achieved,date){
         var months=monthsUntilDeadline(date);var days=daysUntilDeadline(date);var remaining=Math.max(0,goal-achieved);
         el.planRemaining.textContent=remaining;el.planTargetContext.textContent=achieved+" MatFin realizados de uma meta de "+goal+".";el.planDeadlineText.textContent=fullDate(date);
@@ -559,24 +608,24 @@
         el.planPrizeNote.textContent=remaining<1?"O prêmio já foi atingido.":"Este ritmo considera diretamente a meta necessária para receber o prêmio.";
       }
       function render(){
-        var p=products[active];var tracking=sellerInputs[active];
+        var p=products[active];var record=sellerInputs[active];var tracking=activeTracking();
         var goal=Math.max(1,Math.floor(safeNumber(el.goal.value,p.goal)));
         var date=el.date.value||p.closingDate;
-        var production=tracking.production;var totals=productionTotals(p,production);var achieved=totals.matfinCount;
-        var earned=achieved>=goal?p.bonus:0;var total=totals.matfinEarnings+earned;
+        var production=tracking.production;var totals=productionTotals(p,production,tracking.rates);var achieved=totals.matfinCount;
         var progress=achieved/goal*100;var visualProgress=Math.min(100,progress);var accessibleProgress=Number(progress.toFixed(2));
         tracking.goal=goal;tracking.date=date;persistTracking();
         el.pageTitle.textContent="Projeção de Produção";
         el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
-        el.totalInscritos.textContent=totals.inscritoCount;el.totalMatFin.textContent=totals.matfinCount;renderModalityEarnings(p,production);
-        el.goalText.textContent=goal+" MatFin";setMoney(el.bonusText,p.bonus);el.dateText.textContent=shortDate(date);setMoney(el.totalText,total);
+        el.totalInscritos.textContent=totals.inscritoCount;el.totalMatFin.textContent=totals.matfinCount;renderFinancialSummary(p,record,tracking);
         el.progressFill.style.width=visualProgress+"%";el.progressText.textContent=percent(progress)+"% DE META ALCANÇADA";el.progressDetail.textContent=achieved+" de "+goal+" MatFin";el.progressTrack.setAttribute("aria-valuenow",accessibleProgress);el.progressTrack.setAttribute("aria-valuemax",Math.max(100,accessibleProgress));
-        el.bonusRow.classList.toggle("earned",earned>0);
         renderPlanning(goal,achieved,date);
+      }
+      function loadMonth(monthKey){
+        if(!validMonthKey(monthKey))return;var record=sellerInputs[active];record.selectedMonth=monthKey;var tracking=ensureMonthState(active,monthKey);el.referenceMonth.value=monthKey;el.goal.value=tracking.goal;el.date.value=tracking.date;renderProductionRows(products[active],tracking.production);persistTracking();render();
       }
       function loadProduct(key){
         active=key;localStorage.setItem(ACTIVE_KEY,key);
-        var inputs=sellerInputs[key];el.goal.value=inputs.goal;el.date.value=inputs.date;renderProductionRows(products[key],inputs.production);
+        var record=sellerInputs[key];var inputs=ensureMonthState(key,record.selectedMonth);el.referenceMonth.value=record.selectedMonth;el.goal.value=inputs.goal;el.date.value=inputs.date;renderProductionRows(products[key],inputs.production);
         $$(".product-btn").forEach(function(btn){var on=btn.dataset.product===active;btn.classList.toggle("active",on);btn.setAttribute("aria-current",on?"page":"false")});
         render();
       }
@@ -629,6 +678,8 @@
       }
       function syncMobileMenu(){setMobileMenu(false,false)}
       [el.goal,el.date].forEach(function(input){input.addEventListener("input",render)});
+      el.referenceMonth.addEventListener("change",function(){loadMonth(el.referenceMonth.value)});
+      $$(".summary-view-btn").forEach(function(btn){btn.addEventListener("click",function(){summaryView=btn.dataset.summaryView;$$('.summary-view-btn').forEach(function(item){var on=item===btn;item.classList.toggle("active",on);item.setAttribute("aria-selected",on?"true":"false")});render()})});
       el.productionRows.addEventListener("click",function(event){var button=event.target.closest(".counter-btn");if(!button)return;var input=button.parentElement.querySelector(".counter-input");input.value=Math.max(0,safeInteger(input.value,0)+Number(button.dataset.delta));syncProductionFromDOM();render()});
       el.productionRows.addEventListener("input",function(event){if(!event.target.classList.contains("counter-input"))return;syncProductionFromDOM();render()});
       el.productionRows.addEventListener("change",function(event){if(!event.target.classList.contains("counter-input"))return;event.target.value=safeInteger(event.target.value,0);syncProductionFromDOM();render()});
@@ -658,9 +709,9 @@
       el.adminModal.addEventListener("click",function(event){if(event.target===el.adminModal)closeAdmin()});
       el.adminForm.addEventListener("submit",function(event){
         event.preventDefault();saveVisibleAdminFields();products=adminDraft;
-        Object.keys(products).forEach(function(key){sellerInputs[key].goal=products[key].goal;sellerInputs[key].date=products[key].closingDate;sellerInputs[key].production=normalizeProduction(products[key],sellerInputs[key].production,0)});
-        el.goal.value=products[active].goal;el.date.value=products[active].closingDate;
-        localStorage.setItem(STORAGE_KEY,JSON.stringify(products));renderProductionRows(products[active],sellerInputs[active].production);render();closeAdmin();
+        Object.keys(products).forEach(function(key){var record=sellerInputs[key];var state=ensureMonthState(key,record.selectedMonth);state.goal=products[key].goal;state.date=dateForMonth(products[key],record.selectedMonth);state.production=normalizeProduction(products[key],state.production,0,false);state.rates=mergeRates(products[key].rates,products[key].rates);state.bonus=products[key].bonus});
+        var current=activeTracking();el.goal.value=current.goal;el.date.value=current.date;
+        localStorage.setItem(STORAGE_KEY,JSON.stringify(products));persistTracking();renderProductionRows(products[active],current.production);render();closeAdmin();
         el.lastUpdate.textContent="Parâmetros atualizados agora";showToast();
       });
       document.addEventListener("keydown",function(event){
