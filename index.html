@@ -198,14 +198,21 @@
       .main{padding-top:94px}.hero{margin-bottom:16px}.hero h1{font-size:clamp(32px,3vw,42px)}
       .context-bar{margin-bottom:18px;padding-bottom:13px}.context-item{padding-right:22px;padding-left:22px}
       .workspace{grid-template-columns:minmax(300px,.82fr) minmax(450px,1.18fr);gap:18px;align-items:stretch}
-      .input-card,.result-card{height:100%;padding:21px 23px}.card-head{margin-bottom:16px}.card-head h2{font-size:19px}.section-kicker{margin-bottom:4px;font-size:8px}
+      .input-card,.result-card{height:100%;padding:21px 23px}.card-head{margin-bottom:16px}.card-head h2{font-size:19px;font-weight:650}.section-kicker{margin-bottom:4px;font-size:8px}
       .quantity-field{margin-bottom:0}.input-wrap input{height:45px;font-size:14px}.field label{margin-bottom:6px;font-size:11px}
       .production-panel{margin-top:14px}.production-title-row{margin-bottom:7px}.production-title-row small{margin-top:2px}
-      .production-header{padding-top:7px;padding-bottom:7px}.production-row{padding-top:6px;padding-bottom:6px}.counter-btn,.counter-input{height:29px}.production-total{padding-top:7px;padding-bottom:7px}
+      .production-header{padding-top:7px;padding-bottom:7px;font-size:9px}.production-row{padding-top:6px;padding-bottom:6px}.production-row>strong{font-size:11px;font-weight:600}.counter-btn,.counter-input{height:29px}.counter-input{font-weight:650}.production-total{padding-top:7px;padding-bottom:7px}
       .input-card .progress-block{margin-top:12px}.progress-meta{margin-top:8px}
-      .projection{gap:18px;padding:13px 0}.projection:first-child{padding-top:0}.metric-copy small{margin-top:3px;font-size:10px}.metric-label{font-size:9px}.metric-value{font-size:clamp(27px,2.35vw,34px)}
-      .total{gap:20px;padding:18px 0 1px}.total-copy small{margin-top:5px}.total-value{font-size:clamp(37px,3.3vw,47px)}
+      .projection{gap:24px;padding:14px 0}.projection:first-child{padding-top:0}.metric-copy small{margin-top:4px;font-size:10px}.metric-label{font-size:9px}.metric-value{font-size:clamp(22px,1.8vw,28px)}
+      .total{gap:20px;padding:18px 0 1px}.total-copy small{margin-top:5px}.total-value{font-size:clamp(33px,2.8vw,40px)}
     }
+    /* Hierarquia financeira: modalidade primeiro, valor com escala contida */
+    .metric-modality{position:relative}.metric-modality:before{content:"";position:absolute;left:0;top:17px;bottom:17px;width:2px;border-radius:2px;background:rgba(85,211,222,.58)}
+    .metric-modality .metric-copy{padding-left:13px}.metric-modality .metric-label{color:#88A3BC;font-size:9px;font-weight:600;letter-spacing:.055em;text-transform:uppercase}
+    .metric-modality-name{display:block;margin-top:2px;color:#F1F7FC;font-size:14px;font-weight:650;line-height:1.25;letter-spacing:-.01em}
+    .metric-modality .metric-value{font-size:clamp(23px,2vw,28px);font-weight:650;letter-spacing:-.025em}.metric-modality .metric-value .currency{color:#91A9C2}
+    #bonusRow .metric-label,.total-label{font-weight:650;letter-spacing:.045em;text-transform:none}#bonusRow .metric-value{font-size:clamp(23px,2vw,28px);font-weight:650}.total-value{font-size:clamp(32px,3vw,40px)}
+    @media(max-width:760px){.metric-modality-name{font-size:13px}.metric-modality:before{top:13px;bottom:13px}.metric-modality .metric-value{font-size:22px}#bonusRow .metric-value{font-size:23px}.total-value{font-size:30px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -304,12 +311,12 @@
           <div class="projection-list">
             <div id="modalityEarningsRows"></div>
             <div class="projection" id="bonusRow">
-              <span class="metric-copy"><span class="metric-label">PRÊMIO AO ATINGIR A META</span><small>Meta configurada em <strong id="goalText">30 MatFin</strong></small></span>
+              <span class="metric-copy"><span class="metric-label">Prêmio ao atingir a meta</span><small>Meta configurada em <strong id="goalText">30 MatFin</strong></small></span>
               <strong class="metric-value" id="bonusText"><span class="currency">R$</span><span class="amount">1.200,00</span></strong>
             </div>
           </div>
           <div class="total">
-            <span class="total-copy"><span class="total-label">REMUNERAÇÃO TOTAL PROJETADA</span><small>Projeção calculada até <strong id="dateText">31/08</strong></small></span>
+            <span class="total-copy"><span class="total-label">Remuneração total projetada</span><small>Projeção calculada até <strong id="dateText">31/08</strong></small></span>
             <span class="total-value" id="totalText"><span class="currency">R$</span><span class="amount">3.240,00</span></span>
           </div>
         </article>
@@ -521,7 +528,7 @@
       function renderModalityEarnings(product,production){
         el.modalityEarningsRows.innerHTML=Object.keys(product.rates).map(function(key){
           var rate=product.rates[key];var count=safeInteger((production[key]||{}).matfin,0);var value=count*rate.matfin;
-          return '<div class="projection metric-modality"><span class="metric-copy"><span class="metric-label">VALOR A RECEBER — '+escapeHTML(rate.label.toUpperCase())+'</span><small><strong>'+count+' MatFin</strong> × R$ '+numberOnly(rate.matfin)+'</small></span><strong class="metric-value"><span class="currency">R$</span><span class="amount">'+numberOnly(value)+'</span></strong></div>';
+          return '<div class="projection metric-modality"><span class="metric-copy"><span class="metric-label">Valor a receber</span><strong class="metric-modality-name">'+escapeHTML(rate.label)+'</strong><small><strong>'+count+' MatFin</strong> × R$ '+numberOnly(rate.matfin)+'</small></span><strong class="metric-value"><span class="currency">R$</span><span class="amount">'+numberOnly(value)+'</span></strong></div>';
         }).join("");
       }
       function renderProductionRows(product,production){
