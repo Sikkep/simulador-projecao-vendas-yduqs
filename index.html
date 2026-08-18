@@ -139,7 +139,7 @@
     .footer{color:#91A4B8;font-size:11px}.footer-status,.footer-admin{font-weight:600}
     .kicker,.admin-section-label{font-weight:650;letter-spacing:.1em}.modal-head h2{font-weight:700}.admin-profile-tab,.admin-product-tab{font-weight:600}.btn-secondary,.btn-primary{font-weight:650}
     /* Planejamento automático baseado na meta e no prazo */
-    .planning-card{grid-column:1/-1;padding:28px 30px}.planning-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:20px}.planning-head .card-head{margin:0}.planning-note{max-width:470px;margin:0;color:#A9BACB;font-size:12px;line-height:1.55;text-align:right}
+    .planning-card{grid-column:1/-1;padding:28px 30px}.planning-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:20px}.planning-head .card-head{margin:0}.planning-title-row{display:flex;align-items:center;flex-wrap:wrap;gap:10px}.planning-month-badge{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border:1px solid rgba(85,211,222,.24);border-radius:999px;color:#72DCE5;background:rgba(27,174,190,.08);font-size:9px;font-weight:650;white-space:nowrap}.planning-note{max-width:520px;margin:0;color:#A9BACB;font-size:12px;line-height:1.55;text-align:right}
     .plan-overview{display:grid;grid-template-columns:minmax(190px,.8fr) minmax(240px,1fr) minmax(180px,.72fr);gap:14px}.plan-overview-item{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:17px 18px;border:1px solid rgba(132,174,214,.14);border-radius:13px;background:rgba(17,29,66,.3)}.plan-overview-item>span{color:#86A5C2;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.plan-overview-item strong{margin-top:5px;color:#F1F7FC;font-size:22px;font-weight:700;line-height:1.2}.plan-target strong{color:#55D3DE}.plan-overview-item small{margin-top:6px;color:#9FB3C7;font-size:11px;line-height:1.45}
     .synced-deadline{position:relative;padding-left:52px;border-color:rgba(27,174,190,.42);background:#111A3B;box-shadow:inset 3px 0 0 #1BAEBE}.sync-icon{position:absolute;left:17px;top:50%;width:23px;height:23px;display:grid;place-items:center;border-radius:7px;color:#63D8E2;background:rgba(27,174,190,.12);transform:translateY(-50%)}.sync-label{display:inline-flex;align-items:center;gap:6px;color:#70DCE5!important}.sync-label:after{content:"SINCRONIZADO";padding:3px 6px;border-radius:999px;color:#102043;background:#63D8E2;font-size:7px;font-weight:700;letter-spacing:.05em}.synced-deadline small{color:#B4C4D4}
     .pace-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(132,174,214,.16)}.pace-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:12px}.pace-head span{color:#B9C9D8;font-size:12px;font-weight:650}.pace-head small{color:#88A1BA;font-size:10px}.pace-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.pace-card{display:grid;min-width:0;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"label label" "value unit";align-items:baseline;column-gap:7px;padding:15px 16px;border:1px solid rgba(132,174,214,.14);border-radius:12px;background:rgba(17,29,66,.4)}.pace-card span{grid-area:label;display:block;color:#86A5C2;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.pace-card strong{grid-area:value;display:block;margin-top:6px;color:#F1F7FC;font-size:clamp(22px,2vw,26px);font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}.pace-card small{grid-area:unit;display:block;margin-top:0;color:#F1F7FC;font-size:clamp(13px,1.2vw,15px);font-weight:700;line-height:1.2}.plan-summary{margin:13px 0 0;color:#B2C2D1;font-size:12px;line-height:1.55}.plan-prize-note{display:block;margin-top:5px;color:#81D8E1;font-size:11px;font-weight:600;line-height:1.5}
@@ -340,12 +340,12 @@
 
         <article class="card planning-card" aria-live="polite">
           <div class="planning-head">
-            <div class="card-head"><div><span class="section-kicker">PLANEJAMENTO SUGERIDO</span><h2>Ritmo para alcançar a meta</h2></div></div>
-            <p class="planning-note">As sugestões usam o total de MatFin informado e a meta da faixa superior, sempre dentro da data-limite.</p>
+            <div class="card-head"><div><span class="section-kicker">PLANEJAMENTO MENSAL</span><div class="planning-title-row"><h2>Ritmo para alcançar a meta</h2><span class="planning-month-badge" id="planningMonthBadge">Agosto de 2026</span></div></div></div>
+            <p class="planning-note">As sugestões consideram somente a produção e a meta do mês selecionado. Ao trocar o mês, o acompanhamento recomeça com o histórico daquele período.</p>
           </div>
           <div class="plan-overview">
             <div class="plan-overview-item plan-target">
-              <span>Falta para a meta</span>
+              <span id="planRemainingLabel">Falta para a meta de agosto</span>
               <strong><span id="planRemaining">18</span> MatFin</strong>
               <small id="planTargetContext">0 MatFin realizados de uma meta de 30.</small>
             </div>
@@ -353,7 +353,7 @@
               <span class="sync-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/></svg></span>
               <span class="sync-label">Data-limite refletida</span>
               <strong id="planDeadlineText">31/08/2026</strong>
-              <small>Este prazo é o mesmo campo “Data-limite” exibido acima.</small>
+              <small id="planDeadlineContext">Este prazo pertence ao mês selecionado acima.</small>
             </div>
             <div class="plan-overview-item time-remaining">
               <span>Tempo restante</span>
@@ -466,7 +466,7 @@
         contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),modalityEarningsRows:$("#modalityEarningsRows"),goalImpact:$("#goalImpact"),goalImpactTitle:$("#goalImpactTitle"),goalImpactText:$("#goalImpactText"),
         summaryPeriod:$("#summaryPeriod"),grossLabel:$("#grossLabel"),grossValue:$("#grossValue"),releasedLabel:$("#releasedLabel"),releasedValue:$("#releasedValue"),retainedLabel:$("#retainedLabel"),retainedValue:$("#retainedValue"),totalLabel:$("#totalLabel"),totalCaption:$("#totalCaption"),
         dateText:$("#dateText"),progressTrack:$("#progressTrack"),progressFill:$("#progressFill"),progressText:$("#progressText"),progressDetail:$("#progressDetail"),
-        planRemaining:$("#planRemaining"),planTargetContext:$("#planTargetContext"),planDeadlineText:$("#planDeadlineText"),daysRemaining:$("#daysRemaining"),timeBreakdown:$("#timeBreakdown"),monthlySuggestion:$("#monthlySuggestion"),weeklySuggestion:$("#weeklySuggestion"),dailySuggestion:$("#dailySuggestion"),planSummary:$("#planSummary"),planPrizeNote:$("#planPrizeNote"),
+        planningMonthBadge:$("#planningMonthBadge"),planRemainingLabel:$("#planRemainingLabel"),planRemaining:$("#planRemaining"),planTargetContext:$("#planTargetContext"),planDeadlineText:$("#planDeadlineText"),planDeadlineContext:$("#planDeadlineContext"),daysRemaining:$("#daysRemaining"),timeBreakdown:$("#timeBreakdown"),monthlySuggestion:$("#monthlySuggestion"),weeklySuggestion:$("#weeklySuggestion"),dailySuggestion:$("#dailySuggestion"),planSummary:$("#planSummary"),planPrizeNote:$("#planPrizeNote"),
         totalText:$("#totalText"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),menuOverlay:$("#menuOverlay"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
         loginModal:$("#loginModal"),loginPanel:$("#loginPanel"),loginForm:$("#loginForm"),adminPassword:$("#adminPassword"),
         passwordError:$("#passwordError"),adminModal:$("#adminModal"),adminForm:$("#adminForm"),adminProduct:$("#adminProduct"),
@@ -556,6 +556,7 @@
         var rates=mergeRates(product.rates,storedRates||product.rates);var totals={inscritoCount:0,matfinCount:0,matfinEarnings:0};Object.keys(product.rates).forEach(function(key){var rate=rates[key];var count=production[key]||{inscritos:0,matfin:0};var matfinValue=useGoalRate?rate.matfinMeta:rate.matfin;totals.inscritoCount+=safeInteger(count.inscritos,0);totals.matfinCount+=safeInteger(count.matfin,0);totals.matfinEarnings+=safeInteger(count.matfin,0)*matfinValue});return totals;
       }
       function monthLabel(monthKey){var parts=monthKey.split("-").map(Number);var label=new Intl.DateTimeFormat("pt-BR",{month:"long",year:"numeric"}).format(new Date(parts[0],parts[1]-1,1,12));return label.charAt(0).toUpperCase()+label.slice(1)}
+      function planningReferenceDate(monthKey){var parts=monthKey.split("-").map(Number);var firstDay=new Date(parts[0],parts[1]-1,1,12,0,0,0);var now=new Date();var today=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12,0,0,0);return today<firstDay?firstDay:today}
       function semesterMeta(monthKey){var year=Number(monthKey.slice(0,4));var month=Number(monthKey.slice(5,7));var number=month<=6?1:2;var start=number===1?1:7;return{year:year,number:number,start:start,end:start+5,label:number+"º semestre de "+year}}
       function monthlyFinancialData(product,state){
         var rates=mergeRates(product.rates,state.rates);var baseTotals=productionTotals(product,state.production,rates,false);var goalReached=baseTotals.matfinCount>=state.goal;var totals=productionTotals(product,state.production,rates,goalReached);var entries=Object.keys(product.rates).map(function(key){var count=safeInteger((state.production[key]||{}).matfin,0);var rate=goalReached?rates[key].matfinMeta:rates[key].matfin;var gross=count*rate;return{key:key,label:product.rates[key].label,count:count,rate:rate,gross:gross,value:gross*.6}});
@@ -582,26 +583,26 @@
       }
       function counterMarkup(modality,metric,value,label){return '<div class="counter-control"><button class="counter-btn" type="button" data-modality="'+modality+'" data-metric="'+metric+'" data-delta="-1" aria-label="Diminuir '+escapeHTML(label)+'">−</button><input class="counter-input" type="number" min="0" step="1" inputmode="numeric" value="'+safeInteger(value,0)+'" data-modality="'+modality+'" data-metric="'+metric+'" aria-label="'+escapeHTML(label)+'"><button class="counter-btn" type="button" data-modality="'+modality+'" data-metric="'+metric+'" data-delta="1" aria-label="Aumentar '+escapeHTML(label)+'">+</button></div>'}
       function syncProductionFromDOM(){var production=activeTracking().production;$$('.counter-input').forEach(function(input){var modality=input.dataset.modality;var metric=input.dataset.metric;if(production[modality])production[modality][metric]=safeInteger(input.value,0)})}
-      function renderPlanning(goal,achieved,date){
-        var months=monthsUntilDeadline(date);var days=daysUntilDeadline(date);var remaining=Math.max(0,goal-achieved);
-        el.planRemaining.textContent=remaining;el.planTargetContext.textContent=achieved+" MatFin realizados de uma meta de "+goal+".";el.planDeadlineText.textContent=fullDate(date);
+      function renderPlanning(goal,achieved,date,monthKey){
+        var reference=planningReferenceDate(monthKey);var months=monthsUntilDeadline(date,reference);var days=daysUntilDeadline(date,reference);var remaining=Math.max(0,goal-achieved);var periodLabel=monthLabel(monthKey);var monthName=periodLabel.split(" de ")[0].toLowerCase();
+        el.planningMonthBadge.textContent=periodLabel;el.planRemainingLabel.textContent="Falta para a meta de "+monthName;el.planRemaining.textContent=remaining;el.planTargetContext.textContent=achieved+" MatFin realizados em "+monthName+" de uma meta de "+goal+".";el.planDeadlineText.textContent=fullDate(date);el.planDeadlineContext.textContent="Este prazo pertence ao planejamento de "+monthName+".";
         if(days<0){
-          el.daysRemaining.textContent="Prazo encerrado";el.timeBreakdown.textContent="Escolha uma data-limite igual ou posterior a hoje.";
+          el.daysRemaining.textContent="Prazo encerrado";el.timeBreakdown.textContent="O planejamento de "+monthName+" já foi encerrado.";
           [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion].forEach(function(item){item.textContent="--"});
-          el.planSummary.textContent="Não é possível calcular o ritmo porque a data-limite já passou.";el.planPrizeNote.textContent="";return;
+          el.planSummary.textContent="Selecione outro mês para consultar uma nova meta mensal.";el.planPrizeNote.textContent="";return;
         }
         var planningDays=Math.max(1,days);
         el.daysRemaining.textContent=days===0?"Hoje":days+" dias";
         el.timeBreakdown.textContent=formatRemainingPeriod(days);
         if(remaining<1){
           [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion].forEach(function(item){item.textContent="0"});
-          el.planSummary.textContent="A meta de "+goal+" MatFin já foi alcançada.";
+          el.planSummary.textContent="A meta mensal de "+goal+" MatFin já foi alcançada em "+monthName+".";
         }else{
           var pace=paceFor(remaining,months,planningDays);
           el.monthlySuggestion.textContent=pace.monthly;el.weeklySuggestion.textContent=pace.weekly;el.dailySuggestion.textContent=pace.daily;
-          el.planSummary.textContent="Para concluir os "+remaining+" MatFin restantes e alcançar a meta de "+goal+" até "+shortDate(date)+", o ritmo mínimo inteiro é "+pace.daily+" por dia, "+pace.weekly+" por semana ou "+pace.monthly+" por mês.";
+          el.planSummary.textContent="Para concluir os "+remaining+" MatFin restantes de "+monthName+" e alcançar a meta de "+goal+" até "+shortDate(date)+", o ritmo mínimo inteiro é "+pace.daily+" por dia, "+pace.weekly+" por semana ou "+pace.monthly+" no mês.";
         }
-        el.planPrizeNote.textContent=remaining<1?"A faixa superior de valor já está ativa para todas as MatFin do mês.":"Este ritmo considera a meta necessária para ativar a faixa superior de valor.";
+        el.planPrizeNote.textContent=remaining<1?"Os valores atualizados estão ativos somente para as MatFin de "+monthName+".":"Ao iniciar outro mês, uma nova meta e um novo acompanhamento serão utilizados.";
       }
       function render(){
         var p=products[active];var record=sellerInputs[active];var tracking=activeTracking();
@@ -614,7 +615,7 @@
         el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
         el.totalInscritos.textContent=totals.inscritoCount;el.totalMatFin.textContent=totals.matfinCount;renderFinancialSummary(p,record,tracking);
         el.progressFill.style.width=visualProgress+"%";el.progressText.textContent=percent(progress)+"% DE META ALCANÇADA";el.progressDetail.textContent=achieved+" de "+goal+" MatFin";el.progressTrack.setAttribute("aria-valuenow",accessibleProgress);el.progressTrack.setAttribute("aria-valuemax",Math.max(100,accessibleProgress));
-        renderPlanning(goal,achieved,date);
+        renderPlanning(goal,achieved,date,record.selectedMonth);
       }
       function loadMonth(monthKey){
         if(!validMonthKey(monthKey))return;var record=sellerInputs[active];record.selectedMonth=monthKey;var tracking=ensureMonthState(active,monthKey);el.referenceMonth.value=monthKey;el.goal.value=tracking.goal;el.date.value=tracking.date;renderProductionRows(products[active],tracking.production);persistTracking();render();
