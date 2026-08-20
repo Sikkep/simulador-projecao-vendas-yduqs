@@ -249,6 +249,12 @@
     @media(min-width:761px) and (max-width:1250px){.production-header,.production-row,.production-total{grid-template-columns:minmax(82px,1.15fr) minmax(48px,.75fr) 26px minmax(48px,.75fr) 26px minmax(48px,.75fr);gap:4px;padding-right:6px;padding-left:6px}.production-header{font-size:6px}.production-header span:nth-child(3),.production-header span:nth-child(5){font-size:6px}.production-label>strong{font-size:9px}.current-rate-badge{padding-right:4px;padding-left:4px;font-size:6px}.counter-control{grid-template-columns:16px minmax(16px,1fr) 16px}.counter-btn{width:16px;height:29px;font-size:14px}.counter-input{height:29px;font-size:10px}.conversion-cell,.conversion-cell strong{font-size:7px}.production-row,.production-total{padding-top:6px;padding-bottom:6px}}
     @media(max-width:760px){.policy-link{min-height:31px;padding:0 9px;font-size:9px}.production-header{display:none}.production-row,.production-total{grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr) 42px minmax(0,1fr);grid-template-areas:"label label label label label" "inscr conv1 acad conv2 matfin";gap:7px}.production-label{grid-area:label;display:flex;align-items:center;justify-content:space-between;gap:10px}.production-row .metric-inscritos,.production-total .metric-inscritos{grid-area:inscr}.production-row .conversion-inscritos-acad,.production-total .conversion-inscritos-acad{grid-area:conv1}.production-row .metric-matacad,.production-total .metric-matacad{grid-area:acad}.production-row .conversion-acad-matfin,.production-total .conversion-acad-matfin{grid-area:conv2}.production-row .metric-matfin,.production-total .metric-matfin{grid-area:matfin}.production-row,.production-total{padding:10px}.production-row>strong{font-size:10px}.production-row .counter-control{position:relative;margin-top:14px}.production-row .counter-control:before{content:attr(data-stage-label);position:absolute;bottom:calc(100% + 3px);left:0;width:100%;overflow:hidden;color:#718CA7;font-size:7px;font-weight:650;letter-spacing:.04em;text-align:center;text-overflow:ellipsis;white-space:nowrap}.counter-control{grid-template-columns:23px minmax(24px,1fr) 23px}.progress-meta{display:grid;grid-template-columns:1fr auto;align-items:center!important;gap:6px 8px!important}.progress-meta #progressDetail{grid-column:1/-1;text-align:left}.admin-rate-header.consultant-matrix,.admin-rate-row.consultant-matrix{min-width:860px}.results-stage-grid{gap:5px}.results-stage-grid div{padding:8px 6px}}
     @media(max-width:430px){.header{gap:8px}.policy-link span{display:none}.policy-link{width:34px;justify-content:center;padding:0}.production-label{align-items:flex-start;flex-direction:column;gap:5px}.current-rate-badge{font-size:7px}.production-row,.production-total{grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr) 36px minmax(0,1fr);gap:5px}.conversion-cell{font-size:7px}.conversion-cell strong{font-size:9px}.counter-control{grid-template-columns:20px minmax(20px,1fr) 20px}.counter-btn{width:20px}.results-stage-grid strong{font-size:15px}.results-step-conversions{flex-direction:column;gap:3px}}
+    /* Enquadramento consolidado: menos navegação e mais largura para o funil */
+    #adminProductTabs[hidden],#adminProductTabsLabel[hidden]{display:none}
+    @media(min-width:761px){.sidebar{width:220px;padding-right:13px;padding-left:13px}.main{padding-right:28px;padding-left:244px}.wrap{max-width:1320px}.product-btn{padding-right:8px;padding-left:8px}.side-title{padding-right:4px;padding-left:4px}}
+    @media(min-width:761px) and (max-width:1240px){.main{padding-left:236px}}
+    @media(min-width:1121px){.workspace{grid-template-columns:minmax(350px,.96fr) minmax(410px,1.04fr);gap:18px}}
+    @media(max-width:760px){.consultant-list,.results-menu-list{grid-template-columns:1fr}.consultant-list .product-btn,.results-menu-list .product-btn{min-height:62px;flex-direction:row;justify-content:flex-start;gap:10px;padding:10px 13px;text-align:left}.consultant-list .product-icon,.results-menu-list .product-icon{flex:0 0 auto}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -277,15 +283,9 @@
     </div>
     <div id="productMenu">
       <div class="menu-label">CONSULTOR</div>
-      <nav class="product-list" aria-label="Simulações para consultor">
-        <button class="product-btn active" type="button" data-product="consultor_graduacao">
-          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-5 9 5-9 5-9-5Z"/><path d="M7 12.5V17c2.8 2 7.2 2 10 0v-4.5"/></svg></span><span>Graduação</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
-        </button>
-        <button class="product-btn" type="button" data-product="consultor_posGraduacao">
-          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3h8v4H8zM6 7h12v14H6z"/><path d="M9 12h6M9 16h4"/></svg></span><span>Pós-Graduação</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
-        </button>
-        <button class="product-btn" type="button" data-product="consultor_cursoTecnico">
-          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5 5L4 17l3 3 5.7-5.7a4 4 0 0 0 5-5l-2.3 2.3-3-3 2.3-2.3Z"/></svg></span><span>Curso Técnico</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+      <nav class="product-list consultant-list" aria-label="Simulação consolidada para consultor">
+        <button class="product-btn active" type="button" data-product="consultor_geral">
+          <span class="product-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></span><span>Consultor</span><span class="product-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
         </button>
       </nav>
       <div class="menu-label role-menu-label">GERENTE</div>
@@ -443,10 +443,10 @@
           <article class="results-kpi retained"><span>A receber no semestre</span><strong id="resultsRetained">R$ 0,00</strong><small>40% acumulados para o fechamento</small></article>
         </div>
         <div class="results-chart-grid" aria-label="Participação dos produtos nos resultados">
-          <article class="results-chart-card"><div class="results-chart-head"><div><h2>Distribuição de Inscritos</h2><p>Participação de cada produto no total do semestre.</p></div><span class="results-chart-badge">Inscritos</span></div><div id="resultsInscritosChart"></div></article>
-          <article class="results-chart-card"><div class="results-chart-head"><div><h2>Distribuição de MatFin</h2><p>Participação de cada produto nas matrículas finalizadas.</p></div><span class="results-chart-badge">MatFin</span></div><div id="resultsMatfinChart"></div></article>
+          <article class="results-chart-card"><div class="results-chart-head"><div><h2>Distribuição de Inscritos</h2><p id="resultsInscritosDescription">Participação de cada modalidade no total do semestre.</p></div><span class="results-chart-badge">Inscritos</span></div><div id="resultsInscritosChart"></div></article>
+          <article class="results-chart-card"><div class="results-chart-head"><div><h2>Distribuição de MatFin</h2><p id="resultsMatfinDescription">Participação de cada modalidade nas matrículas finalizadas.</p></div><span class="results-chart-badge">MatFin</span></div><div id="resultsMatfinChart"></div></article>
         </div>
-        <div class="results-section-head"><div><span class="section-kicker">DESEMPENHO POR PRODUTO</span><h2>Produção e conversão</h2></div><small id="resultsMonthsCount">0 meses com produção</small></div>
+        <div class="results-section-head"><div><span class="section-kicker" id="resultsBreakdownKicker">DESEMPENHO POR MODALIDADE</span><h2 id="resultsBreakdownTitle">Produção e conversão</h2></div><small id="resultsMonthsCount">0 meses com produção</small></div>
         <div class="results-product-grid" id="resultsProductCards"></div>
       </section>
       <div class="footer">
@@ -490,19 +490,19 @@
       </div>
       <form id="adminForm">
         <div class="modal-body">
-          <p class="modal-description">Selecione o perfil e o curso, defina os parâmetros desejados e salve todas as alterações de uma só vez.</p>
+          <p class="modal-description">Selecione o perfil, defina os parâmetros desejados e salve todas as alterações de uma só vez.</p>
           <span class="admin-section-label">Perfil comercial</span>
           <div class="admin-profile-tabs" id="adminProfileTabs" role="tablist" aria-label="Perfil administrado">
             <button class="admin-profile-tab active" type="button" role="tab" data-admin-profile="consultor">Consultor</button>
             <button class="admin-profile-tab" type="button" role="tab" data-admin-profile="gerente">Gerente</button>
           </div>
-          <span class="admin-section-label">Curso</span>
+          <span class="admin-section-label" id="adminProductTabsLabel">Curso</span>
           <div class="admin-product-tabs" id="adminProductTabs" role="tablist" aria-label="Produto administrado">
             <button class="admin-product-tab active" type="button" role="tab" data-admin-product="graduacao">Graduação</button>
             <button class="admin-product-tab" type="button" role="tab" data-admin-product="posGraduacao">Pós-Graduação</button>
             <button class="admin-product-tab" type="button" role="tab" data-admin-product="cursoTecnico">Curso Técnico</button>
           </div>
-          <div class="admin-banner">Editando parâmetros de <strong id="adminProduct">Consultor • Graduação</strong></div>
+          <div class="admin-banner">Editando parâmetros de <strong id="adminProduct">Consultor • Todos os produtos</strong></div>
           <span class="admin-section-label" id="adminRatesLabel">Política de remuneração</span>
           <small class="admin-policy-hint" id="adminPolicyHint">Os parâmetros abaixo alimentam a faixa exibida no simulador.</small>
           <div class="admin-rates-table" id="adminRatesTable">
@@ -527,7 +527,7 @@
       var STORAGE_KEY="yduqs-sales-simulator-v2";
       var ACTIVE_KEY="yduqs-sales-active-product-v2";
       var PERSONAL_KEY="yduqs-personal-tracking-v1";
-      var ADMIN_PASSWORD="YDUQS@2026";
+      var ADMIN_PASSWORD_HASH="cc038ec8d8ec7a75008f813d5540496c2583c7061296b222d732e263339017b6";
       var CONSULTANT_TIERS=[
         {min:0,label:"0%–49,99%"},{min:.5,label:"50%–79,99%"},{min:.8,label:"80%–99,99%"},{min:1,label:"100%–119,99%"},{min:1.2,label:"120%–149,99%"},{min:1.5,label:"150%–199,99%"},{min:2,label:"200%+"}
       ];
@@ -547,9 +547,7 @@
       };
       var generalRates={geral:{label:"Geral",tiers:[9,18,25,35,42,49,56]}};
       var defaults={
-        consultor_graduacao:{profile:"Consultor",profileKey:"consultor",productKey:"graduacao",name:"Graduação",compensationType:"perMatfin",goal:30,closingDate:"2026-08-31",rates:graduationRates,initialProduction:{medVetOdonto:{inscritos:1,matacad:1,matfin:0},presencialEstrela:{inscritos:0,matacad:0,matfin:0},presencialOutros:{inscritos:2,matacad:2,matfin:1},semipresencial:{inscritos:4,matacad:4,matfin:3},ead:{inscritos:11,matacad:8,matfin:6}}},
-        consultor_posGraduacao:{profile:"Consultor",profileKey:"consultor",productKey:"posGraduacao",name:"Pós-Graduação",compensationType:"perMatfin",goal:20,closingDate:"2026-08-28",rates:generalRates,initialProduction:{geral:{inscritos:14,matacad:10,matfin:8}}},
-        consultor_cursoTecnico:{profile:"Consultor",profileKey:"consultor",productKey:"cursoTecnico",name:"Curso Técnico",compensationType:"perMatfin",goal:35,closingDate:"2026-08-25",rates:generalRates,initialProduction:{geral:{inscritos:24,matacad:17,matfin:12}}},
+        consultor_geral:{profile:"Consultor",profileKey:"consultor",productKey:"geral",name:"Todos os produtos",compensationType:"perMatfin",goal:30,closingDate:"2026-08-31",rates:graduationRates,initialProduction:{medVetOdonto:{inscritos:1,matacad:1,matfin:0},presencialEstrela:{inscritos:0,matacad:0,matfin:0},presencialOutros:{inscritos:2,matacad:2,matfin:1},semipresencial:{inscritos:4,matacad:4,matfin:3},ead:{inscritos:11,matacad:8,matfin:6}}},
         gerente_graduacao:{profile:"Gerente",profileKey:"gerente",productKey:"graduacao",name:"Graduação",compensationType:"salaryPercentage",goal:45,closingDate:"2026-08-31",salary:0,managerTiers:MANAGER_TIERS,rates:graduationRates,initialProduction:{medVetOdonto:{inscritos:2,matacad:2,matfin:1},presencialEstrela:{inscritos:0,matacad:0,matfin:0},presencialOutros:{inscritos:4,matacad:3,matfin:2},semipresencial:{inscritos:7,matacad:6,matfin:4},ead:{inscritos:18,matacad:13,matfin:10}}},
         gerente_posGraduacao:{profile:"Gerente",profileKey:"gerente",productKey:"posGraduacao",name:"Pós-Graduação",compensationType:"salaryPercentage",goal:30,closingDate:"2026-08-28",salary:0,managerTiers:MANAGER_TIERS,rates:generalRates,initialProduction:{geral:{inscritos:20,matacad:15,matfin:11}}},
         gerente_cursoTecnico:{profile:"Gerente",profileKey:"gerente",productKey:"cursoTecnico",name:"Curso Técnico",compensationType:"salaryPercentage",goal:50,closingDate:"2026-08-25",salary:0,managerTiers:MANAGER_TIERS,rates:generalRates,initialProduction:{geral:{inscritos:32,matacad:24,matfin:17}}}
@@ -557,7 +555,7 @@
       var $=function(s){return document.querySelector(s)};
       var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
       var el={
-        main:$(".main"),resultsView:$("#resultsView"),resultsTitle:$("#resultsTitle"),resultsPeriod:$("#resultsPeriod"),resultsMonth:$("#resultsMonth"),resultsTotalMatFin:$("#resultsTotalMatFin"),resultsTotalMatAcad:$("#resultsTotalMatAcad"),resultsTotalInscritos:$("#resultsTotalInscritos"),resultsFunnelConversion:$("#resultsFunnelConversion"),resultsOverallConversion:$("#resultsOverallConversion"),resultsReleased:$("#resultsReleased"),resultsRetained:$("#resultsRetained"),resultsInscritosChart:$("#resultsInscritosChart"),resultsMatfinChart:$("#resultsMatfinChart"),resultsMonthsCount:$("#resultsMonthsCount"),resultsProductCards:$("#resultsProductCards"),
+        main:$(".main"),resultsView:$("#resultsView"),resultsTitle:$("#resultsTitle"),resultsPeriod:$("#resultsPeriod"),resultsMonth:$("#resultsMonth"),resultsTotalMatFin:$("#resultsTotalMatFin"),resultsTotalMatAcad:$("#resultsTotalMatAcad"),resultsTotalInscritos:$("#resultsTotalInscritos"),resultsFunnelConversion:$("#resultsFunnelConversion"),resultsOverallConversion:$("#resultsOverallConversion"),resultsReleased:$("#resultsReleased"),resultsRetained:$("#resultsRetained"),resultsInscritosChart:$("#resultsInscritosChart"),resultsMatfinChart:$("#resultsMatfinChart"),resultsInscritosDescription:$("#resultsInscritosDescription"),resultsMatfinDescription:$("#resultsMatfinDescription"),resultsMonthsCount:$("#resultsMonthsCount"),resultsBreakdownKicker:$("#resultsBreakdownKicker"),resultsBreakdownTitle:$("#resultsBreakdownTitle"),resultsProductCards:$("#resultsProductCards"),
         goal:$("#goal"),date:$("#date"),managerSalaryField:$("#managerSalaryField"),managerSalary:$("#managerSalary"),referenceMonth:$("#referenceMonth"),pageTitle:$("#pageTitle"),productionRows:$("#productionRows"),productionPanelTitle:$("#productionPanelTitle"),productionHint:$("#productionHint"),totalInscritos:$("#totalInscritos"),totalConversionInscritosAcad:$("#totalConversionInscritosAcad"),totalMatAcad:$("#totalMatAcad"),totalConversionAcadMatFin:$("#totalConversionAcadMatFin"),totalMatFin:$("#totalMatFin"),
         contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),modalityEarningsRows:$("#modalityEarningsRows"),goalImpact:$("#goalImpact"),goalImpactTitle:$("#goalImpactTitle"),goalImpactText:$("#goalImpactText"),
         summaryPeriod:$("#summaryPeriod"),grossLabel:$("#grossLabel"),grossValue:$("#grossValue"),releasedLabel:$("#releasedLabel"),releasedValue:$("#releasedValue"),retainedLabel:$("#retainedLabel"),retainedValue:$("#retainedValue"),totalLabel:$("#totalLabel"),totalCaption:$("#totalCaption"),
@@ -566,11 +564,15 @@
         totalText:$("#totalText"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),menuOverlay:$("#menuOverlay"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
         loginModal:$("#loginModal"),loginPanel:$("#loginPanel"),loginForm:$("#loginForm"),adminPassword:$("#adminPassword"),
         passwordError:$("#passwordError"),adminModal:$("#adminModal"),adminForm:$("#adminForm"),adminProduct:$("#adminProduct"),
-        adminRatesTable:$("#adminRatesTable"),adminRatesHeader:$("#adminRatesHeader"),adminRatesLabel:$("#adminRatesLabel"),adminPolicyHint:$("#adminPolicyHint"),adminRatesRows:$("#adminRatesRows"),adminGoal:$("#adminGoal"),adminDate:$("#adminDate"),
+        adminProductTabs:$("#adminProductTabs"),adminProductTabsLabel:$("#adminProductTabsLabel"),adminRatesTable:$("#adminRatesTable"),adminRatesHeader:$("#adminRatesHeader"),adminRatesLabel:$("#adminRatesLabel"),adminPolicyHint:$("#adminPolicyHint"),adminRatesRows:$("#adminRatesRows"),adminGoal:$("#adminGoal"),adminDate:$("#adminDate"),
         toast:$("#toast"),lastUpdate:$("#lastUpdate")
       };
       function cloneDefaults(){return JSON.parse(JSON.stringify(defaults))}
       function safeNumber(value,fallback){var n=Number(value);return Number.isFinite(n)&&n>=0?n:(fallback||0)}
+      async function sha256(value){
+        var digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(value));
+        return Array.from(new Uint8Array(digest),function(byte){return byte.toString(16).padStart(2,"0")}).join("");
+      }
       function safeInteger(value,fallback){return Math.max(0,Math.floor(safeNumber(value,fallback)))}
       function escapeHTML(value){return String(value).replace(/[&<>"']/g,function(char){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]})}
       function mergeRates(defaultRates,storedRates){
@@ -587,13 +589,14 @@
           var stored=JSON.parse(localStorage.getItem(STORAGE_KEY));
           if(!stored||typeof stored!=="object")return cloneDefaults();
           var result=cloneDefaults();
-          Object.keys(result).forEach(function(key){var saved=stored[key]||{};result[key]=Object.assign(result[key],saved,{name:defaults[key].name,profile:defaults[key].profile,profileKey:defaults[key].profileKey,productKey:defaults[key].productKey,compensationType:defaults[key].compensationType,initialProduction:defaults[key].initialProduction});result[key].rates=mergeRates(defaults[key].rates,saved.rates);result[key].salary=safeNumber(saved.salary,defaults[key].salary||0);result[key].managerTiers=mergeManagerTiers(defaults[key].managerTiers||[],saved.managerTiers)});
+          Object.keys(result).forEach(function(key){var saved=stored[key]||(key==="consultor_geral"?stored.consultor_graduacao:null)||{};result[key]=Object.assign(result[key],saved,{name:defaults[key].name,profile:defaults[key].profile,profileKey:defaults[key].profileKey,productKey:defaults[key].productKey,compensationType:defaults[key].compensationType,initialProduction:defaults[key].initialProduction});result[key].rates=mergeRates(defaults[key].rates,saved.rates);result[key].salary=safeNumber(saved.salary,defaults[key].salary||0);result[key].managerTiers=mergeManagerTiers(defaults[key].managerTiers||[],saved.managerTiers)});
           return result;
         }catch(error){return cloneDefaults()}
       }
       var products=loadProducts();
       var active=localStorage.getItem(ACTIVE_KEY);
-      if(!products[active])active="consultor_graduacao";
+      if(active&&active.indexOf("consultor_")===0)active="consultor_geral";
+      if(!products[active])active="consultor_geral";
       var sellerInputs={};
       var summaryView="monthly";
       var adminDraft=null;
@@ -620,15 +623,29 @@
         return result;
       }
       function normalizeMonthState(product,monthKey,saved,useInitial){saved=saved||{};return{goal:Math.max(1,safeInteger(saved.goal,product.goal)),date:saved.date||dateForMonth(product,monthKey),salary:safeNumber(saved.salary,product.salary||0),production:normalizeProduction(product,saved.production,saved.achieved,useInitial),rates:mergeRates(product.rates,saved.rates||product.rates),managerTiers:mergeManagerTiers(product.managerTiers||[],saved.managerTiers||product.managerTiers)}}
+      function consolidatedConsultantTracking(product,tracking){
+        if(tracking.consultor_geral)return tracking.consultor_geral;
+        var legacyKeys=["consultor_graduacao","consultor_posGraduacao","consultor_cursoTecnico"];var legacyRecords=legacyKeys.map(function(key){return tracking[key]}).filter(Boolean);if(!legacyRecords.length)return{};
+        function recordMonth(record,monthKey){if(record.months&&record.months[monthKey])return record.months[monthKey];return record.selectedMonth===monthKey?record:null}
+        var selected=legacyRecords.map(function(record){return record.selectedMonth}).filter(validMonthKey)[0]||defaultMonthKey(product);var monthSet={};
+        legacyRecords.forEach(function(record){if(record.months&&typeof record.months==="object")Object.keys(record.months).forEach(function(monthKey){if(validMonthKey(monthKey))monthSet[monthKey]=true});else if(validMonthKey(record.selectedMonth))monthSet[record.selectedMonth]=true});if(!Object.keys(monthSet).length)monthSet[selected]=true;
+        var months={};Object.keys(monthSet).forEach(function(monthKey){
+          var graduationState=recordMonth(tracking.consultor_graduacao||{},monthKey);var fallbackState=graduationState||legacyRecords.map(function(record){return recordMonth(record,monthKey)}).filter(Boolean)[0]||{};var production=normalizeProduction(product,graduationState&&graduationState.production,graduationState&&graduationState.achieved,false);
+          ["consultor_posGraduacao","consultor_cursoTecnico"].forEach(function(key){var state=recordMonth(tracking[key]||{},monthKey);if(!state)return;var stageTotals={inscritos:0,matacad:0,matfin:0};Object.keys(state.production||{}).forEach(function(modality){var count=state.production[modality]||{};var matfin=safeInteger(count.matfin,0);stageTotals.inscritos+=safeInteger(count.inscritos,0);stageTotals.matacad+=count.matacad===undefined?matfin:safeInteger(count.matacad,0);stageTotals.matfin+=matfin});if(!Object.keys(state.production||{}).length&&safeInteger(state.achieved,0)>0){stageTotals.matacad=safeInteger(state.achieved,0);stageTotals.matfin=safeInteger(state.achieved,0)}production.ead.inscritos+=stageTotals.inscritos;production.ead.matacad+=stageTotals.matacad;production.ead.matfin+=stageTotals.matfin});
+          months[monthKey]={goal:Math.max(1,safeInteger(fallbackState.goal,product.goal)),date:fallbackState.date||dateForMonth(product,monthKey),production:production,rates:graduationState&&graduationState.rates||product.rates};
+        });
+        if(!months[selected])selected=Object.keys(months).sort().slice(-1)[0];return{selectedMonth:selected,months:months};
+      }
+      var consultantTracking=consolidatedConsultantTracking(products.consultor_geral,savedTracking);
       Object.keys(products).forEach(function(key){
-        var p=products[key];var saved=savedTracking[key]||{};var baseMonth=defaultMonthKey(p);var selected=validMonthKey(saved.selectedMonth)?saved.selectedMonth:baseMonth;var months={};
+        var p=products[key];var saved=(key==="consultor_geral"?consultantTracking:savedTracking[key])||{};var baseMonth=defaultMonthKey(p);var selected=validMonthKey(saved.selectedMonth)?saved.selectedMonth:baseMonth;var months={};
         if(saved.months&&typeof saved.months==="object")Object.keys(saved.months).forEach(function(monthKey){if(validMonthKey(monthKey))months[monthKey]=normalizeMonthState(p,monthKey,saved.months[monthKey],false)});
         else months[selected]=normalizeMonthState(p,selected,saved,true);
         if(!months[selected])months[selected]=normalizeMonthState(p,selected,null,false);
         sellerInputs[key]={selectedMonth:selected,months:months};
       });
       var activeResultsProfile="consultor";
-      var resultsMonths={consultor:sellerInputs.consultor_graduacao.selectedMonth,gerente:sellerInputs.gerente_graduacao.selectedMonth};
+      var resultsMonths={consultor:sellerInputs.consultor_geral.selectedMonth,gerente:sellerInputs.gerente_graduacao.selectedMonth};
       function ensureMonthState(productKey,monthKey){var record=sellerInputs[productKey];if(!record.months[monthKey])record.months[monthKey]=normalizeMonthState(products[productKey],monthKey,null,false);return record.months[monthKey]}
       function activeTracking(){var record=sellerInputs[active];return ensureMonthState(active,record.selectedMonth)}
       function persistTracking(){try{localStorage.setItem(PERSONAL_KEY,JSON.stringify(sellerInputs))}catch(error){}}
@@ -705,13 +722,18 @@
         Object.keys(record.months).sort().forEach(function(monthKey){var month=Number(monthKey.slice(5,7));if(Number(monthKey.slice(0,4))!==meta.year||month<meta.start||month>meta.end)return;var state=record.months[monthKey];var data=monthlyFinancialData(product,state);result.inscritos+=data.totals.inscritoCount;result.matacad+=data.totals.matacadCount;result.matfin+=data.totals.matfinCount;result.released+=data.released;result.retained+=data.retained;if(data.totals.inscritoCount>0||data.totals.matacadCount>0||data.totals.matfinCount>0){result.months++;monthsSeen[monthKey]=true}});
         result.conversionInscritosAcad=conversionPercent(result.matacad,result.inscritos);result.conversionAcadMatFin=conversionPercent(result.matfin,result.matacad);result.conversion=conversionPercent(result.matfin,result.inscritos);return result;
       }
+      function consultantModalityResultsForSemester(meta,monthsSeen){
+        var product=products.consultor_geral;var record=sellerInputs.consultor_geral;var results={};Object.keys(product.rates).forEach(function(key){results[key]={key:key,name:product.rates[key].label,inscritos:0,matacad:0,matfin:0,released:0,retained:0,months:0}});
+        Object.keys(record.months).sort().forEach(function(monthKey){var month=Number(monthKey.slice(5,7));if(Number(monthKey.slice(0,4))!==meta.year||month<meta.start||month>meta.end)return;var state=record.months[monthKey];var financial=monthlyFinancialData(product,state);var monthHasProduction=false;Object.keys(product.rates).forEach(function(key){var count=state.production[key]||{};var item=results[key];var inscritos=safeInteger(count.inscritos,0);var matacad=safeInteger(count.matacad,0);var matfin=safeInteger(count.matfin,0);var entry=financial.entries.filter(function(financialEntry){return financialEntry.key===key})[0];item.inscritos+=inscritos;item.matacad+=matacad;item.matfin+=matfin;item.released+=entry?entry.gross*.6:0;item.retained+=entry?entry.gross*.4:0;if(inscritos>0||matacad>0||matfin>0){item.months++;monthHasProduction=true}});if(monthHasProduction)monthsSeen[monthKey]=true});
+        return Object.keys(product.rates).map(function(key){var item=results[key];item.conversionInscritosAcad=conversionPercent(item.matacad,item.inscritos);item.conversionAcadMatFin=conversionPercent(item.matfin,item.matacad);item.conversion=conversionPercent(item.matfin,item.inscritos);return item});
+      }
       function renderDonutChart(target,cards,metric,total,label){
-        var colors=["#55D3DE","#2F7CF6","#79A9FF"];var cursor=0;var segments=cards.map(function(item,index){var value=item[metric];var share=total>0?value/total*100:0;var start=cursor;cursor+=share;return {name:item.name,value:value,share:share,color:colors[index%colors.length],start:start,end:cursor}});var background=total>0?"conic-gradient("+segments.map(function(item){return item.color+" "+item.start.toFixed(3)+"% "+item.end.toFixed(3)+"%"}).join(",")+")":"rgba(126,168,210,.11)";var summary=segments.map(function(item){return item.name+": "+item.value+" ("+percent(item.share)+"%)"}).join("; ");
+        var colors=["#55D3DE","#2F7CF6","#79A9FF","#7C63E8","#44B98A"];var cursor=0;var segments=cards.map(function(item,index){var value=item[metric];var share=total>0?value/total*100:0;var start=cursor;cursor+=share;return {name:item.name,value:value,share:share,color:colors[index%colors.length],start:start,end:cursor}});var background=total>0?"conic-gradient("+segments.map(function(item){return item.color+" "+item.start.toFixed(3)+"% "+item.end.toFixed(3)+"%"}).join(",")+")":"rgba(126,168,210,.11)";var summary=segments.map(function(item){return item.name+": "+item.value+" ("+percent(item.share)+"%)"}).join("; ");
         target.innerHTML='<div class="donut-layout"><div class="donut-chart" role="img" aria-label="'+escapeHTML(label+". "+(total>0?summary:"Sem dados no período"))+'" style="background:'+background+'">'+(total>0?'<div class="donut-center"><strong>'+total+'</strong><span>'+escapeHTML(label)+'</span></div>':'<span class="donut-empty">Sem dados no período</span>')+'</div><div class="donut-legend">'+segments.map(function(item){return '<div class="donut-legend-item"><i class="donut-swatch" style="background:'+item.color+'"></i><span class="donut-legend-copy"><strong>'+escapeHTML(item.name)+'</strong><small>'+item.value+' '+escapeHTML(label.toLowerCase())+'</small></span><span class="donut-share">'+percent(item.share)+'%<small>do total</small></span></div>'}).join("")+'</div></div>';
       }
       function renderResults(profileKey){
-        var monthKey=resultsMonths[profileKey];var meta=semesterMeta(monthKey);var monthsSeen={};var productKeys=Object.keys(products).filter(function(key){return products[key].profileKey===profileKey});var cards=productKeys.map(function(key){return productResultsForSemester(key,meta,monthsSeen)});var total=cards.reduce(function(acc,item){acc.inscritos+=item.inscritos;acc.matacad+=item.matacad;acc.matfin+=item.matfin;acc.released+=item.released;acc.retained+=item.retained;return acc},{inscritos:0,matacad:0,matfin:0,released:0,retained:0});var conversion=conversionPercent(total.matfin,total.inscritos);var conversionInscritosAcad=conversionPercent(total.matacad,total.inscritos);var conversionAcadMatFin=conversionPercent(total.matfin,total.matacad);var profileLabel=profileKey==="gerente"?"Gerente":"Consultor";var monthsCount=Object.keys(monthsSeen).length;
-        el.resultsTitle.textContent="Resultados";el.resultsPeriod.textContent=profileLabel+" • "+meta.label+" • consolidação dos três produtos";el.resultsMonth.value=monthKey;el.resultsTotalMatFin.textContent=total.matfin;el.resultsTotalInscritos.textContent=total.inscritos+" inscritos";el.resultsTotalMatAcad.textContent=total.matacad+" Mat. Acad.";el.resultsOverallConversion.textContent=percent(conversion)+"%";el.resultsFunnelConversion.textContent="Inscritos → Acad. "+percent(conversionInscritosAcad)+"% • Acad. → MatFin "+percent(conversionAcadMatFin)+"%";el.resultsReleased.textContent="R$ "+numberOnly(total.released);el.resultsRetained.textContent="R$ "+numberOnly(total.retained);el.resultsMonthsCount.textContent=monthsCount+(monthsCount===1?" mês com produção":" meses com produção");renderDonutChart(el.resultsInscritosChart,cards,"inscritos",total.inscritos,"Inscritos");renderDonutChart(el.resultsMatfinChart,cards,"matfin",total.matfin,"MatFin");
+        var monthKey=resultsMonths[profileKey];var meta=semesterMeta(monthKey);var monthsSeen={};var consultantView=profileKey==="consultor";var productKeys=Object.keys(products).filter(function(key){return products[key].profileKey===profileKey});var cards=consultantView?consultantModalityResultsForSemester(meta,monthsSeen):productKeys.map(function(key){return productResultsForSemester(key,meta,monthsSeen)});var total=cards.reduce(function(acc,item){acc.inscritos+=item.inscritos;acc.matacad+=item.matacad;acc.matfin+=item.matfin;acc.released+=item.released;acc.retained+=item.retained;return acc},{inscritos:0,matacad:0,matfin:0,released:0,retained:0});var conversion=conversionPercent(total.matfin,total.inscritos);var conversionInscritosAcad=conversionPercent(total.matacad,total.inscritos);var conversionAcadMatFin=conversionPercent(total.matfin,total.matacad);var profileLabel=profileKey==="gerente"?"Gerente":"Consultor";var monthsCount=Object.keys(monthsSeen).length;
+        el.resultsTitle.textContent="Resultados";el.resultsPeriod.textContent=profileLabel+" • "+meta.label+" • "+(consultantView?"consolidação por modalidade":"consolidação dos três produtos");el.resultsBreakdownKicker.textContent=consultantView?"DESEMPENHO POR MODALIDADE":"DESEMPENHO POR PRODUTO";el.resultsBreakdownTitle.textContent=consultantView?"Produção consolidada":"Produção e conversão";el.resultsInscritosDescription.textContent="Participação de cada "+(consultantView?"modalidade":"produto")+" no total do semestre.";el.resultsMatfinDescription.textContent="Participação de cada "+(consultantView?"modalidade":"produto")+" nas matrículas finalizadas.";el.resultsMonth.value=monthKey;el.resultsTotalMatFin.textContent=total.matfin;el.resultsTotalInscritos.textContent=total.inscritos+" inscritos";el.resultsTotalMatAcad.textContent=total.matacad+" Mat. Acad.";el.resultsOverallConversion.textContent=percent(conversion)+"%";el.resultsFunnelConversion.textContent="Inscritos → Acad. "+percent(conversionInscritosAcad)+"% • Acad. → MatFin "+percent(conversionAcadMatFin)+"%";el.resultsReleased.textContent="R$ "+numberOnly(total.released);el.resultsRetained.textContent="R$ "+numberOnly(total.retained);el.resultsMonthsCount.textContent=monthsCount+(monthsCount===1?" mês com produção":" meses com produção");renderDonutChart(el.resultsInscritosChart,cards,"inscritos",total.inscritos,"Inscritos");renderDonutChart(el.resultsMatfinChart,cards,"matfin",total.matfin,"MatFin");
         el.resultsProductCards.innerHTML=cards.map(function(item){var bar=Math.min(100,item.conversion);return '<article class="results-product-card"><div class="results-product-head"><h3>'+escapeHTML(item.name)+'</h3><span>'+item.months+(item.months===1?' mês':' meses')+'</span></div><div class="results-stage-grid"><div><span>Inscritos</span><strong>'+item.inscritos+'</strong></div><div><span>Mat. Acad.</span><strong>'+item.matacad+'</strong></div><div><span>MatFin</span><strong>'+item.matfin+'</strong></div></div><div class="results-step-conversions"><span>Inscritos → Acad. <strong>'+percent(item.conversionInscritosAcad)+'%</strong></span><span>Acad. → MatFin <strong>'+percent(item.conversionAcadMatFin)+'%</strong></span></div><div class="conversion-track" role="progressbar" aria-label="Conversão total de '+escapeHTML(item.name)+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+Number(item.conversion.toFixed(2))+'"><span style="width:'+bar+'%"></span></div><div class="results-product-foot"><div><span>Recebido · 60%</span><strong>R$ '+numberOnly(item.released)+'</strong></div><div><span>Retido · 40%</span><strong>R$ '+numberOnly(item.retained)+'</strong></div></div></article>'}).join("");
       }
       function selectResultsProfile(profileKey){
@@ -722,7 +744,7 @@
       }
       function currentRateLabel(product,state,key){var totals=productionTotals(product,state.production);var attainment=totals.matfinCount/Math.max(1,state.goal);if(product.compensationType==="salaryPercentage"){var manager=managerTierData(product,state,attainment);return percent(manager.tier.multiplier*100)+"% do salário • "+manager.label}var consultant=consultantTierData(product,state,attainment);return "R$ "+numberOnly(consultant.rates[key].tiers[consultant.index])+" / MatFin • "+consultant.label}
       function renderProductionRows(product,production,state){
-        state=state||activeTracking();var isGraduation=product.productKey==="graduacao";el.productionPanelTitle.textContent=isGraduation?"Produção por modalidade":"Produção geral";el.productionHint.textContent="Informe Inscritos, Matrícula Acadêmica e Matrícula Financeira para acompanhar as conversões.";
+        state=state||activeTracking();var hasModalities=Object.keys(product.rates).length>1;el.productionPanelTitle.textContent=hasModalities?"Produção por modalidade":"Produção geral";el.productionHint.textContent="Informe Inscritos, Matrícula Acadêmica e Matrícula Financeira para acompanhar as conversões.";
         el.productionRows.innerHTML=Object.keys(product.rates).map(function(key){var label=product.rates[key].label;var count=production[key];var conversionOne=conversionPercent(count.matacad,count.inscritos);var conversionTwo=conversionPercent(count.matfin,count.matacad);return '<div class="production-row"><span class="production-label"><strong>'+escapeHTML(label)+'</strong><small class="current-rate-badge" data-rate-badge="'+key+'">'+escapeHTML(currentRateLabel(product,state,key))+'</small></span>'+counterMarkup(key,"inscritos",count.inscritos,"Inscritos — "+label)+'<span class="conversion-cell conversion-inscritos-acad" data-conversion="inscritos-acad" data-modality="'+key+'"><strong>'+percent(conversionOne)+'%</strong><small>I → Acad.</small></span>'+counterMarkup(key,"matacad",count.matacad,"Matrículas acadêmicas — "+label)+'<span class="conversion-cell conversion-acad-matfin" data-conversion="acad-matfin" data-modality="'+key+'"><strong>'+percent(conversionTwo)+'%</strong><small>Acad. → Fin.</small></span>'+counterMarkup(key,"matfin",count.matfin,"Matrículas financeiras — "+label)+'</div>'}).join("");
       }
       function updateProductionIndicators(product,state){Object.keys(product.rates).forEach(function(key){var count=state.production[key]||{};var badge=el.productionRows.querySelector('[data-rate-badge="'+key+'"]');var first=el.productionRows.querySelector('[data-conversion="inscritos-acad"][data-modality="'+key+'"] strong');var second=el.productionRows.querySelector('[data-conversion="acad-matfin"][data-modality="'+key+'"] strong');if(badge)badge.textContent=currentRateLabel(product,state,key);if(first)first.textContent=percent(conversionPercent(count.matacad,count.inscritos))+"%";if(second)second.textContent=percent(conversionPercent(count.matfin,count.matacad))+"%"})}
@@ -805,12 +827,12 @@
         if(keepVisibleChanges)saveVisibleAdminFields();
         adminEditing=key;
         var p=adminDraft[key];
-        el.adminProduct.textContent=p.profile+" • "+p.name;renderAdminRates(p);el.adminGoal.value=p.goal;el.adminDate.value=p.closingDate;
+        var consolidated=p.profileKey==="consultor";el.adminProductTabs.hidden=consolidated;el.adminProductTabsLabel.hidden=consolidated;el.adminProduct.textContent=p.profile+" • "+p.name;renderAdminRates(p);el.adminGoal.value=p.goal;el.adminDate.value=p.closingDate;
         $$(".admin-profile-tab").forEach(function(btn){
           var on=btn.dataset.adminProfile===p.profileKey;btn.classList.toggle("active",on);btn.setAttribute("aria-selected",on?"true":"false");
         });
         $$(".admin-product-tab").forEach(function(btn){
-          var on=btn.dataset.adminProduct===p.productKey;btn.classList.toggle("active",on);btn.setAttribute("aria-selected",on?"true":"false");
+          var on=!consolidated&&btn.dataset.adminProduct===p.productKey;btn.classList.toggle("active",on);btn.setAttribute("aria-selected",on?"true":"false");
         });
       }
       function openAdmin(){
@@ -848,14 +870,14 @@
       el.adminAccess.addEventListener("click",requestAdminAccess);
       el.qSecret.addEventListener("dblclick",requestAdminAccess);
       $$(".admin-profile-tab").forEach(function(btn){btn.addEventListener("click",function(){
-        var productKey=adminDraft[adminEditing].productKey;selectAdminProduct(btn.dataset.adminProfile+"_"+productKey,true);
+        var profileKey=btn.dataset.adminProfile;if(profileKey==="consultor")selectAdminProduct("consultor_geral",true);else{var productKey=adminDraft[adminEditing].profileKey==="gerente"?adminDraft[adminEditing].productKey:"graduacao";selectAdminProduct("gerente_"+productKey,true)}
       })});
       $$(".admin-product-tab").forEach(function(btn){btn.addEventListener("click",function(){
-        var profileKey=adminDraft[adminEditing].profileKey;selectAdminProduct(profileKey+"_"+btn.dataset.adminProduct,true);
+        selectAdminProduct("gerente_"+btn.dataset.adminProduct,true);
       })});
-      el.loginForm.addEventListener("submit",function(event){
+      el.loginForm.addEventListener("submit",async function(event){
         event.preventDefault();
-        if(el.adminPassword.value===ADMIN_PASSWORD){sessionStorage.setItem("yduqs-admin-unlocked","true");openAdmin();return}
+        if(await sha256(el.adminPassword.value)===ADMIN_PASSWORD_HASH){sessionStorage.setItem("yduqs-admin-unlocked","true");openAdmin();return}
         el.passwordError.textContent="Senha incorreta. Tente novamente.";el.loginPanel.classList.remove("shake");
         void el.loginPanel.offsetWidth;el.loginPanel.classList.add("shake");el.adminPassword.select();
       });
