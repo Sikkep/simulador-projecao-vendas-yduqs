@@ -262,6 +262,11 @@
     @media(min-width:1251px){.production-header,.production-row,.production-total{grid-template-columns:minmax(220px,1.4fr) repeat(3,minmax(120px,.82fr)) repeat(2,minmax(90px,.62fr));gap:11px;padding-right:16px;padding-left:16px}.production-header{padding-top:11px;padding-bottom:11px;font-size:9px}.production-header span:nth-child(5),.production-header span:nth-child(6){font-size:8px}.production-row{min-height:58px;padding-top:8px;padding-bottom:8px}.production-label>strong{font-size:13px;line-height:1.35}.current-rate-badge{padding:4px 7px;font-size:9px}.counter-control{grid-template-columns:34px minmax(50px,1fr) 34px;border-radius:10px}.counter-btn{width:34px;height:40px;font-size:18px}.counter-input{height:40px;font-size:15px}.conversion-cell{min-height:40px;padding:6px 7px;border:1px solid rgba(85,211,222,.12);border-radius:10px;background:rgba(27,174,190,.055)}.conversion-cell strong{font-size:15px;line-height:1}.conversion-cell small{margin-top:4px;font-size:8px;line-height:1.2}.production-total{padding-top:11px;padding-bottom:11px}.production-total b{font-size:15px}.production-total small{font-size:9px}.production-total .conversion-cell strong{font-size:15px}}
     @media(min-width:761px) and (max-width:1050px){.result-card #modalityEarningsRows{grid-template-columns:1fr}.result-card .projection{grid-column:1/-1}.manager-list{grid-template-columns:1fr}.manager-list .product-btn{min-height:62px}}
     @media(max-width:760px){.consultant-list,.manager-list,.results-menu-list{grid-template-columns:1fr}.manager-list .product-btn{min-height:62px;flex-direction:row;justify-content:flex-start;gap:10px;padding:10px 13px;text-align:left}.manager-list .product-icon{flex:0 0 auto}.result-card .total{align-items:flex-start;flex-direction:column;padding:15px}.result-card #modalityEarningsRows{grid-template-columns:1fr}.result-card .projection{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px}}
+    /* Duas metas mensais: MatFin e Matrícula Acadêmica */
+    .goal-deadline-fields{grid-template-columns:repeat(3,minmax(0,1fr))}.goal-deadline-fields .manager-salary-field{grid-column:1/-1}.progress-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.goal-progress-card{min-width:0;padding:14px 15px 12px;border:1px solid rgba(118,160,205,.14);border-radius:12px;background:rgba(17,29,66,.3)}.goal-progress-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.goal-progress-head strong{color:#DDE9F6;font-size:11px;font-weight:700}.goal-progress-head span{color:#75DFE8;font-size:11px;font-weight:700;white-space:nowrap}.goal-progress-card .progress-meta{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px;margin-top:5px}.goal-progress-card .progress-meta>span:last-child{min-width:0;text-align:right}.goal-progress-card .progress-meta #progressDetail{grid-column:auto;text-align:right}.goal-progress-card.stage-progress .progress-track span{background:#E2A13B;box-shadow:0 0 18px rgba(226,161,59,.28)}.goal-progress-card.stage-near .progress-track span{background:#F2D35B;box-shadow:0 0 18px rgba(242,211,91,.26)}.goal-progress-card.stage-hit .progress-track span{background:#55D3DE;box-shadow:0 0 20px rgba(85,211,222,.34)}.goal-progress-card.stage-progress .progress-stage{color:#F2C77E!important;background:rgba(226,161,59,.1)}.goal-progress-card.stage-near .progress-stage{color:#F6DE7E!important;background:rgba(242,211,91,.1)}.goal-progress-card.stage-hit .progress-stage{color:#78E0E8!important;background:rgba(85,211,222,.1)}
+    .plan-overview.dual-goals{grid-template-columns:repeat(2,minmax(0,1fr))}.plan-overview.dual-goals .synced-deadline,.plan-overview.dual-goals .time-remaining{grid-column:auto}.plan-academic-target strong{color:#93E6EC}.pace-card{display:block}.pace-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.pace-values strong{display:flex!important;min-width:0;align-items:baseline;gap:5px;margin:0!important;padding:8px 9px;border:1px solid rgba(118,160,205,.11);border-radius:8px;background:rgba(17,29,66,.34)}.pace-values strong b{color:#F1F7FC;font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}.pace-values strong small{display:block!important;margin:0!important;color:#A8BDD0!important;font-size:10px!important;font-weight:600!important}.admin-base-fields{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media(max-width:760px){.goal-deadline-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.goal-deadline-fields .field:nth-child(3){grid-column:1/-1}.progress-grid{grid-template-columns:1fr}.plan-overview.dual-goals{grid-template-columns:repeat(2,minmax(0,1fr))}.plan-overview.dual-goals .synced-deadline,.plan-overview.dual-goals .time-remaining{grid-column:auto}.admin-base-fields{grid-template-columns:1fr}.goal-progress-card .progress-meta{grid-template-columns:auto minmax(0,1fr)}}
+    @media(max-width:430px){.goal-deadline-fields{grid-template-columns:1fr}.goal-deadline-fields .field:nth-child(3){grid-column:auto}.plan-overview.dual-goals{grid-template-columns:1fr}.pace-grid{grid-template-columns:1fr}.pace-values strong b{font-size:20px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -333,8 +338,12 @@
           <div class="quantity-field">
             <div class="expectation-fields goal-deadline-fields">
               <div class="field">
-                <label for="goal">Meta para aumentar o valor</label>
+                <label for="goal">Meta mensal de MatFin</label>
                 <div class="input-wrap"><input id="goal" type="number" min="1" step="1" value="30" inputmode="numeric"><span class="affix">MatFin</span></div>
+              </div>
+              <div class="field">
+                <label for="academicGoal">Meta mensal de Matrícula Acadêmica</label>
+                <div class="input-wrap"><input id="academicGoal" type="number" min="1" step="1" value="30" inputmode="numeric"><span class="affix">Mat. Acad.</span></div>
               </div>
               <div class="field">
                 <label for="date">Data-limite</label>
@@ -362,9 +371,20 @@
               </div>
             </section>
             <div class="progress-block" aria-live="polite">
-              <div class="progress-track" role="progressbar" aria-label="Percentual da meta de MatFin alcançada" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><span id="progressFill"></span></div>
-              <div class="progress-milestones" id="progressMilestones" aria-hidden="true"><span style="left:50%">50%</span><span style="left:80%">80%</span><span style="left:100%">100%</span></div>
-              <div class="progress-meta"><strong id="progressText">0% DE META ALCANÇADA</strong><span class="progress-stage" id="progressStage">Abaixo de 50%</span><span id="progressDetail">0 de 30 MatFin</span></div>
+              <div class="progress-grid">
+                <section class="goal-progress-card" id="financialProgressCard">
+                  <div class="goal-progress-head"><strong>Meta de MatFin</strong><span id="progressText">0%</span></div>
+                  <div class="progress-track" role="progressbar" aria-label="Percentual da meta de MatFin alcançada" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><span id="progressFill"></span></div>
+                  <div class="progress-milestones" id="progressMilestones" aria-hidden="true"><span style="left:50%">50%</span><span style="left:80%">80%</span><span style="left:100%">100%</span></div>
+                  <div class="progress-meta"><span class="progress-stage" id="progressStage">Abaixo de 50%</span><span id="progressDetail">0 de 30 MatFin</span></div>
+                </section>
+                <section class="goal-progress-card" id="academicProgressCard">
+                  <div class="goal-progress-head"><strong>Meta de Matrícula Acadêmica</strong><span id="academicProgressText">0%</span></div>
+                  <div class="progress-track" role="progressbar" aria-label="Percentual da meta de Matrícula Acadêmica alcançada" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="academicProgressTrack"><span id="academicProgressFill"></span></div>
+                  <div class="progress-milestones" id="academicProgressMilestones" aria-hidden="true"><span style="left:50%">50%</span><span style="left:80%">80%</span><span style="left:100%">100%</span></div>
+                  <div class="progress-meta"><span class="progress-stage" id="academicProgressStage">Abaixo de 50%</span><span id="academicProgressDetail">0 de 30 Mat. Acad.</span></div>
+                </section>
+              </div>
             </div>
           </div>
         </article>
@@ -386,7 +406,7 @@
           <div class="projection-list">
             <div id="modalityEarningsRows"></div>
           </div>
-          <div class="goal-impact" id="goalImpact"><span class="goal-impact-icon" aria-hidden="true">↑</span><span><strong id="goalImpactTitle">Atualização dos valores</strong><small id="goalImpactText">O valor por MatFin aumenta quando a meta mensal é atingida.</small></span></div>
+          <div class="goal-impact" id="goalImpact"><span class="goal-impact-icon" aria-hidden="true">↑</span><span><strong id="goalImpactTitle">Atualização dos valores</strong><small id="goalImpactText">A faixa é definida pelo menor atingimento entre as metas de MatFin e Matrícula Acadêmica.</small></span></div>
           <div class="total">
             <span class="total-copy"><span class="total-label" id="totalLabel">Total a receber no mês</span><small id="totalCaption">Projeção calculada até <strong id="dateText">31/08</strong></small></span>
             <span class="total-value" id="totalText"><span class="currency">R$</span><span class="amount">3.240,00</span></span>
@@ -396,13 +416,18 @@
         <article class="card planning-card" aria-live="polite">
           <div class="planning-head">
             <div class="card-head"><div><span class="section-kicker">PLANEJAMENTO MENSAL</span><div class="planning-title-row"><h2>Ritmo para alcançar a meta</h2><span class="planning-month-badge" id="planningMonthBadge">Agosto de 2026</span></div></div></div>
-            <p class="planning-note">As sugestões consideram somente a produção e a meta do mês selecionado. Ao trocar o mês, o acompanhamento recomeça com o histórico daquele período.</p>
+            <p class="planning-note">As sugestões consideram separadamente as metas de MatFin e Matrícula Acadêmica do mês selecionado.</p>
           </div>
-          <div class="plan-overview">
+          <div class="plan-overview dual-goals">
             <div class="plan-overview-item plan-target">
-              <span id="planRemainingLabel">Falta para a meta de agosto</span>
+              <span id="planRemainingLabel">Falta para a meta de MatFin</span>
               <strong><span id="planRemaining">18</span> MatFin</strong>
               <small id="planTargetContext">0 MatFin realizados de uma meta de 30.</small>
+            </div>
+            <div class="plan-overview-item plan-target plan-academic-target">
+              <span id="planAcademicRemainingLabel">Falta para a meta acadêmica</span>
+              <strong><span id="planAcademicRemaining">18</span> Mat. Acad.</strong>
+              <small id="planAcademicTargetContext">0 matrículas acadêmicas realizadas de uma meta de 30.</small>
             </div>
             <div class="plan-overview-item synced-deadline">
               <span class="sync-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/></svg></span>
@@ -419,9 +444,9 @@
           <div class="pace-section">
             <div class="pace-head"><span>Sugestão de ritmo</span><small>Valores mínimos inteiros para alcançar a meta até o prazo</small></div>
             <div class="pace-grid">
-              <div class="pace-card"><span>Por mês</span><strong id="monthlySuggestion">--</strong><small>MatFin/mês</small></div>
-              <div class="pace-card"><span>Por semana</span><strong id="weeklySuggestion">--</strong><small>MatFin/semana</small></div>
-              <div class="pace-card"><span>Por dia</span><strong id="dailySuggestion">--</strong><small>MatFin/dia</small></div>
+              <div class="pace-card"><span>Por mês</span><div class="pace-values"><strong><b id="monthlySuggestion">--</b><small>MatFin</small></strong><strong><b id="monthlyAcademicSuggestion">--</b><small>Mat. Acad.</small></strong></div></div>
+              <div class="pace-card"><span>Por semana</span><div class="pace-values"><strong><b id="weeklySuggestion">--</b><small>MatFin</small></strong><strong><b id="weeklyAcademicSuggestion">--</b><small>Mat. Acad.</small></strong></div></div>
+              <div class="pace-card"><span>Por dia</span><div class="pace-values"><strong><b id="dailySuggestion">--</b><small>MatFin</small></strong><strong><b id="dailyAcademicSuggestion">--</b><small>Mat. Acad.</small></strong></div></div>
             </div>
             <p class="plan-summary" id="planSummary">Ajuste a meta ou a data-limite para atualizar as sugestões.</p>
             <span class="plan-prize-note" id="planPrizeNote"></span>
@@ -511,7 +536,8 @@
             <div id="adminRatesRows"></div>
           </div>
           <div class="form-grid admin-base-fields">
-            <div class="field"><label for="adminGoal">Quantidade da meta mensal</label><div class="input-wrap"><input id="adminGoal" type="number" min="1" step="1" required inputmode="numeric"><span class="affix">MatFin</span></div></div>
+            <div class="field"><label for="adminGoal">Meta mensal de MatFin</label><div class="input-wrap"><input id="adminGoal" type="number" min="1" step="1" required inputmode="numeric"><span class="affix">MatFin</span></div></div>
+            <div class="field"><label for="adminAcademicGoal">Meta mensal acadêmica</label><div class="input-wrap"><input id="adminAcademicGoal" type="number" min="1" step="1" required inputmode="numeric"><span class="affix">Mat. Acad.</span></div></div>
             <div class="field"><label for="adminDate">Data de fechamento</label><div class="input-wrap"><input id="adminDate" type="date" required></div></div>
           </div>
         </div>
@@ -547,22 +573,22 @@
         ead:{label:"EAD — inclui Ao Vivo e Flex",tiers:[9,18,25,35,42,49,56]}
       };
       var defaults={
-        consultor_geral:{profile:"Consultor",profileKey:"consultor",productKey:"geral",name:"Todos os produtos",compensationType:"perMatfin",goal:30,closingDate:"2026-08-31",rates:graduationRates,initialProduction:{medVetOdonto:{inscritos:1,matacad:1,matfin:0},presencialEstrela:{inscritos:0,matacad:0,matfin:0},presencialOutros:{inscritos:2,matacad:2,matfin:1},semipresencial:{inscritos:4,matacad:4,matfin:3},ead:{inscritos:11,matacad:8,matfin:6}}},
-        gerente_geral:{profile:"Gerente",profileKey:"gerente",productKey:"geral",name:"Todos os produtos",compensationType:"salaryPercentage",goal:45,closingDate:"2026-08-31",salary:0,managerTiers:MANAGER_TIERS,rates:graduationRates,initialProduction:{medVetOdonto:{inscritos:2,matacad:2,matfin:1},presencialEstrela:{inscritos:0,matacad:0,matfin:0},presencialOutros:{inscritos:4,matacad:3,matfin:2},semipresencial:{inscritos:7,matacad:6,matfin:4},ead:{inscritos:70,matacad:52,matfin:38}}}
+        consultor_geral:{profile:"Consultor",profileKey:"consultor",productKey:"geral",name:"Todos os produtos",compensationType:"perMatfin",goal:30,academicGoal:30,closingDate:"2026-08-31",rates:graduationRates,initialProduction:{medVetOdonto:{inscritos:1,matacad:1,matfin:0},presencialEstrela:{inscritos:0,matacad:0,matfin:0},presencialOutros:{inscritos:2,matacad:2,matfin:1},semipresencial:{inscritos:4,matacad:4,matfin:3},ead:{inscritos:11,matacad:8,matfin:6}}},
+        gerente_geral:{profile:"Gerente",profileKey:"gerente",productKey:"geral",name:"Todos os produtos",compensationType:"salaryPercentage",goal:45,academicGoal:45,closingDate:"2026-08-31",salary:0,managerTiers:MANAGER_TIERS,rates:graduationRates,initialProduction:{medVetOdonto:{inscritos:2,matacad:2,matfin:1},presencialEstrela:{inscritos:0,matacad:0,matfin:0},presencialOutros:{inscritos:4,matacad:3,matfin:2},semipresencial:{inscritos:7,matacad:6,matfin:4},ead:{inscritos:70,matacad:52,matfin:38}}}
       };
       var $=function(s){return document.querySelector(s)};
       var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
       var el={
         main:$(".main"),resultsView:$("#resultsView"),resultsTitle:$("#resultsTitle"),resultsPeriod:$("#resultsPeriod"),resultsMonth:$("#resultsMonth"),resultsTotalMatFin:$("#resultsTotalMatFin"),resultsTotalMatAcad:$("#resultsTotalMatAcad"),resultsTotalInscritos:$("#resultsTotalInscritos"),resultsFunnelConversion:$("#resultsFunnelConversion"),resultsOverallConversion:$("#resultsOverallConversion"),resultsReleased:$("#resultsReleased"),resultsRetained:$("#resultsRetained"),resultsInscritosChart:$("#resultsInscritosChart"),resultsMatfinChart:$("#resultsMatfinChart"),resultsInscritosDescription:$("#resultsInscritosDescription"),resultsMatfinDescription:$("#resultsMatfinDescription"),resultsMonthsCount:$("#resultsMonthsCount"),resultsBreakdownKicker:$("#resultsBreakdownKicker"),resultsBreakdownTitle:$("#resultsBreakdownTitle"),resultsProductCards:$("#resultsProductCards"),
-        goal:$("#goal"),date:$("#date"),managerSalaryField:$("#managerSalaryField"),managerSalary:$("#managerSalary"),referenceMonth:$("#referenceMonth"),pageTitle:$("#pageTitle"),productionRows:$("#productionRows"),productionPanelTitle:$("#productionPanelTitle"),productionHint:$("#productionHint"),totalInscritos:$("#totalInscritos"),totalConversionInscritosMatFin:$("#totalConversionInscritosMatFin"),totalMatFin:$("#totalMatFin"),totalConversionMatFinMatAcad:$("#totalConversionMatFinMatAcad"),totalMatAcad:$("#totalMatAcad"),
+        goal:$("#goal"),academicGoal:$("#academicGoal"),date:$("#date"),managerSalaryField:$("#managerSalaryField"),managerSalary:$("#managerSalary"),referenceMonth:$("#referenceMonth"),pageTitle:$("#pageTitle"),productionRows:$("#productionRows"),productionPanelTitle:$("#productionPanelTitle"),productionHint:$("#productionHint"),totalInscritos:$("#totalInscritos"),totalConversionInscritosMatFin:$("#totalConversionInscritosMatFin"),totalMatFin:$("#totalMatFin"),totalConversionMatFinMatAcad:$("#totalConversionMatFinMatAcad"),totalMatAcad:$("#totalMatAcad"),
         contextProduct:$("#contextProduct"),contextDate:$("#contextDate"),contextProfile:$("#contextProfile"),modalityEarningsRows:$("#modalityEarningsRows"),goalImpact:$("#goalImpact"),goalImpactTitle:$("#goalImpactTitle"),goalImpactText:$("#goalImpactText"),
         summaryPeriod:$("#summaryPeriod"),grossLabel:$("#grossLabel"),grossValue:$("#grossValue"),releasedLabel:$("#releasedLabel"),releasedValue:$("#releasedValue"),retainedLabel:$("#retainedLabel"),retainedValue:$("#retainedValue"),totalLabel:$("#totalLabel"),totalCaption:$("#totalCaption"),
-        dateText:$("#dateText"),progressBlock:$(".progress-block"),progressTrack:$("#progressTrack"),progressFill:$("#progressFill"),progressMilestones:$("#progressMilestones"),progressText:$("#progressText"),progressDetail:$("#progressDetail"),progressStage:$("#progressStage"),
-        planningMonthBadge:$("#planningMonthBadge"),planRemainingLabel:$("#planRemainingLabel"),planRemaining:$("#planRemaining"),planTargetContext:$("#planTargetContext"),planDeadlineText:$("#planDeadlineText"),planDeadlineContext:$("#planDeadlineContext"),daysRemaining:$("#daysRemaining"),timeBreakdown:$("#timeBreakdown"),monthlySuggestion:$("#monthlySuggestion"),weeklySuggestion:$("#weeklySuggestion"),dailySuggestion:$("#dailySuggestion"),planSummary:$("#planSummary"),planPrizeNote:$("#planPrizeNote"),
+        dateText:$("#dateText"),progressBlock:$(".progress-block"),financialProgressCard:$("#financialProgressCard"),progressTrack:$("#progressTrack"),progressFill:$("#progressFill"),progressMilestones:$("#progressMilestones"),progressText:$("#progressText"),progressDetail:$("#progressDetail"),progressStage:$("#progressStage"),academicProgressCard:$("#academicProgressCard"),academicProgressTrack:$("#academicProgressTrack"),academicProgressFill:$("#academicProgressFill"),academicProgressMilestones:$("#academicProgressMilestones"),academicProgressText:$("#academicProgressText"),academicProgressDetail:$("#academicProgressDetail"),academicProgressStage:$("#academicProgressStage"),
+        planningMonthBadge:$("#planningMonthBadge"),planRemainingLabel:$("#planRemainingLabel"),planRemaining:$("#planRemaining"),planTargetContext:$("#planTargetContext"),planAcademicRemainingLabel:$("#planAcademicRemainingLabel"),planAcademicRemaining:$("#planAcademicRemaining"),planAcademicTargetContext:$("#planAcademicTargetContext"),planDeadlineText:$("#planDeadlineText"),planDeadlineContext:$("#planDeadlineContext"),daysRemaining:$("#daysRemaining"),timeBreakdown:$("#timeBreakdown"),monthlySuggestion:$("#monthlySuggestion"),weeklySuggestion:$("#weeklySuggestion"),dailySuggestion:$("#dailySuggestion"),monthlyAcademicSuggestion:$("#monthlyAcademicSuggestion"),weeklyAcademicSuggestion:$("#weeklyAcademicSuggestion"),dailyAcademicSuggestion:$("#dailyAcademicSuggestion"),planSummary:$("#planSummary"),planPrizeNote:$("#planPrizeNote"),
         totalText:$("#totalText"),sidebar:$("#sidebar"),menuDots:$("#menuDots"),menuOverlay:$("#menuOverlay"),qSecret:$("#qSecret"),adminAccess:$("#adminAccess"),
         loginModal:$("#loginModal"),loginPanel:$("#loginPanel"),loginForm:$("#loginForm"),adminPassword:$("#adminPassword"),
         passwordError:$("#passwordError"),adminModal:$("#adminModal"),adminForm:$("#adminForm"),adminProduct:$("#adminProduct"),
-        adminProductTabs:$("#adminProductTabs"),adminProductTabsLabel:$("#adminProductTabsLabel"),adminRatesTable:$("#adminRatesTable"),adminRatesHeader:$("#adminRatesHeader"),adminRatesLabel:$("#adminRatesLabel"),adminPolicyHint:$("#adminPolicyHint"),adminRatesRows:$("#adminRatesRows"),adminGoal:$("#adminGoal"),adminDate:$("#adminDate"),
+        adminProductTabs:$("#adminProductTabs"),adminProductTabsLabel:$("#adminProductTabsLabel"),adminRatesTable:$("#adminRatesTable"),adminRatesHeader:$("#adminRatesHeader"),adminRatesLabel:$("#adminRatesLabel"),adminPolicyHint:$("#adminPolicyHint"),adminRatesRows:$("#adminRatesRows"),adminGoal:$("#adminGoal"),adminAcademicGoal:$("#adminAcademicGoal"),adminDate:$("#adminDate"),
         toast:$("#toast"),lastUpdate:$("#lastUpdate")
       };
       var workspace=$(".workspace"),inputCard=$(".input-card"),resultCard=$(".result-card"),summaryCardHead=$(".summary-card-head"),resultTotal=$(".result-card .total");
@@ -590,7 +616,7 @@
           var stored=JSON.parse(localStorage.getItem(STORAGE_KEY));
           if(!stored||typeof stored!=="object")return cloneDefaults();
           var result=cloneDefaults();
-          Object.keys(result).forEach(function(key){var legacyKey=key==="consultor_geral"?"consultor_graduacao":key==="gerente_geral"?"gerente_graduacao":null;var saved=stored[key]||(legacyKey?stored[legacyKey]:null)||{};result[key]=Object.assign(result[key],saved,{name:defaults[key].name,profile:defaults[key].profile,profileKey:defaults[key].profileKey,productKey:defaults[key].productKey,compensationType:defaults[key].compensationType,initialProduction:defaults[key].initialProduction});result[key].rates=mergeRates(defaults[key].rates,saved.rates);if(result[key].rates.presencialEstrela&&result[key].rates.presencialEstrela.tiers[0]===22.5)result[key].rates.presencialEstrela.tiers[0]=23;result[key].salary=safeNumber(saved.salary,defaults[key].salary||0);result[key].managerTiers=mergeManagerTiers(defaults[key].managerTiers||[],saved.managerTiers)});
+          Object.keys(result).forEach(function(key){var legacyKey=key==="consultor_geral"?"consultor_graduacao":key==="gerente_geral"?"gerente_graduacao":null;var saved=stored[key]||(legacyKey?stored[legacyKey]:null)||{};result[key]=Object.assign(result[key],saved,{name:defaults[key].name,profile:defaults[key].profile,profileKey:defaults[key].profileKey,productKey:defaults[key].productKey,compensationType:defaults[key].compensationType,initialProduction:defaults[key].initialProduction});if(saved.academicGoal===undefined)result[key].academicGoal=Math.max(1,safeInteger(result[key].goal,defaults[key].academicGoal));result[key].rates=mergeRates(defaults[key].rates,saved.rates);if(result[key].rates.presencialEstrela&&result[key].rates.presencialEstrela.tiers[0]===22.5)result[key].rates.presencialEstrela.tiers[0]=23;result[key].salary=safeNumber(saved.salary,defaults[key].salary||0);result[key].managerTiers=mergeManagerTiers(defaults[key].managerTiers||[],saved.managerTiers)});
           return result;
         }catch(error){return cloneDefaults()}
       }
@@ -624,7 +650,7 @@
         if(!hasSaved&&safeInteger(legacyAchieved,0)>0&&keys.length){result[keys[0]].matacad=safeInteger(legacyAchieved,0);result[keys[0]].matfin=safeInteger(legacyAchieved,0)}
         return result;
       }
-      function normalizeMonthState(product,monthKey,saved,useInitial){saved=saved||{};var rates=mergeRates(product.rates,saved.rates||product.rates);if(rates.presencialEstrela&&rates.presencialEstrela.tiers[0]===22.5)rates.presencialEstrela.tiers[0]=23;return{goal:Math.max(1,safeInteger(saved.goal,product.goal)),date:saved.date||dateForMonth(product,monthKey),salary:safeNumber(saved.salary,product.salary||0),production:normalizeProduction(product,saved.production,saved.achieved,useInitial),rates:rates,managerTiers:mergeManagerTiers(product.managerTiers||[],saved.managerTiers||product.managerTiers)}}
+      function normalizeMonthState(product,monthKey,saved,useInitial){saved=saved||{};var rates=mergeRates(product.rates,saved.rates||product.rates);if(rates.presencialEstrela&&rates.presencialEstrela.tiers[0]===22.5)rates.presencialEstrela.tiers[0]=23;var goal=Math.max(1,safeInteger(saved.goal,product.goal));var academicGoal=Math.max(1,safeInteger(saved.academicGoal,saved.goal||product.academicGoal||goal));return{goal:goal,academicGoal:academicGoal,date:saved.date||dateForMonth(product,monthKey),salary:safeNumber(saved.salary,product.salary||0),production:normalizeProduction(product,saved.production,saved.achieved,useInitial),rates:rates,managerTiers:mergeManagerTiers(product.managerTiers||[],saved.managerTiers||product.managerTiers)}}
       function consolidatedProfileTracking(product,tracking,profileKey){
         var consolidatedKey=profileKey+"_geral";if(tracking[consolidatedKey])return tracking[consolidatedKey];
         var legacyKeys=[profileKey+"_graduacao",profileKey+"_posGraduacao",profileKey+"_cursoTecnico"];var legacyRecords=legacyKeys.map(function(key){return tracking[key]}).filter(Boolean);if(!legacyRecords.length)return{};
@@ -634,7 +660,7 @@
         var months={};Object.keys(monthSet).forEach(function(monthKey){
           var graduationKey=profileKey+"_graduacao";var graduationState=recordMonth(tracking[graduationKey]||{},monthKey);var monthStates=legacyKeys.map(function(key){return recordMonth(tracking[key]||{},monthKey)}).filter(Boolean);var fallbackState=graduationState||monthStates[0]||{};var production=normalizeProduction(product,graduationState&&graduationState.production,graduationState&&graduationState.achieved,false);
           [profileKey+"_posGraduacao",profileKey+"_cursoTecnico"].forEach(function(key){var state=recordMonth(tracking[key]||{},monthKey);if(!state)return;var stageTotals={inscritos:0,matacad:0,matfin:0};Object.keys(state.production||{}).forEach(function(modality){var count=state.production[modality]||{};var matfin=safeInteger(count.matfin,0);stageTotals.inscritos+=safeInteger(count.inscritos,0);stageTotals.matacad+=count.matacad===undefined?matfin:safeInteger(count.matacad,0);stageTotals.matfin+=matfin});if(!Object.keys(state.production||{}).length&&safeInteger(state.achieved,0)>0){stageTotals.matacad=safeInteger(state.achieved,0);stageTotals.matfin=safeInteger(state.achieved,0)}production.ead.inscritos+=stageTotals.inscritos;production.ead.matacad+=stageTotals.matacad;production.ead.matfin+=stageTotals.matfin});
-          var salaryState=monthStates.filter(function(state){return safeNumber(state.salary,0)>0})[0]||fallbackState;months[monthKey]={goal:Math.max(1,safeInteger(fallbackState.goal,product.goal)),date:fallbackState.date||dateForMonth(product,monthKey),salary:safeNumber(salaryState.salary,product.salary||0),production:production,rates:graduationState&&graduationState.rates||product.rates,managerTiers:(graduationState&&graduationState.managerTiers)||fallbackState.managerTiers||product.managerTiers};
+          var salaryState=monthStates.filter(function(state){return safeNumber(state.salary,0)>0})[0]||fallbackState;var consolidatedGoal=Math.max(1,safeInteger(fallbackState.goal,product.goal));months[monthKey]={goal:consolidatedGoal,academicGoal:Math.max(1,safeInteger(fallbackState.academicGoal,fallbackState.goal||product.academicGoal||consolidatedGoal)),date:fallbackState.date||dateForMonth(product,monthKey),salary:safeNumber(salaryState.salary,product.salary||0),production:production,rates:graduationState&&graduationState.rates||product.rates,managerTiers:(graduationState&&graduationState.managerTiers)||fallbackState.managerTiers||product.managerTiers};
         });
         if(!months[selected])selected=Object.keys(months).sort().slice(-1)[0];return{selectedMonth:selected,months:months};
       }
@@ -690,12 +716,13 @@
       function productionTotals(product,production){
         var totals={inscritoCount:0,matacadCount:0,matfinCount:0};Object.keys(product.rates).forEach(function(key){var count=production[key]||{};totals.inscritoCount+=safeInteger(count.inscritos,0);totals.matacadCount+=safeInteger(count.matacad,0);totals.matfinCount+=safeInteger(count.matfin,0)});return totals;
       }
+      function goalAttainmentData(state,totals){var financial=totals.matfinCount/Math.max(1,state.goal);var academic=totals.matacadCount/Math.max(1,state.academicGoal||state.goal);return{financial:financial,academic:academic,combined:Math.min(financial,academic)}}
       function conversionPercent(numerator,denominator){return denominator>0?numerator/denominator*100:0}
       function monthLabel(monthKey){var parts=monthKey.split("-").map(Number);var label=new Intl.DateTimeFormat("pt-BR",{month:"long",year:"numeric"}).format(new Date(parts[0],parts[1]-1,1,12));return label.charAt(0).toUpperCase()+label.slice(1)}
       function planningReferenceDate(monthKey){var parts=monthKey.split("-").map(Number);var firstDay=new Date(parts[0],parts[1]-1,1,12,0,0,0);var now=new Date();var today=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12,0,0,0);return today<firstDay?firstDay:today}
       function semesterMeta(monthKey){var year=Number(monthKey.slice(0,4));var month=Number(monthKey.slice(5,7));var number=month<=6?1:2;var start=number===1?1:7;return{year:year,number:number,start:start,end:start+5,label:number+"º semestre de "+year}}
       function monthlyFinancialData(product,state){
-        var totals=productionTotals(product,state.production);var attainment=totals.matfinCount/Math.max(1,state.goal);var entries=[];var gross=0;var tierLabel="";var tierPercent=0;
+        var totals=productionTotals(product,state.production);var attainments=goalAttainmentData(state,totals);var attainment=attainments.combined;var entries=[];var gross=0;var tierLabel="";var tierPercent=0;
         if(product.compensationType==="salaryPercentage"){
           var manager=managerTierData(product,state,attainment);var salary=safeNumber(state.salary,0);var managerGross=salary*manager.tier.multiplier;tierLabel=manager.label;tierPercent=manager.tier.multiplier;
           entries=[{key:"managerSalary",label:"Remuneração percentual",count:totals.matfinCount,rate:manager.tier.multiplier,salary:salary,gross:managerGross,value:managerGross*.6}];gross=managerGross;
@@ -703,7 +730,7 @@
           var consultant=consultantTierData(product,state,attainment);tierLabel=consultant.label;
           entries=Object.keys(product.rates).map(function(key){var count=safeInteger((state.production[key]||{}).matfin,0);var rate=consultant.rates[key].tiers[consultant.index];var entryGross=count*rate;gross+=entryGross;return{key:key,label:product.rates[key].label,count:count,rate:rate,gross:entryGross,value:entryGross*.6}});
         }
-        return{entries:entries,gross:gross,released:gross*.6,retained:gross*.4,total:gross*.6,totals:totals,goalReached:attainment>=1,attainment:attainment,tierLabel:tierLabel,tierPercent:tierPercent,compensationType:product.compensationType};
+        return{entries:entries,gross:gross,released:gross*.6,retained:gross*.4,total:gross*.6,totals:totals,goalReached:attainment>=1,attainment:attainment,financialAttainment:attainments.financial,academicAttainment:attainments.academic,tierLabel:tierLabel,tierPercent:tierPercent,compensationType:product.compensationType};
       }
       function semesterFinancialData(product,record){
         var meta=semesterMeta(record.selectedMonth);var entries={};var gross=0;var released=0;var retained=0;var monthsWithProduction=0;var monthsWithGoal=0;
@@ -716,8 +743,8 @@
         el.grossLabel.textContent=semester?"Valor bruto acumulado":"Valor bruto na faixa atual";el.releasedLabel.textContent=semester?"Já liberado nos meses · 60%":"Liberado no mês · 60%";el.retainedLabel.textContent=semester?"Saldo retido · 40%":"Retido para o semestre · 40%";
         el.grossValue.textContent="R$ "+numberOnly(data.gross);el.releasedValue.textContent="R$ "+numberOnly(data.released);el.retainedValue.textContent="R$ "+numberOnly(data.retained);
         el.modalityEarningsRows.innerHTML=data.entries.map(function(entry){var detail;if(semester)detail=entry.count+" MatFin acumulados • 40% retidos";else if(product.compensationType==="salaryPercentage")detail=percent(entry.rate*100)+"% do salário-base de R$ "+numberOnly(entry.salary)+" • faixa "+data.tierLabel;else detail=entry.count+" MatFin × R$ "+numberOnly(entry.rate)+" por matrícula • faixa "+data.tierLabel;var label=semester?"Retido no semestre":"Valor liberado no mês";return '<div class="projection metric-modality"><span class="metric-copy"><span class="metric-label">'+label+'</span><strong class="metric-modality-name">'+escapeHTML(entry.label)+'</strong><small><strong>'+escapeHTML(detail)+'</strong></small></span><strong class="metric-value"><span class="currency">R$</span><span class="amount">'+numberOnly(entry.value)+'</span></strong></div>'}).join("");
-        if(semester){el.goalImpactTitle.textContent="Histórico de metas mensais";el.goalImpactText.textContent=data.monthsWithGoal+" de "+data.monthsWithProduction+(data.monthsWithProduction===1?" mês com produção atingiu":" meses com produção atingiram")+" 100% ou mais da meta.";el.goalImpact.classList.toggle("achieved",data.monthsWithGoal>0);el.totalLabel.textContent="Saldo para pagamento semestral";el.totalCaption.textContent="Pagamento dos 40% retidos ao fim do "+data.meta.label}
-        else{var remaining=Math.max(0,state.goal-data.totals.matfinCount);el.goalImpactTitle.textContent=(data.goalReached?"Meta atingida":"Meta não atingida")+" — "+data.tierLabel;var phaseText=product.compensationType==="salaryPercentage"?"Percentual atual: "+percent(data.tierPercent*100)+"% do salário-base.":"Os valores por MatFin desta fase aparecem em cada modalidade.";el.goalImpactText.textContent=data.goalReached?phaseText:"Faltam "+remaining+" matrículas para chegar a 100% da meta. "+phaseText;el.goalImpact.classList.toggle("achieved",data.goalReached);el.totalLabel.textContent="Total a receber no mês";el.totalCaption.textContent="60% liberados sobre a faixa atual • fechamento "+shortDate(state.date)}
+        if(semester){el.goalImpactTitle.textContent="Histórico das duas metas mensais";el.goalImpactText.textContent=data.monthsWithGoal+" de "+data.monthsWithProduction+(data.monthsWithProduction===1?" mês com produção atingiu":" meses com produção atingiram")+" simultaneamente as metas de MatFin e Matrícula Acadêmica.";el.goalImpact.classList.toggle("achieved",data.monthsWithGoal>0);el.totalLabel.textContent="Saldo para pagamento semestral";el.totalCaption.textContent="Pagamento dos 40% retidos ao fim do "+data.meta.label}
+        else{var remainingFinancial=Math.max(0,state.goal-data.totals.matfinCount);var remainingAcademic=Math.max(0,state.academicGoal-data.totals.matacadCount);el.goalImpactTitle.textContent=(data.goalReached?"Metas atingidas":"Metas ainda não atingidas")+" — "+data.tierLabel;var phaseText=product.compensationType==="salaryPercentage"?"Percentual atual: "+percent(data.tierPercent*100)+"% do salário-base.":"Os valores por MatFin desta fase aparecem em cada modalidade.";var attainmentText="MatFin: "+percent(data.financialAttainment*100)+"% • Mat. Acad.: "+percent(data.academicAttainment*100)+"%. ";el.goalImpactText.textContent=data.goalReached?attainmentText+phaseText:"Faltam "+remainingFinancial+" MatFin e "+remainingAcademic+" Mat. Acad. para concluir as duas metas. "+attainmentText+phaseText;el.goalImpact.classList.toggle("achieved",data.goalReached);el.totalLabel.textContent="Total a receber no mês";el.totalCaption.textContent="60% liberados sobre a faixa definida pela menor meta • fechamento "+shortDate(state.date)}
         setMoney(el.totalText,data.total);return data;
       }
       function productResultsForSemester(productKey,meta,monthsSeen){
@@ -745,7 +772,7 @@
       function showResults(){
         activeResultsProfile=products[active].profileKey;el.main.classList.add("results-mode");el.resultsView.setAttribute("aria-hidden","false");$$('.product-btn[data-product]').forEach(function(btn){btn.classList.remove("active");btn.setAttribute("aria-current","false")});$$('.results-btn').forEach(function(btn){btn.classList.add("active");btn.setAttribute("aria-current","page")});selectResultsProfile(activeResultsProfile);if(mobileMenuQuery.matches)setMobileMenu(false,true);
       }
-      function currentRateLabel(product,state,key){var totals=productionTotals(product,state.production);var attainment=totals.matfinCount/Math.max(1,state.goal);if(product.compensationType==="salaryPercentage"){var manager=managerTierData(product,state,attainment);return percent(manager.tier.multiplier*100)+"% do salário • "+manager.label}var consultant=consultantTierData(product,state,attainment);return "R$ "+numberOnly(consultant.rates[key].tiers[consultant.index])+" / MatFin • "+consultant.label}
+      function currentRateLabel(product,state,key){var totals=productionTotals(product,state.production);var attainment=goalAttainmentData(state,totals).combined;if(product.compensationType==="salaryPercentage"){var manager=managerTierData(product,state,attainment);return percent(manager.tier.multiplier*100)+"% do salário • "+manager.label}var consultant=consultantTierData(product,state,attainment);return "R$ "+numberOnly(consultant.rates[key].tiers[consultant.index])+" / MatFin • "+consultant.label}
       function renderProductionRows(product,production,state){
         state=state||activeTracking();var hasModalities=Object.keys(product.rates).length>1;el.productionPanelTitle.textContent=hasModalities?"Realizado por produto/modalidade":"Realizado geral";el.productionHint.textContent="Informe Inscritos, Matrícula Financeira e Matrícula Acadêmica para acompanhar as conversões.";
         el.productionRows.innerHTML=Object.keys(product.rates).map(function(key){var label=product.rates[key].label;var count=production[key];var conversionOne=conversionPercent(count.matfin,count.inscritos);var conversionTwo=conversionPercent(count.matacad,count.matfin);return '<div class="production-row"><span class="production-label"><strong>'+escapeHTML(label)+'</strong><small class="current-rate-badge" data-rate-badge="'+key+'">'+escapeHTML(currentRateLabel(product,state,key))+'</small></span>'+counterMarkup(key,"inscritos",count.inscritos,"Inscritos — "+label)+counterMarkup(key,"matfin",count.matfin,"Matrículas financeiras — "+label)+counterMarkup(key,"matacad",count.matacad,"Matrículas acadêmicas — "+label)+'<span class="conversion-cell conversion-inscritos-matfin" data-conversion="inscritos-matfin" data-modality="'+key+'"><strong>'+percent(conversionOne)+'%</strong></span><span class="conversion-cell conversion-matfin-matacad" data-conversion="matfin-matacad" data-modality="'+key+'"><strong>'+percent(conversionTwo)+'%</strong></span></div>'}).join("");
@@ -753,48 +780,46 @@
       function updateProductionIndicators(product,state){Object.keys(product.rates).forEach(function(key){var count=state.production[key]||{};var badge=el.productionRows.querySelector('[data-rate-badge="'+key+'"]');var first=el.productionRows.querySelector('[data-conversion="inscritos-matfin"][data-modality="'+key+'"] strong');var second=el.productionRows.querySelector('[data-conversion="matfin-matacad"][data-modality="'+key+'"] strong');if(badge)badge.textContent=currentRateLabel(product,state,key);if(first)first.textContent=percent(conversionPercent(count.matfin,count.inscritos))+"%";if(second)second.textContent=percent(conversionPercent(count.matacad,count.matfin))+"%"})}
       function counterMarkup(modality,metric,value,label){var stageLabel=metric==="matacad"?"Mat. Acad.":metric==="matfin"?"MatFin":"Inscritos";return '<div class="counter-control metric-'+metric+'" data-stage-label="'+stageLabel+'"><button class="counter-btn" type="button" data-modality="'+modality+'" data-metric="'+metric+'" data-delta="-1" aria-label="Diminuir '+escapeHTML(label)+'">−</button><input class="counter-input" type="number" min="0" step="1" inputmode="numeric" value="'+safeInteger(value,0)+'" data-modality="'+modality+'" data-metric="'+metric+'" aria-label="'+escapeHTML(label)+'"><button class="counter-btn" type="button" data-modality="'+modality+'" data-metric="'+metric+'" data-delta="1" aria-label="Aumentar '+escapeHTML(label)+'">+</button></div>'}
       function syncProductionFromDOM(){var production=activeTracking().production;$$('.counter-input').forEach(function(input){var modality=input.dataset.modality;var metric=input.dataset.metric;if(production[modality])production[modality][metric]=safeInteger(input.value,0)})}
-      function renderPlanning(goal,achieved,date,monthKey){
-        var reference=planningReferenceDate(monthKey);var months=monthsUntilDeadline(date,reference);var days=daysUntilDeadline(date,reference);var remaining=Math.max(0,goal-achieved);var periodLabel=monthLabel(monthKey);var monthName=periodLabel.split(" de ")[0].toLowerCase();
-        el.planningMonthBadge.textContent=periodLabel;el.planRemainingLabel.textContent="Falta para a meta de "+monthName;el.planRemaining.textContent=remaining;el.planTargetContext.textContent=achieved+" MatFin realizados em "+monthName+" de uma meta de "+goal+".";el.planDeadlineText.textContent=fullDate(date);el.planDeadlineContext.textContent="Este prazo pertence ao planejamento de "+monthName+".";
+      function renderPlanning(goal,achieved,academicGoal,academicAchieved,date,monthKey){
+        var reference=planningReferenceDate(monthKey);var months=monthsUntilDeadline(date,reference);var days=daysUntilDeadline(date,reference);var remaining=Math.max(0,goal-achieved);var academicRemaining=Math.max(0,academicGoal-academicAchieved);var periodLabel=monthLabel(monthKey);var monthName=periodLabel.split(" de ")[0].toLowerCase();var allSuggestions=[el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion,el.monthlyAcademicSuggestion,el.weeklyAcademicSuggestion,el.dailyAcademicSuggestion];
+        el.planningMonthBadge.textContent=periodLabel;el.planRemainingLabel.textContent="Falta para a meta de MatFin em "+monthName;el.planRemaining.textContent=remaining;el.planTargetContext.textContent=achieved+" MatFin realizados de uma meta de "+goal+".";el.planAcademicRemainingLabel.textContent="Falta para a meta acadêmica em "+monthName;el.planAcademicRemaining.textContent=academicRemaining;el.planAcademicTargetContext.textContent=academicAchieved+" Mat. Acad. realizadas de uma meta de "+academicGoal+".";el.planDeadlineText.textContent=fullDate(date);el.planDeadlineContext.textContent="Este prazo pertence ao planejamento de "+monthName+".";
         if(days<0){
           el.daysRemaining.textContent="Prazo encerrado";el.timeBreakdown.textContent="O planejamento de "+monthName+" já foi encerrado.";
-          [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion].forEach(function(item){item.textContent="--"});
-          el.planSummary.textContent="Selecione outro mês para consultar uma nova meta mensal.";el.planPrizeNote.textContent="";return;
+          allSuggestions.forEach(function(item){item.textContent="--"});
+          el.planSummary.textContent="Selecione outro mês para consultar as novas metas mensais.";el.planPrizeNote.textContent="";return;
         }
-        var planningDays=Math.max(1,days);
-        el.daysRemaining.textContent=days===0?"Hoje":days+" dias";
-        el.timeBreakdown.textContent=formatRemainingPeriod(days);
-        if(remaining<1){
-          [el.monthlySuggestion,el.weeklySuggestion,el.dailySuggestion].forEach(function(item){item.textContent="0"});
-          el.planSummary.textContent="A meta mensal de "+goal+" MatFin já foi alcançada em "+monthName+".";
-        }else{
-          var pace=paceFor(remaining,months,planningDays);
-          el.monthlySuggestion.textContent=pace.monthly;el.weeklySuggestion.textContent=pace.weekly;el.dailySuggestion.textContent=pace.daily;
-          el.planSummary.textContent="Para concluir os "+remaining+" MatFin restantes de "+monthName+" e alcançar a meta de "+goal+" até "+shortDate(date)+", o ritmo mínimo inteiro é "+pace.daily+" por dia, "+pace.weekly+" por semana ou "+pace.monthly+" no mês.";
-        }
-        el.planPrizeNote.textContent=remaining<1?"Os valores atualizados estão ativos somente para as MatFin de "+monthName+".":"Ao iniciar outro mês, uma nova meta e um novo acompanhamento serão utilizados.";
+        var planningDays=Math.max(1,days);var financialPace=paceFor(remaining,months,planningDays);var academicPace=paceFor(academicRemaining,months,planningDays);
+        el.daysRemaining.textContent=days===0?"Hoje":days+" dias";el.timeBreakdown.textContent=formatRemainingPeriod(days);
+        el.monthlySuggestion.textContent=financialPace.monthly;el.weeklySuggestion.textContent=financialPace.weekly;el.dailySuggestion.textContent=financialPace.daily;el.monthlyAcademicSuggestion.textContent=academicPace.monthly;el.weeklyAcademicSuggestion.textContent=academicPace.weekly;el.dailyAcademicSuggestion.textContent=academicPace.daily;
+        if(remaining<1&&academicRemaining<1)el.planSummary.textContent="As metas mensais de "+goal+" MatFin e "+academicGoal+" Matrículas Acadêmicas já foram alcançadas em "+monthName+".";
+        else el.planSummary.textContent="Para concluir as duas metas até "+shortDate(date)+", faltam "+remaining+" MatFin e "+academicRemaining+" Mat. Acad. Os ritmos acima mostram a necessidade mínima de cada etapa.";
+        el.planPrizeNote.textContent=remaining<1&&academicRemaining<1?"Os valores atualizados estão ativos para as MatFin de "+monthName+".":"A faixa de remuneração acompanha o menor percentual entre as duas metas do mês.";
+      }
+      function tierLabelAt(product,state,attainment){return product.compensationType==="salaryPercentage"?managerTierData(product,state,attainment).label:consultantTierData(product,state,attainment).label}
+      function updateGoalProgress(product,state,card,track,fill,milestonesElement,text,detail,stage,achieved,goal,unit){
+        var progress=achieved/Math.max(1,goal)*100;var accessibleProgress=Number(progress.toFixed(2));var milestones=product.compensationType==="salaryPercentage"?[80,90,100]:[50,80,100];var stageClass=progress>=100?"stage-hit":progress>=milestones[1]?"stage-near":progress>=milestones[0]?"stage-progress":"stage-low";
+        card.classList.remove("stage-low","stage-progress","stage-near","stage-hit");card.classList.add(stageClass);milestonesElement.innerHTML=milestones.map(function(value){return '<span style="left:'+value+'%">'+value+'%</span>'}).join("");fill.style.width=Math.min(100,progress)+"%";text.textContent=percent(progress)+"%";detail.textContent=achieved+" de "+goal+" "+unit;stage.textContent=tierLabelAt(product,state,progress/100);track.setAttribute("aria-valuenow",accessibleProgress);track.setAttribute("aria-valuemax",Math.max(100,accessibleProgress));
       }
       function render(){
         var p=products[active];var record=sellerInputs[active];var tracking=activeTracking();
         var goal=Math.max(1,Math.floor(safeNumber(el.goal.value,p.goal)));
+        var academicGoal=Math.max(1,Math.floor(safeNumber(el.academicGoal.value,p.academicGoal||goal)));
         var date=el.date.value||p.closingDate;
         var isManager=p.compensationType==="salaryPercentage";el.managerSalaryField.hidden=!isManager;if(isManager)tracking.salary=safeNumber(el.managerSalary.value,tracking.salary);
-        var production=tracking.production;var totals=productionTotals(p,production);var achieved=totals.matfinCount;
-        var progress=achieved/goal*100;var visualProgress=Math.min(100,progress);var accessibleProgress=Number(progress.toFixed(2));
-        tracking.goal=goal;tracking.date=date;persistTracking();
+        var production=tracking.production;var totals=productionTotals(p,production);var achieved=totals.matfinCount;var academicAchieved=totals.matacadCount;
+        tracking.goal=goal;tracking.academicGoal=academicGoal;tracking.date=date;persistTracking();
         el.pageTitle.textContent="Projeção de Produção";
         el.contextProduct.textContent=p.name;el.contextDate.textContent=shortDate(date);el.contextProfile.textContent=p.profile;
         el.totalInscritos.textContent=totals.inscritoCount;el.totalMatFin.textContent=totals.matfinCount;el.totalMatAcad.textContent=totals.matacadCount;el.totalConversionInscritosMatFin.textContent=percent(conversionPercent(totals.matfinCount,totals.inscritoCount))+"%";el.totalConversionMatFinMatAcad.textContent=percent(conversionPercent(totals.matacadCount,totals.matfinCount))+"%";updateProductionIndicators(p,tracking);var financialData=renderFinancialSummary(p,record,tracking);
-        var milestones=isManager?[80,90,100]:[50,80,100];el.progressMilestones.innerHTML=milestones.map(function(value){return '<span style="left:'+value+'%">'+value+'%</span>'}).join("");var stageClass=progress>=100?"stage-hit":progress>=milestones[1]?"stage-near":progress>=milestones[0]?"stage-progress":"stage-low";el.progressBlock.classList.remove("stage-low","stage-progress","stage-near","stage-hit");el.progressBlock.classList.add(stageClass);el.progressStage.textContent=financialData.tierLabel;
-        el.progressFill.style.width=visualProgress+"%";el.progressText.textContent=percent(progress)+"% DE META ALCANÇADA";el.progressDetail.textContent=achieved+" de "+goal+" MatFin";el.progressTrack.setAttribute("aria-valuenow",accessibleProgress);el.progressTrack.setAttribute("aria-valuemax",Math.max(100,accessibleProgress));
-        renderPlanning(goal,achieved,date,record.selectedMonth);
+        updateGoalProgress(p,tracking,el.financialProgressCard,el.progressTrack,el.progressFill,el.progressMilestones,el.progressText,el.progressDetail,el.progressStage,achieved,goal,"MatFin");updateGoalProgress(p,tracking,el.academicProgressCard,el.academicProgressTrack,el.academicProgressFill,el.academicProgressMilestones,el.academicProgressText,el.academicProgressDetail,el.academicProgressStage,academicAchieved,academicGoal,"Mat. Acad.");
+        renderPlanning(goal,achieved,academicGoal,academicAchieved,date,record.selectedMonth);
       }
       function loadMonth(monthKey){
-        if(!validMonthKey(monthKey))return;var record=sellerInputs[active];record.selectedMonth=monthKey;var tracking=ensureMonthState(active,monthKey);el.referenceMonth.value=monthKey;el.goal.value=tracking.goal;el.date.value=tracking.date;el.managerSalary.value=tracking.salary||0;renderProductionRows(products[active],tracking.production,tracking);persistTracking();render();
+        if(!validMonthKey(monthKey))return;var record=sellerInputs[active];record.selectedMonth=monthKey;var tracking=ensureMonthState(active,monthKey);el.referenceMonth.value=monthKey;el.goal.value=tracking.goal;el.academicGoal.value=tracking.academicGoal;el.date.value=tracking.date;el.managerSalary.value=tracking.salary||0;renderProductionRows(products[active],tracking.production,tracking);persistTracking();render();
       }
       function loadProduct(key){
         active=key;localStorage.setItem(ACTIVE_KEY,key);el.main.classList.remove("results-mode");el.resultsView.setAttribute("aria-hidden","true");$$('.results-btn').forEach(function(btn){btn.classList.remove("active");btn.setAttribute("aria-current","false")});
-        var record=sellerInputs[key];var inputs=ensureMonthState(key,record.selectedMonth);el.referenceMonth.value=record.selectedMonth;el.goal.value=inputs.goal;el.date.value=inputs.date;el.managerSalary.value=inputs.salary||0;el.managerSalaryField.hidden=products[key].compensationType!=="salaryPercentage";renderProductionRows(products[key],inputs.production,inputs);
+        var record=sellerInputs[key];var inputs=ensureMonthState(key,record.selectedMonth);el.referenceMonth.value=record.selectedMonth;el.goal.value=inputs.goal;el.academicGoal.value=inputs.academicGoal;el.date.value=inputs.date;el.managerSalary.value=inputs.salary||0;el.managerSalaryField.hidden=products[key].compensationType!=="salaryPercentage";renderProductionRows(products[key],inputs.production,inputs);
         $$(".product-btn[data-product]").forEach(function(btn){var on=btn.dataset.product===active;btn.classList.toggle("active",on);btn.setAttribute("aria-current",on?"page":"false")});
         render();
       }
@@ -811,6 +836,7 @@
         var p=adminDraft[adminEditing];
         $$(".admin-rate-input[data-tier-index]").forEach(function(input){var index=safeInteger(input.dataset.tierIndex,0);if(input.dataset.modality&&p.rates[input.dataset.modality])p.rates[input.dataset.modality].tiers[index]=safeNumber(input.value,p.rates[input.dataset.modality].tiers[index]);else if(input.dataset.managerField&&p.managerTiers[index])p.managerTiers[index][input.dataset.managerField]=safeNumber(input.value,p.managerTiers[index][input.dataset.managerField]*100)/100});
         p.goal=Math.max(1,Math.floor(safeNumber(el.adminGoal.value,p.goal)));
+        p.academicGoal=Math.max(1,Math.floor(safeNumber(el.adminAcademicGoal.value,p.academicGoal||p.goal)));
         p.closingDate=el.adminDate.value||p.closingDate;
       }
       function renderAdminRates(product){
@@ -830,7 +856,7 @@
         if(keepVisibleChanges)saveVisibleAdminFields();
         adminEditing=key;
         var p=adminDraft[key];
-        var consolidated=p.productKey==="geral";el.adminProductTabs.hidden=consolidated;el.adminProductTabsLabel.hidden=consolidated;el.adminProduct.textContent=p.profile+" • "+p.name;renderAdminRates(p);el.adminGoal.value=p.goal;el.adminDate.value=p.closingDate;
+        var consolidated=p.productKey==="geral";el.adminProductTabs.hidden=consolidated;el.adminProductTabsLabel.hidden=consolidated;el.adminProduct.textContent=p.profile+" • "+p.name;renderAdminRates(p);el.adminGoal.value=p.goal;el.adminAcademicGoal.value=p.academicGoal||p.goal;el.adminDate.value=p.closingDate;
         $$(".admin-profile-tab").forEach(function(btn){
           var on=btn.dataset.adminProfile===p.profileKey;btn.classList.toggle("active",on);btn.setAttribute("aria-selected",on?"true":"false");
         });
@@ -855,7 +881,7 @@
         else if(returnFocus&&isMobile)el.menuDots.focus();
       }
       function syncMobileMenu(){setMobileMenu(false,false)}
-      [el.goal,el.date,el.managerSalary].forEach(function(input){input.addEventListener("input",render)});
+      [el.goal,el.academicGoal,el.date,el.managerSalary].forEach(function(input){input.addEventListener("input",render)});
       el.referenceMonth.addEventListener("change",function(){loadMonth(el.referenceMonth.value)});
       $$(".summary-view-btn").forEach(function(btn){btn.addEventListener("click",function(){summaryView=btn.dataset.summaryView;$$('.summary-view-btn').forEach(function(item){var on=item===btn;item.classList.toggle("active",on);item.setAttribute("aria-selected",on?"true":"false")});render()})});
       el.productionRows.addEventListener("click",function(event){var button=event.target.closest(".counter-btn");if(!button)return;var input=button.parentElement.querySelector(".counter-input");input.value=Math.max(0,safeInteger(input.value,0)+Number(button.dataset.delta));syncProductionFromDOM();render()});
@@ -890,8 +916,8 @@
       el.adminModal.addEventListener("click",function(event){if(event.target===el.adminModal)closeAdmin()});
       el.adminForm.addEventListener("submit",function(event){
         event.preventDefault();saveVisibleAdminFields();products=adminDraft;
-        Object.keys(products).forEach(function(key){var record=sellerInputs[key];var state=ensureMonthState(key,record.selectedMonth);state.goal=products[key].goal;state.date=dateForMonth(products[key],record.selectedMonth);state.production=normalizeProduction(products[key],state.production,0,false);state.rates=mergeRates(products[key].rates,products[key].rates);state.managerTiers=mergeManagerTiers(products[key].managerTiers||[],products[key].managerTiers)});
-        var current=activeTracking();el.goal.value=current.goal;el.date.value=current.date;el.managerSalary.value=current.salary||0;
+        Object.keys(products).forEach(function(key){var record=sellerInputs[key];var state=ensureMonthState(key,record.selectedMonth);state.goal=products[key].goal;state.academicGoal=products[key].academicGoal||products[key].goal;state.date=dateForMonth(products[key],record.selectedMonth);state.production=normalizeProduction(products[key],state.production,0,false);state.rates=mergeRates(products[key].rates,products[key].rates);state.managerTiers=mergeManagerTiers(products[key].managerTiers||[],products[key].managerTiers)});
+        var current=activeTracking();el.goal.value=current.goal;el.academicGoal.value=current.academicGoal;el.date.value=current.date;el.managerSalary.value=current.salary||0;
         localStorage.setItem(STORAGE_KEY,JSON.stringify(products));persistTracking();renderProductionRows(products[active],current.production,current);render();closeAdmin();
         if(el.main.classList.contains("results-mode"))renderResults(activeResultsProfile);
         el.lastUpdate.textContent="Parâmetros atualizados agora";showToast();
