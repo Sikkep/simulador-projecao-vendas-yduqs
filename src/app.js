@@ -915,11 +915,11 @@ function populateAdmin(profile, monthKey) {
   const rates = adminForm.querySelector("#admin-rates");
   const description = adminForm.querySelector("#admin-rates-description");
   if (profile === "consultor") {
-    description.textContent = "Estrutura vertical: cada modalidade reúne todas as faixas da planilha de política.";
-    rates.innerHTML = MODALITIES.map((modality) => `<section class="admin-rate-section"><h3>${escapeHtml(modality.label)}</h3><div class="admin-rate-fields">${CONSULTANT_TIERS.map((tier, index) => `<div class="field"><label for="rate-${modality.id}-${index}">${tier.label}</label><input id="rate-${modality.id}-${index}" type="text" inputmode="decimal" value="${state.config.consultantRates[modality.id][index]}" data-consultant-rate="${modality.id}:${index}"></div>`).join("")}</div></section>`).join("");
+    description.textContent = "Cada modalidade reúne as faixas da política, da maior para a menor.";
+    rates.innerHTML = MODALITIES.map((modality) => `<section class="admin-rate-section"><h3>${escapeHtml(modality.label)}</h3><div class="admin-rate-rail"><div class="admin-rate-fields">${CONSULTANT_TIERS.map((tier, index) => `<div class="field admin-rate-field"><label for="rate-${modality.id}-${index}">${tier.label}</label><input id="rate-${modality.id}-${index}" type="text" inputmode="decimal" value="${state.config.consultantRates[modality.id][index]}" data-consultant-rate="${modality.id}:${index}"></div>`).reverse().join("")}</div></div></section>`).join("");
   } else {
     description.textContent = "Percentual do salário-base aplicado conforme o menor atingimento entre as duas metas.";
-    rates.innerHTML = state.config.managerTiers.map((tier, index) => `<section class="admin-rate-section"><h3>${escapeHtml(tier.label)}</h3><div class="field"><label for="manager-tier-${index}">Percentual do salário</label><input id="manager-tier-${index}" type="text" inputmode="decimal" value="${formatNumber(tier.multiplier * 100)}" data-manager-rate="${index}"><p class="field-help">Percentual aplicado ao salário-base.</p></div></section>`).join("");
+    rates.innerHTML = `<section class="admin-rate-section"><h3>Percentual do salário por faixa</h3><div class="admin-rate-rail"><div class="admin-rate-fields admin-rate-fields--manager">${state.config.managerTiers.map((tier, index) => `<div class="field admin-rate-field"><label for="manager-tier-${index}">${escapeHtml(tier.label)}</label><input id="manager-tier-${index}" type="text" inputmode="decimal" value="${formatNumber(tier.multiplier * 100)}" data-manager-rate="${index}"><p class="field-help">Percentual aplicado ao salário-base.</p></div>`).reverse().join("")}</div></div></section>`;
   }
 }
 
