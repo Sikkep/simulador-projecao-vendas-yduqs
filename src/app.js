@@ -168,7 +168,18 @@ function profileSelect(profile, id = "profile-select") {
 }
 
 function monthSelect(monthKey, id = "month-select") {
-  return `<div class="field month-switch"><label for="${id}">Mês de referência</label><input id="${id}" type="month" value="${monthKey}" data-month-select></div>`;
+  return `<div class="field month-switch"><label for="${id}">Mês de referência</label><select id="${id}" data-month-select>${monthOptions(monthKey)}</select></div>`;
+}
+
+function monthOptions(centerMonth, before = 18, after = 18) {
+  const [year, month] = centerMonth.split("-").map(Number);
+  const options = [];
+  for (let offset = -before; offset <= after; offset += 1) {
+    const date = new Date(Date.UTC(year, month - 1 + offset, 1, 12));
+    const key = `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
+    options.push(`<option value="${key}" ${key === centerMonth ? "selected" : ""}>${monthLabel(key)}</option>`);
+  }
+  return options.join("");
 }
 
 function moneyHero(result, valid = true) {
@@ -827,6 +838,7 @@ function populateAdmin(profile, monthKey) {
   const safeMonth = validMonthKey(monthKey) ? monthKey : activeMonth(profile);
   const ctx = context(profile, safeMonth);
   adminForm.querySelector("#admin-profile").value = profile;
+  adminForm.querySelector("#admin-month").innerHTML = monthOptions(safeMonth);
   adminForm.querySelector("#admin-month").value = safeMonth;
   adminForm.querySelector("#admin-financial-goal").value = ctx.monthState.financialGoal;
   adminForm.querySelector("#admin-financial-date").value = ctx.monthState.financialDeadline;

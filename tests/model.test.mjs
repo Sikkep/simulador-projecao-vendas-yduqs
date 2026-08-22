@@ -38,6 +38,7 @@ test("conversão sem denominador retorna Sem base e permite superar 100%", () =>
 
 test("localização usa PT-BR e pluralização correta", () => {
   assert.equal(monthLabel("2026-08"), "Agosto de 2026");
+  assert.equal(monthLabel("2026-09"), "Setembro de 2026");
   assert.equal(pluralize(1, "Matrícula", "Matrículas"), "Matrícula");
   assert.equal(pluralize(20, "Matrícula", "Matrículas"), "Matrículas");
 });
