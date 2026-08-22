@@ -543,6 +543,125 @@ h3 {
   min-width: 208px;
 }
 
+.month-picker {
+  position: relative;
+}
+
+.month-picker__trigger {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 16px;
+  text-align: left;
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.month-picker__trigger:hover,
+.month-picker[data-open="true"] .month-picker__trigger {
+  border-color: var(--muted-foreground);
+}
+
+.month-picker__value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.month-picker__chevron {
+  transition: transform 180ms ease;
+}
+
+.month-picker[data-open="true"] .month-picker__chevron {
+  transform: rotate(180deg);
+}
+
+.month-picker__popover {
+  position: absolute;
+  z-index: 45;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  width: min(320px, calc(100vw - var(--space-8)));
+  padding: var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--card-strong);
+  color: var(--foreground);
+  box-shadow: 0 var(--space-3) var(--space-8) var(--shadow);
+}
+
+.month-picker__popover[hidden] {
+  display: none;
+}
+
+.month-picker__header {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.month-picker__year-button {
+  width: 44px;
+  min-width: 44px;
+}
+
+.month-picker__year {
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.month-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.month-picker__month {
+  min-width: 0;
+  min-height: 44px;
+  padding: var(--space-2);
+  border: 1px solid var(--transparent);
+  border-radius: var(--radius-sm);
+  background: var(--transparent);
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.month-picker__month:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--muted);
+}
+
+.month-picker__month[data-current="true"]:not([aria-pressed="true"]) {
+  border-color: var(--brand-emphasis);
+}
+
+.month-picker__month[aria-pressed="true"] {
+  border-color: var(--brand-solid);
+  background: var(--brand-solid);
+  color: var(--logo-navy);
+}
+
+.month-picker__month:disabled {
+  pointer-events: none;
+}
+
 .profile-switch select {
   padding-inline: var(--space-8);
   text-align: center;
@@ -2153,6 +2272,15 @@ button:disabled {
 }
 
 @media (max-width: 430px) {
+  .month-picker__popover {
+    position: fixed;
+    z-index: 70;
+    inset: auto var(--space-4) var(--space-4);
+    width: auto;
+    max-height: calc(100dvh - var(--space-8));
+    overflow-y: auto;
+  }
+
   .page-header {
     gap: var(--space-4);
     margin-bottom: var(--space-6);
