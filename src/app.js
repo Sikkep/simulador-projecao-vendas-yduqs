@@ -204,10 +204,6 @@ function monthKeys(centerMonth, before = 18, after = 18) {
   return keys;
 }
 
-function monthOptions(centerMonth, before = 18, after = 18) {
-  return monthKeys(centerMonth, before, after).map((key) => `<option value="${key}" ${key === centerMonth ? "selected" : ""}>${monthLabel(key)}</option>`).join("");
-}
-
 function monthGridMarkup(selectedMonth, year, minMonth, maxMonth) {
   const currentMonth = currentMonthKey();
   const enabledMonths = MONTH_SHORT_LABELS.map((label, index) => {
@@ -842,7 +838,9 @@ function openMonthPicker(picker) {
   trigger.setAttribute("aria-expanded", "true");
   picker.querySelector(".month-picker__popover").hidden = false;
   requestAnimationFrame(() => {
-    picker.querySelector('[data-month-option][aria-pressed="true"]:not(:disabled), [data-month-option]:not(:disabled)')?.focus({ preventScroll: true });
+    const selectedOption = picker.querySelector('[data-month-option][aria-pressed="true"]:not(:disabled)');
+    const firstAvailableOption = picker.querySelector('[data-month-option]:not(:disabled)');
+    (selectedOption || firstAvailableOption)?.focus({ preventScroll: true });
   });
 }
 
@@ -877,8 +875,8 @@ function focusMonthOption(option, key) {
   return true;
 }
 
-function bindMonthPickers() {
-  main.querySelectorAll("[data-month-picker]").forEach((picker) => {
+function bindMonthPickers(root = main) {
+  root.querySelectorAll("[data-month-picker]").forEach((picker) => {
     const trigger = picker.querySelector("[data-month-trigger]");
     trigger.addEventListener("click", () => {
       if (picker.dataset.open === "true") closeMonthPicker(picker, true);
@@ -899,6 +897,12 @@ function bindMonthPickers() {
       trigger.dispatchEvent(new Event("change", { bubbles: true }));
     });
     picker.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
+        closeMonthPicker(picker, true);
+        return;
+      }
       const option = event.target.closest("[data-month-option]");
       if (!option || !focusMonthOption(option, event.key)) return;
       event.preventDefault();
@@ -1043,14 +1047,22 @@ function initializeAdmin() {
   adminForm.querySelector("#admin-profile").addEventListener("change", () => populateAdmin(adminForm.querySelector("#admin-profile").value, adminForm.querySelector("#admin-month").value));
   adminForm.querySelector("#admin-month").addEventListener("change", () => populateAdmin(adminForm.querySelector("#admin-profile").value, adminForm.querySelector("#admin-month").value));
   adminForm.addEventListener("submit", saveAdmin);
+  bindMonthPickers(adminForm);
 }
 
 function populateAdmin(profile, monthKey) {
   const safeMonth = validMonthKey(monthKey) ? monthKey : activeMonth(profile);
   const ctx = context(profile, safeMonth);
   adminForm.querySelector("#admin-profile").value = profile;
-  adminForm.querySelector("#admin-month").innerHTML = monthOptions(safeMonth);
-  adminForm.querySelector("#admin-month").value = safeMonth;
+  const adminMonth = adminForm.querySelector("#admin-month");
+  const adminMonthPicker = adminMonth.closest("[data-month-picker]");
+  const availableMonths = monthKeys(safeMonth);
+  adminMonth.value = safeMonth;
+  adminMonth.querySelector("[data-month-value]").textContent = monthLabel(safeMonth);
+  adminMonthPicker.dataset.minMonth = availableMonths[0];
+  adminMonthPicker.dataset.maxMonth = availableMonths.at(-1);
+  updateMonthPicker(adminMonthPicker, Number(safeMonth.slice(0, 4)));
+  closeMonthPicker(adminMonthPicker);
   adminForm.querySelector("#admin-financial-goal").value = ctx.monthState.financialGoal;
   adminForm.querySelector("#admin-financial-date").value = ctx.monthState.financialDeadline;
   adminForm.querySelector("#admin-academic-goal").value = ctx.semesterState.academicGoal;
