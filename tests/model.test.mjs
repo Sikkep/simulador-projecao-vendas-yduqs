@@ -5,10 +5,12 @@ import {
   conversion,
   conversionLabel,
   monthLabel,
+  parseMoney,
   pluralize,
   validateAcademicDate,
   validateFinancialDate,
   validateGoal,
+  validateProduction,
 } from "../src/model.js";
 import { DEFAULT_CONSULTANT_RATES, DEFAULT_MANAGER_TIERS, MODALITIES } from "../src/config.js";
 
@@ -22,6 +24,23 @@ test("meta aceita somente inteiro maior ou igual a 1", () => {
     assert.equal(validateGoal(value).message, "A meta mínima é 1 matrícula");
   }
   assert.deepEqual(validateGoal("1"), { valid: true, value: 1, message: "" });
+});
+
+test("metas e produção rejeitam overflow e inteiros inseguros", () => {
+  assert.deepEqual(validateGoal("100000"), { valid: false, value: null, message: "A meta máxima é 99.999 matrículas" });
+  assert.deepEqual(validateProduction("100000"), { valid: false, value: null, message: "O valor máximo por etapa é 99.999" });
+  assert.equal(validateGoal(String(Number.MAX_SAFE_INTEGER + 1)).message, "A meta deve ser um número inteiro seguro");
+  assert.equal(validateProduction(String(Number.MAX_SAFE_INTEGER + 1)).message, "Informe uma quantidade inteira segura");
+  assert.deepEqual(validateProduction("99999"), { valid: true, value: 99999, message: "" });
+});
+
+test("valor monetário rejeita Infinity, precisão insegura e conteúdo malformado", () => {
+  assert.equal(parseMoney("R$ 1.234,56"), 1234.56);
+  assert.equal(parseMoney(5000.5), 5000.5);
+  assert.equal(parseMoney("9".repeat(400)), null);
+  assert.equal(parseMoney(Infinity), null);
+  assert.equal(parseMoney("12,345"), null);
+  assert.equal(parseMoney(""), null);
 });
 
 test("datas respeitam mês financeiro e semestre acadêmico", () => {

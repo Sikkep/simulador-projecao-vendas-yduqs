@@ -15,6 +15,7 @@ import {
   formatNumber,
   formatPercent,
   monthLabel,
+  parseMoney,
   paceFor,
   productionTotals,
   quantityLabel,
@@ -29,6 +30,7 @@ import {
   allMonthsInSemester,
   ensureProfileMonth,
   loadState,
+  notesForMonth,
   resetProductionToZero,
   saveState,
   semesterProduction,
@@ -189,9 +191,10 @@ function moneyHero(result, valid = true) {
   return `<section class="card card--sticky hero-card" aria-labelledby="resultado-title">
     <div><p class="eyebrow">2 · Resultado</p><h2 id="resultado-title">Remuneração estimada</h2></div>
     <p class="hero-eyebrow">Liberado no mês — 60%</p>
-    <div class="hero-money" id="hero-money" data-value="${valid ? result.released : 0}" role="status" aria-live="polite">
+    <div class="hero-money" id="hero-money" data-value="${valid ? result.released : 0}" aria-hidden="true">
       ${valid ? currencyMarkup(result.released, "hero-money__value") : "—"}
     </div>
+    <span class="sr-only" id="hero-money-status" role="status" aria-live="polite" aria-atomic="true">${valid ? `Valor liberado no mês: ${formatCurrency(result.released)}` : "Cálculo bloqueado: corrija os campos indicados"}</span>
     <p class="legal-copy">Este é apenas um simulador e não reflete o valor real a ser creditado, para mais informações, consulte o RH.</p>
     <div class="financial-summary">
       <div class="metric-line"><span>Valor bruto calculado</span>${valid ? currencyMarkup(result.gross) : "—"}</div>
@@ -230,6 +233,7 @@ function productionTable(ctx) {
   }).join("");
 
   const total = ctx.result.totals;
+  const errors = MODALITIES.flatMap(({ id }) => ["inscritos", "matfin", "matacad"].map((field) => `<p class="field-error" id="production-error-${id}-${field}" role="alert" hidden></p>`)).join("");
   const mobileRows = MODALITIES.map((modality) => {
     const row = ctx.monthState.production[modality.id];
     const entry = ctx.result.entries.find((candidate) => candidate.id === modality.id);
@@ -252,7 +256,7 @@ function productionTable(ctx) {
       <tbody>${rows}</tbody>
       <tfoot><tr><td>Total geral</td><td class="total-cell">${formatNumber(total.inscritos)}</td><td class="total-cell">${formatNumber(total.matfin)}</td><td class="total-cell">${conversionLabel(conversion(total.matfin, total.inscritos))}</td><td class="total-cell">${formatNumber(total.matacad)}</td><td class="total-cell">${conversionLabel(conversion(total.matacad, total.matfin))}</td><td>${currencyMarkup(ctx.result.released)}</td></tr></tfoot>
     </table>
-  </div><div class="mobile-production-list">${mobileRows}</div>`;
+  </div><div class="mobile-production-list">${mobileRows}</div><div class="production-errors">${errors}</div>`;
 }
 
 function mobileInputPair(label, modality, field, value) {
@@ -282,6 +286,7 @@ function paceSection(ctx) {
 }
 
 function renderProjection() {
+  const activeId = document.activeElement?.id;
   const profile = activeProfile();
   const monthKey = activeMonth(profile);
   let ctx = context(profile, monthKey);
@@ -309,7 +314,7 @@ function renderProjection() {
             <div class="field"><label for="financial-goal">Meta mensal de Matrícula Financeira</label><input id="financial-goal" type="text" inputmode="numeric" value="${ctx.monthState.financialGoal}" aria-describedby="financial-goal-error"><p class="field-error" id="financial-goal-error"></p></div>
             <div class="field"><span class="field-label">Data-limite Acadêmica</span><div class="field-static">${calendarIcon()}<span>${formatDate(ctx.semesterState.academicDeadline)}</span></div><p class="field-help">Data fixa da política para o ${semesterMeta(monthKey).label}.</p></div>
             <div class="field"><label for="academic-goal">Meta semestral de Matrícula Acadêmica</label><input id="academic-goal" type="text" inputmode="numeric" value="${ctx.semesterState.academicGoal}" aria-describedby="academic-goal-error"><p class="field-error" id="academic-goal-error"></p></div>
-            ${profile === "gerente" ? `<div class="field"><label for="manager-salary">Salário-base do gerente</label><input id="manager-salary" type="text" inputmode="decimal" value="${formatCurrency(ctx.monthState.salary).replace(/^R\$\s?/, "")}" aria-describedby="manager-salary-help"><p class="field-help" id="manager-salary-help">A remuneração considera o percentual da faixa de atingimento.</p></div>` : ""}
+            ${profile === "gerente" ? `<div class="field"><label for="manager-salary">Salário-base do gerente</label><input id="manager-salary" type="text" inputmode="decimal" value="${formatCurrency(ctx.monthState.salary).replace(/^R\$\s?/, "")}" aria-describedby="manager-salary-help manager-salary-error"><p class="field-help" id="manager-salary-help">A remuneração considera o percentual da faixa de atingimento.</p><p class="field-error" id="manager-salary-error"></p></div>` : ""}
           </div>
         </section>
         ${moneyHero(ctx.result, valid)}
@@ -323,7 +328,9 @@ function renderProjection() {
     </div>
   </div>`;
   bindProjection(ctx);
-  animateHero(valid ? ctx.result.released : 0);
+  if (valid) animateHero(ctx.result.released);
+  else cancelAnimationFrame(animationFrame);
+  restoreFocus(activeId);
 }
 
 function bindProjection(ctx) {
@@ -331,7 +338,16 @@ function bindProjection(ctx) {
   main.querySelector("#academic-goal")?.addEventListener("input", (event) => handleGoalInput(event, ctx, "academic"));
   main.querySelector("#manager-salary")?.addEventListener("change", (event) => {
     const value = parseMoney(event.target.value);
-    ctx.monthState.salary = Math.max(0, value);
+    const error = main.querySelector("#manager-salary-error");
+    const valid = value !== null && value >= 0;
+    event.target.setAttribute("aria-invalid", String(!valid));
+    error.textContent = valid ? "" : "Informe um salário-base monetário válido";
+    if (!valid) {
+      blockHero("Cálculo bloqueado: corrija o salário-base");
+      event.target.focus({ preventScroll: true });
+      return;
+    }
+    ctx.monthState.salary = value;
     persist();
     renderProjection();
   });
@@ -352,11 +368,7 @@ function handleGoalInput(event, ctx, kind) {
   event.target.setAttribute("aria-invalid", validation.valid ? "false" : "true");
   error.textContent = validation.message;
   if (!validation.valid) {
-    const hero = main.querySelector("#hero-money");
-    if (hero) {
-      hero.textContent = "—";
-      hero.setAttribute("aria-label", "Cálculo bloqueado: corrija a meta");
-    }
+    blockHero("Cálculo bloqueado: corrija a meta");
     return;
   }
   const id = event.target.id;
@@ -365,6 +377,8 @@ function handleGoalInput(event, ctx, kind) {
     if (kind === "financial") ctx.monthState.financialGoal = validation.value;
     else ctx.semesterState.academicGoal = validation.value;
     persist();
+    const contextStillActive = route === ROUTES.projection && activeProfile() === ctx.profile && activeMonth(ctx.profile) === ctx.monthKey;
+    if (!contextStillActive) return;
     renderProjection();
     const restored = main.querySelector(`#${id}`);
     restored?.focus({ preventScroll: true });
@@ -374,31 +388,33 @@ function handleGoalInput(event, ctx, kind) {
 
 function handleProductionInput(event, ctx) {
   clearTimeout(recalculateTimer);
+  const [modality, field] = event.target.dataset.production.split(":");
+  const errorId = `production-error-${modality}-${field}`;
   const validation = validateProduction(event.target.value);
-  event.target.setAttribute("aria-invalid", validation.valid ? "false" : "true");
+  const peerInputs = [...main.querySelectorAll(`[data-production="${modality}:${field}"]`)];
+  peerInputs.forEach((input) => {
+    if (input !== event.target) input.value = event.target.value;
+    input.setAttribute("aria-invalid", validation.valid ? "false" : "true");
+  });
+  const error = main.querySelector(`#${errorId}`);
   if (!validation.valid) {
-    event.target.setAttribute("aria-describedby", "production-inline-error");
-    let error = main.querySelector("#production-inline-error");
-    if (!error) {
-      error = document.createElement("p");
-      error.id = "production-inline-error";
-      error.className = "field-error";
-      error.setAttribute("role", "alert");
-      event.target.closest("td, .mobile-pair")?.append(error);
-    }
+    peerInputs.forEach((input) => input.setAttribute("aria-describedby", errorId));
     error.textContent = validation.message;
-    const hero = main.querySelector("#hero-money");
-    if (hero) {
-      hero.textContent = "—";
-      hero.setAttribute("aria-label", "Cálculo bloqueado: corrija a produção");
-    }
+    error.hidden = false;
+    blockHero("Cálculo bloqueado: corrija a produção");
     return;
   }
-  const [modality, field] = event.target.dataset.production.split(":");
+  peerInputs.forEach((input) => {
+    if (input.getAttribute("aria-describedby") === errorId) input.removeAttribute("aria-describedby");
+  });
+  error.textContent = "";
+  error.hidden = true;
+  ctx.monthState.production[modality][field] = validation.value;
+  ctx.monthState.example = false;
   recalculateTimer = setTimeout(() => {
-    ctx.monthState.production[modality][field] = validation.value;
-    ctx.monthState.example = false;
     persist();
+    const contextStillActive = route === ROUTES.projection && activeProfile() === ctx.profile && activeMonth(ctx.profile) === ctx.monthKey;
+    if (!contextStillActive) return;
     syncProductionQuery(ctx);
     renderProjection();
     const visibleInputs = [...main.querySelectorAll(`[data-production="${modality}:${field}"]`)].filter((input) => input.offsetParent !== null);
@@ -407,6 +423,15 @@ function handleProductionInput(event, ctx) {
     restored?.setSelectionRange(restored.value.length, restored.value.length);
     main.querySelector(`[data-row-value="${modality}"]`)?.classList.add("flash");
   }, 280);
+}
+
+function blockHero(message) {
+  cancelAnimationFrame(animationFrame);
+  animationFrame = null;
+  const hero = main.querySelector("#hero-money");
+  const status = main.querySelector("#hero-money-status");
+  if (hero) hero.textContent = "—";
+  if (status) status.textContent = message;
 }
 
 function animateHero(value) {
@@ -427,12 +452,6 @@ function animateHero(value) {
     else lastHeroValue = value;
   };
   animationFrame = requestAnimationFrame(tick);
-}
-
-function parseMoney(value) {
-  const normalized = String(value || "").replace(/[^\d,.-]/g, "").replaceAll(".", "").replace(",", ".");
-  const number = Number(normalized);
-  return Number.isFinite(number) ? number : 0;
 }
 
 function semesterCalculations(profile, monthKey) {
@@ -595,7 +614,8 @@ function renderNotes() {
   const monthKey = activeMonth(profile);
   const modalityId = new URLSearchParams(location.search).get("modalidade");
   const modality = MODALITIES.find((item) => item.id === modalityId);
-  const notes = state.notes[profile];
+  const allNotes = state.notes[profile];
+  const notes = notesForMonth(allNotes, monthKey);
   main.innerHTML = `<div class="page">
     ${pageHeader({ eyebrow: "Organização pessoal", title: "Anotações", description: "Registre contatos e próximos passos. Os dados ficam salvos somente neste navegador.", controls: profileSelect(profile, "notes-profile") })}
     <div class="notes-layout">
@@ -608,19 +628,19 @@ function renderNotes() {
         <p class="form-status" id="note-status" role="status"></p>
       </form>
       <section aria-labelledby="saved-notes-title">
-        <div class="notes-toolbar"><div><p class="eyebrow">Histórico</p><h2 id="saved-notes-title">Anotações salvas</h2></div><div><button class="button button--secondary" id="export-notes" type="button" ${notes.length ? "" : "disabled"}>Exportar planilha</button>${notes.length ? "" : `<p class="export-help">Adicione ao menos uma anotação para habilitar a exportação.</p>`}</div></div>
+        <div class="notes-toolbar"><div><p class="eyebrow">Histórico</p><h2 id="saved-notes-title">Anotações salvas</h2></div><div><button class="button button--secondary" id="export-notes" type="button" ${allNotes.length ? "" : "disabled"}>Exportar planilha</button>${allNotes.length ? "" : `<p class="export-help">Adicione ao menos uma anotação para habilitar a exportação.</p>`}</div></div>
         ${notes.length ? `<div class="notes-grid">${notes.map(noteCard).join("")}</div>` : `<div class="empty-state"><h2>Nenhuma anotação ainda</h2><p class="muted">Registre um contato e seu próximo passo para criar seu plano de acompanhamento.</p></div>`}
       </section>
     </div>
   </div>`;
-  bindNotes(profile);
+  bindNotes(profile, monthKey);
 }
 
 function noteCard(note) {
   return `<article class="card note-card"><div><p class="eyebrow">Contato</p><h3>${escapeHtml(note.name)}</h3></div><div class="note-card__phone"><span>${escapeHtml(note.phone)}</span><button class="icon-button" type="button" data-copy-phone="${escapeHtml(note.phone)}" aria-label="Copiar telefone de ${escapeHtml(note.name)}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div><p class="note-card__text">${escapeHtml(note.text)}</p><div class="note-actions"><button class="button button--danger" type="button" data-delete-note="${escapeHtml(note.id)}">Excluir</button></div></article>`;
 }
 
-function bindNotes(profile) {
+function bindNotes(profile, monthKey) {
   const form = main.querySelector("#note-form");
   const textArea = main.querySelector("#note-text");
   textArea?.addEventListener("input", () => {
@@ -641,8 +661,12 @@ function bindNotes(profile) {
       field.setAttribute("aria-invalid", String(Boolean(message)));
       main.querySelector(`#${errorId}`).textContent = message;
     });
-    if (validations.some(([, , message]) => message)) return;
-    state.notes[profile].unshift({ id: crypto.randomUUID(), name: name.value.trim(), phone: phone.value.trim(), text: text.value.trim(), createdAt: new Date().toISOString() });
+    const firstInvalid = validations.find(([, , message]) => message)?.[0];
+    if (firstInvalid) {
+      firstInvalid.focus({ preventScroll: true });
+      return;
+    }
+    state.notes[profile].unshift({ id: crypto.randomUUID(), monthKey, name: name.value.trim(), phone: phone.value.trim(), text: text.value.trim(), createdAt: new Date().toISOString() });
     persist();
     renderNotes();
     showToast("Anotação adicionada.");
@@ -652,6 +676,7 @@ function bindNotes(profile) {
     showToast("Telefone copiado.");
   }));
   main.querySelectorAll("[data-delete-note]").forEach((button) => button.addEventListener("click", () => {
+    if (!window.confirm("Excluir esta anotação? Esta ação não pode ser desfeita.")) return;
     state.notes[profile] = state.notes[profile].filter((note) => note.id !== button.dataset.deleteNote);
     persist();
     renderNotes();
@@ -679,6 +704,7 @@ function exportNotes(profile, button) {
 }
 
 function render() {
+  const activeId = document.activeElement?.id;
   closeMenu();
   ensureRouteQuery();
   updateNavigation();
@@ -688,6 +714,12 @@ function render() {
   else renderProjection();
   bindGlobalPageControls();
   document.title = `${main.querySelector("h1")?.textContent || "Simulador"} · YDUQS`;
+  restoreFocus(activeId);
+}
+
+function restoreFocus(activeId) {
+  if (!activeId) return;
+  document.getElementById(activeId)?.focus({ preventScroll: true });
 }
 
 function ensureRouteQuery() {
@@ -875,6 +907,8 @@ function populateAdmin(profile, monthKey) {
   adminForm.querySelector("#admin-academic-goal").value = ctx.semesterState.academicGoal;
   adminForm.querySelector("#admin-academic-date").value = ctx.semesterState.academicDeadline;
   adminForm.querySelector("#admin-salary").value = formatCurrency(ctx.monthState.salary).replace(/^R\$\s?/, "");
+  adminForm.querySelector("#admin-salary").setAttribute("aria-invalid", "false");
+  adminForm.querySelector("#admin-salary-error").textContent = "";
   adminForm.querySelector("#admin-salary-field").hidden = profile !== "gerente";
   const rates = adminForm.querySelector("#admin-rates");
   const description = adminForm.querySelector("#admin-rates-description");
@@ -903,11 +937,35 @@ function saveAdmin(event) {
   const academicGoal = validateGoal(adminForm.querySelector("#admin-academic-goal").value);
   const financialDate = validateFinancialDate(adminForm.querySelector("#admin-financial-date").value, monthKey);
   const academicDate = validateAcademicDate(adminForm.querySelector("#admin-academic-date").value, monthKey);
+  const salaryInput = adminForm.querySelector("#admin-salary");
+  const salaryValue = profile === "gerente" ? parseMoney(salaryInput.value) : null;
+  const salaryValid = profile !== "gerente" || (salaryValue !== null && salaryValue >= 0);
+  const salaryValidation = {
+    valid: salaryValid,
+    message: salaryValid ? "" : "Informe um salário-base monetário válido",
+  };
+  const rateSelector = profile === "gerente" ? "[data-manager-rate]" : "[data-consultant-rate]";
+  const rateValues = new Map();
+  const rateInputs = [...adminForm.querySelectorAll(rateSelector)];
+  let ratesValid = true;
+  rateInputs.forEach((input) => {
+    const value = parseMoney(input.value);
+    const valid = value !== null && value >= 0;
+    input.setAttribute("aria-invalid", String(!valid));
+    if (!valid) {
+      input.setAttribute("aria-describedby", "admin-status");
+      ratesValid = false;
+    } else {
+      if (input.getAttribute("aria-describedby") === "admin-status") input.removeAttribute("aria-describedby");
+      rateValues.set(input, value);
+    }
+  });
   setAdminError("admin-financial-goal", financialGoal);
   setAdminError("admin-academic-goal", academicGoal);
   setAdminError("admin-financial-date", financialDate);
   setAdminError("admin-academic-date", academicDate);
-  if (![financialGoal, academicGoal, financialDate, academicDate].every((item) => item.valid)) {
+  if (profile === "gerente") setAdminError("admin-salary", salaryValidation);
+  if (![financialGoal, academicGoal, financialDate, academicDate, salaryValidation].every((item) => item.valid) || !ratesValid) {
     adminForm.querySelector("#admin-status").textContent = "Corrija os campos destacados. Nenhum parâmetro foi alterado.";
     adminForm.querySelector('[aria-invalid="true"]')?.focus();
     return;
@@ -917,14 +975,14 @@ function saveAdmin(event) {
   ctx.semesterState.academicGoal = academicGoal.value;
   ctx.semesterState.academicDeadline = adminForm.querySelector("#admin-academic-date").value;
   if (profile === "gerente") {
-    ctx.monthState.salary = Math.max(0, parseMoney(adminForm.querySelector("#admin-salary").value));
+    ctx.monthState.salary = salaryValue;
     adminForm.querySelectorAll("[data-manager-rate]").forEach((input) => {
-      state.config.managerTiers[Number(input.dataset.managerRate)].multiplier = Math.max(0, parseMoney(input.value) / 100);
+      state.config.managerTiers[Number(input.dataset.managerRate)].multiplier = rateValues.get(input) / 100;
     });
   } else {
     adminForm.querySelectorAll("[data-consultant-rate]").forEach((input) => {
       const [modality, index] = input.dataset.consultantRate.split(":");
-      state.config.consultantRates[modality][Number(index)] = Math.max(0, parseMoney(input.value));
+      state.config.consultantRates[modality][Number(index)] = rateValues.get(input);
     });
   }
   ctx.monthState.snapshot = { consultantRates: structuredClone(state.config.consultantRates), managerTiers: structuredClone(state.config.managerTiers) };

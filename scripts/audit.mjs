@@ -7,6 +7,8 @@ const css = await readFile(resolve(root, "src/styles.css"), "utf8");
 const html = await readFile(resolve(root, "index.html"), "utf8");
 const config = await readFile(resolve(root, "src/config.js"), "utf8");
 const app = await readFile(resolve(root, "src/app.js"), "utf8");
+const model = await readFile(resolve(root, "src/model.js"), "utf8");
+const store = await readFile(resolve(root, "src/store.js"), "utf8");
 
 assert.doesNotMatch(html, /cdn\.tailwindcss\.com/, "Tailwind CDN não pode existir");
 assert.doesNotMatch(css, /#[\da-f]{3,8}\b|rgba?\(|hsla?\(/i, "Cores CSS devem usar tokens em OKLCH");
@@ -17,6 +19,18 @@ for (const token of ["background", "foreground", "card", "muted-foreground", "bo
 }
 assert.match(css, /input,[\s\S]*font-size:\s*16px/, "Inputs precisam usar 16px");
 assert.match(css, /\.button,[\s\S]*min-height:\s*44px/, "Controles precisam ter pelo menos 44px");
+assert.doesNotMatch(css, /(?:html|body)\s*{[^}]*min-width:\s*320px/s, "A página não pode impor largura mínima de 320px");
+assert.match(css, /select\s*{[^}]*min-width:\s*0[^}]*text-overflow:\s*ellipsis/s, "Selects precisam truncar conteúdo extremo com segurança");
+assert.match(css, /\.dialog__panel\s*{[^}]*max-height:\s*calc\(100vh - var\(--space-4\)\)[^}]*display:\s*flex[^}]*flex-direction:\s*column/s, "O painel do modal precisa refluír em alto zoom");
+assert.match(css, /\.dialog__body\s*{[^}]*flex:\s*1 1 auto[^}]*overflow-y:\s*auto/s, "O corpo do modal precisa manter rolagem acessível");
+assert.match(app, /id="hero-money"[^>]*aria-hidden="true"/, "O count-up visual deve ficar oculto de leitores de tela");
+assert.match(app, /id="hero-money-status"[^>]*aria-live="polite"/, "O valor final precisa de uma região estática de anúncio");
+assert.match(app, /const activeId = document\.activeElement\?\.id;[\s\S]*restoreFocus\(activeId\)/, "Renders precisam restaurar o foco por ID");
+assert.match(app, /monthKey, name: name\.value/, "Anotações precisam registrar a competência mensal");
+assert.match(app, /window\.confirm\(/, "Exclusões de anotações precisam de confirmação preventiva");
+assert.match(model, /Number\.isFinite\(number\)[\s\S]*Number\.isSafeInteger\(number \* 100\)/, "Valores monetários precisam rejeitar Infinity e centavos inseguros");
+assert.match(model, /MAX_QUANTITY = 99_999/, "Quantidades precisam ter limite superior explícito");
+assert.match(store, /notesForMonth/, "A visualização de anotações precisa ser isolada por mês");
 
 function luminance([L, C, hue]) {
   const angle = (hue * Math.PI) / 180;

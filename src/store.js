@@ -10,11 +10,13 @@ import {
   clone,
   currentMonthKey,
   financialDeadlineFor,
+  parseMoney,
   semesterMeta,
   validMonthKey,
   validateAcademicDate,
   validateFinancialDate,
   validateGoal,
+  validateProduction,
 } from "./model.js";
 
 const STORAGE_KEY = "yduqs-remuneracao-v3";
@@ -32,16 +34,34 @@ function normalizeProduction(source, fallback = emptyProduction()) {
       const legacy = source?.[modality.legacyId];
       const current = source?.[modality.id];
       const row = current || legacy || fallback[modality.id] || {};
+      const normalizeQuantity = (value) => {
+        const validation = validateProduction(value);
+        return validation.valid ? validation.value : 0;
+      };
       return [
         modality.id,
         {
-          inscritos: Math.max(0, Math.floor(Number(row.inscritos) || 0)),
-          matfin: Math.max(0, Math.floor(Number(row.matfin) || 0)),
-          matacad: Math.max(0, Math.floor(Number(row.matacad) || 0)),
+          inscritos: normalizeQuantity(row.inscritos),
+          matfin: normalizeQuantity(row.matfin),
+          matacad: normalizeQuantity(row.matacad),
         },
       ];
     }),
   );
+}
+
+function normalizeNotes(notes, fallbackMonth) {
+  return (Array.isArray(notes) ? notes : [])
+    .filter((note) => note && typeof note === "object")
+    .map((note) => ({
+      ...note,
+      monthKey: validMonthKey(note.monthKey) ? note.monthKey : fallbackMonth,
+    }));
+}
+
+export function notesForMonth(notes, monthKey) {
+  if (!validMonthKey(monthKey)) return [];
+  return (Array.isArray(notes) ? notes : []).filter((note) => note?.monthKey === monthKey);
 }
 
 function createMonth(profile, monthKey, example = false) {
@@ -155,7 +175,7 @@ function migrateLegacy(storage) {
 
   if (legacyNotes && typeof legacyNotes === "object") {
     for (const profile of ["consultor", "gerente"]) {
-      result.notes[profile] = Array.isArray(legacyNotes[profile]) ? legacyNotes[profile] : [];
+      result.notes[profile] = normalizeNotes(legacyNotes[profile], result.profiles[profile].selectedMonth);
     }
   }
   return result;
@@ -180,7 +200,10 @@ function normalizeState(raw) {
       result.profiles[profile].months[monthKey] = {
         financialGoal: validateGoal(month.financialGoal).valid ? Number(month.financialGoal) : DEFAULT_GOALS[profile].financial,
         financialDeadline: validateFinancialDate(month.financialDeadline, monthKey).valid ? month.financialDeadline : financialDeadlineFor(monthKey),
-        salary: Math.max(0, Number(month.salary) || 0),
+        salary: (() => {
+          const value = parseMoney(month.salary);
+          return value !== null && value >= 0 ? value : 0;
+        })(),
         production: normalizeProduction(month.production),
         example: Boolean(month.example),
         snapshot: month.snapshot && typeof month.snapshot === "object" ? month.snapshot : null,
@@ -196,8 +219,8 @@ function normalizeState(raw) {
     ensureProfileMonth(result, profile, result.profiles[profile].selectedMonth);
   }
   result.notes = {
-    consultor: Array.isArray(raw.notes?.consultor) ? raw.notes.consultor : [],
-    gerente: Array.isArray(raw.notes?.gerente) ? raw.notes.gerente : [],
+    consultor: normalizeNotes(raw.notes?.consultor, result.profiles.consultor.selectedMonth),
+    gerente: normalizeNotes(raw.notes?.gerente, result.profiles.gerente.selectedMonth),
   };
   return result;
 }

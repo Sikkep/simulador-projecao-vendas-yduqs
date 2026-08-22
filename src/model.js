@@ -33,6 +33,7 @@ const dateFormatter = new Intl.DateTimeFormat("pt-BR", {
 });
 
 const pluralRules = new Intl.PluralRules("pt-BR");
+export const MAX_QUANTITY = 99_999;
 
 export function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -117,7 +118,14 @@ export function validateGoal(value) {
   if (!/^\d+$/.test(normalized) || Number(normalized) < 1) {
     return { valid: false, value: null, message: "A meta mínima é 1 matrícula" };
   }
-  return { valid: true, value: Number(normalized), message: "" };
+  const number = Number(normalized);
+  if (!Number.isSafeInteger(number)) {
+    return { valid: false, value: null, message: "A meta deve ser um número inteiro seguro" };
+  }
+  if (number > MAX_QUANTITY) {
+    return { valid: false, value: null, message: "A meta máxima é 99.999 matrículas" };
+  }
+  return { valid: true, value: number, message: "" };
 }
 
 export function validateProduction(value) {
@@ -125,7 +133,31 @@ export function validateProduction(value) {
   if (!/^\d+$/.test(normalized)) {
     return { valid: false, value: null, message: "Informe um número inteiro igual ou maior que 0" };
   }
-  return { valid: true, value: Number(normalized), message: "" };
+  const number = Number(normalized);
+  if (!Number.isSafeInteger(number)) {
+    return { valid: false, value: null, message: "Informe uma quantidade inteira segura" };
+  }
+  if (number > MAX_QUANTITY) {
+    return { valid: false, value: null, message: "O valor máximo por etapa é 99.999" };
+  }
+  return { valid: true, value: number, message: "" };
+}
+
+export function parseMoney(value) {
+  if (typeof value === "number") {
+    return Number.isFinite(value) && Number.isSafeInteger(value * 100) ? value : null;
+  }
+  const raw = String(value ?? "").trim();
+  if (!raw) return null;
+  const normalized = raw
+    .replace(/^R\$\s*/i, "")
+    .replace(/\s/g, "")
+    .replaceAll(".", "")
+    .replace(",", ".");
+  if (!/^-?\d+(?:\.\d{1,2})?$/.test(normalized)) return null;
+  const number = Number(normalized);
+  if (!Number.isFinite(number) || !Number.isSafeInteger(number * 100)) return null;
+  return number;
 }
 
 export function validateFinancialDate(value, monthKey) {
