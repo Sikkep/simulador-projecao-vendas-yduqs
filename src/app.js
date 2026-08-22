@@ -55,6 +55,7 @@ let lastHeroValue = null;
 let recalculateTimer = null;
 let goalTimer = null;
 const ui = { periodTab: "mensal" };
+const MONTH_SHORT_LABELS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
 function normalizeRoute(pathname) {
   const clean = `/${String(pathname || "").split("/").filter(Boolean)[0] || ""}`;
@@ -171,18 +172,57 @@ function profileSelect(profile, id = "profile-select") {
 }
 
 function monthSelect(monthKey, id = "month-select") {
-  return `<div class="field month-switch"><label for="${id}">Mês de referência</label><select id="${id}" data-month-select>${monthOptions(monthKey)}</select></div>`;
+  const availableMonths = monthKeys(monthKey);
+  const minMonth = availableMonths[0];
+  const maxMonth = availableMonths.at(-1);
+  const selectedYear = Number(monthKey.slice(0, 4));
+  const popoverId = `${id}-popover`;
+  return `<div class="field month-switch month-picker" data-month-picker data-min-month="${minMonth}" data-max-month="${maxMonth}" data-view-year="${selectedYear}">
+    <label id="${id}-label" for="${id}">Mês de referência</label>
+    <button class="month-picker__trigger" id="${id}" type="button" value="${monthKey}" data-month-select data-month-trigger aria-haspopup="dialog" aria-expanded="false" aria-controls="${popoverId}" aria-labelledby="${id}-label ${id}-value">
+      ${calendarIcon()}<span class="month-picker__value" id="${id}-value">${escapeHtml(monthLabel(monthKey))}</span><svg class="month-picker__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+    </button>
+    <div class="month-picker__popover" id="${popoverId}" role="dialog" aria-label="Selecionar mês de referência" tabindex="-1" hidden>
+      <div class="month-picker__header">
+        <button class="icon-button month-picker__year-button" type="button" data-month-year="-1" aria-label="Ano anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <strong class="month-picker__year" data-month-year-label aria-live="polite">${selectedYear}</strong>
+        <button class="icon-button month-picker__year-button" type="button" data-month-year="1" aria-label="Próximo ano"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+      <div class="month-picker__grid" data-month-grid aria-label="Meses de ${selectedYear}">${monthGridMarkup(monthKey, selectedYear, minMonth, maxMonth)}</div>
+    </div>
+  </div>`;
 }
 
-function monthOptions(centerMonth, before = 18, after = 18) {
+function monthKeys(centerMonth, before = 18, after = 18) {
   const [year, month] = centerMonth.split("-").map(Number);
-  const options = [];
+  const keys = [];
   for (let offset = -before; offset <= after; offset += 1) {
     const date = new Date(Date.UTC(year, month - 1 + offset, 1, 12));
     const key = `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
-    options.push(`<option value="${key}" ${key === centerMonth ? "selected" : ""}>${monthLabel(key)}</option>`);
+    keys.push(key);
   }
-  return options.join("");
+  return keys;
+}
+
+function monthOptions(centerMonth, before = 18, after = 18) {
+  return monthKeys(centerMonth, before, after).map((key) => `<option value="${key}" ${key === centerMonth ? "selected" : ""}>${monthLabel(key)}</option>`).join("");
+}
+
+function monthGridMarkup(selectedMonth, year, minMonth, maxMonth) {
+  const currentMonth = currentMonthKey();
+  const enabledMonths = MONTH_SHORT_LABELS.map((label, index) => {
+    const key = `${year}-${String(index + 1).padStart(2, "0")}`;
+    return { key, label, index, disabled: key < minMonth || key > maxMonth };
+  });
+  const selectedIsAvailable = enabledMonths.some(({ key, disabled }) => key === selectedMonth && !disabled);
+  const firstEnabled = enabledMonths.find(({ disabled }) => !disabled)?.key;
+  return enabledMonths.map(({ key, label, index, disabled }) => {
+    const selected = key === selectedMonth;
+    const current = key === currentMonth;
+    const tabStop = selectedIsAvailable ? selected : key === firstEnabled;
+    const accessibleLabel = `${monthLabel(key)}${current ? ", mês atual" : ""}${selected ? ", selecionado" : ""}`;
+    return `<button class="month-picker__month" type="button" data-month-option="${key}" data-month-index="${index}" aria-label="${escapeHtml(accessibleLabel)}" aria-pressed="${selected}" tabindex="${tabStop ? "0" : "-1"}" ${current ? 'data-current="true"' : ""} ${disabled ? "disabled" : ""}>${label}</button>`;
+  }).join("");
 }
 
 function moneyHero(result, valid = true) {
@@ -763,7 +803,107 @@ function bindGlobalPageControls() {
     updateUrl(route, { perfil: profile, mes: input.value }, { replace: true });
     render();
   }));
+  bindMonthPickers();
   main.querySelectorAll('a[href^="/"]').forEach((link) => link.addEventListener("click", handleInternalLink));
+}
+
+function updateMonthPicker(picker, year) {
+  const minMonth = picker.dataset.minMonth;
+  const maxMonth = picker.dataset.maxMonth;
+  const minYear = Number(minMonth.slice(0, 4));
+  const maxYear = Number(maxMonth.slice(0, 4));
+  const safeYear = Math.min(maxYear, Math.max(minYear, Number(year)));
+  const trigger = picker.querySelector("[data-month-trigger]");
+  const grid = picker.querySelector("[data-month-grid]");
+  picker.dataset.viewYear = String(safeYear);
+  picker.querySelector("[data-month-year-label]").textContent = String(safeYear);
+  picker.querySelector('[data-month-year="-1"]').disabled = safeYear <= minYear;
+  picker.querySelector('[data-month-year="1"]').disabled = safeYear >= maxYear;
+  grid.setAttribute("aria-label", `Meses de ${safeYear}`);
+  grid.innerHTML = monthGridMarkup(trigger.value, safeYear, minMonth, maxMonth);
+}
+
+function closeMonthPicker(picker, restoreTrigger = false) {
+  if (!picker || picker.dataset.open !== "true") return;
+  picker.dataset.open = "false";
+  const trigger = picker.querySelector("[data-month-trigger]");
+  const popover = picker.querySelector(".month-picker__popover");
+  trigger.setAttribute("aria-expanded", "false");
+  popover.hidden = true;
+  if (restoreTrigger) trigger.focus({ preventScroll: true });
+}
+
+function openMonthPicker(picker) {
+  document.querySelectorAll('[data-month-picker][data-open="true"]').forEach((candidate) => closeMonthPicker(candidate));
+  const trigger = picker.querySelector("[data-month-trigger]");
+  const selectedYear = Number(trigger.value.slice(0, 4));
+  updateMonthPicker(picker, selectedYear);
+  picker.dataset.open = "true";
+  trigger.setAttribute("aria-expanded", "true");
+  picker.querySelector(".month-picker__popover").hidden = false;
+  requestAnimationFrame(() => {
+    picker.querySelector('[data-month-option][aria-pressed="true"]:not(:disabled), [data-month-option]:not(:disabled)')?.focus({ preventScroll: true });
+  });
+}
+
+function focusMonthOption(option, key) {
+  const buttons = [...option.closest("[data-month-grid]").querySelectorAll("[data-month-option]")];
+  const currentIndex = Number(option.dataset.monthIndex);
+  let targetIndex = currentIndex;
+  let direction = 0;
+  if (key === "ArrowLeft") {
+    targetIndex -= 1;
+    direction = -1;
+  } else if (key === "ArrowRight") {
+    targetIndex += 1;
+    direction = 1;
+  } else if (key === "ArrowUp") {
+    targetIndex -= 3;
+    direction = -1;
+  } else if (key === "ArrowDown") {
+    targetIndex += 3;
+    direction = 1;
+  } else if (key === "Home") {
+    targetIndex = buttons.findIndex((button) => !button.disabled);
+  } else if (key === "End") {
+    targetIndex = buttons.map((button) => !button.disabled).lastIndexOf(true);
+  } else return false;
+  while (buttons[targetIndex]?.disabled) targetIndex += direction;
+  const target = buttons[targetIndex];
+  if (target && !target.disabled) {
+    buttons.forEach((button) => { button.tabIndex = button === target ? 0 : -1; });
+    target.focus({ preventScroll: true });
+  }
+  return true;
+}
+
+function bindMonthPickers() {
+  main.querySelectorAll("[data-month-picker]").forEach((picker) => {
+    const trigger = picker.querySelector("[data-month-trigger]");
+    trigger.addEventListener("click", () => {
+      if (picker.dataset.open === "true") closeMonthPicker(picker, true);
+      else openMonthPicker(picker);
+    });
+    picker.addEventListener("click", (event) => {
+      const yearControl = event.target.closest("[data-month-year]");
+      if (yearControl && !yearControl.disabled) {
+        const nextYear = Number(picker.dataset.viewYear) + Number(yearControl.dataset.monthYear);
+        updateMonthPicker(picker, nextYear);
+        return;
+      }
+      const option = event.target.closest("[data-month-option]");
+      if (!option || option.disabled) return;
+      trigger.value = option.dataset.monthOption;
+      closeMonthPicker(picker);
+      trigger.focus({ preventScroll: true });
+      trigger.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+    picker.addEventListener("keydown", (event) => {
+      const option = event.target.closest("[data-month-option]");
+      if (!option || !focusMonthOption(option, event.key)) return;
+      event.preventDefault();
+    });
+  });
 }
 
 function handleInternalLink(event) {
@@ -1002,6 +1142,18 @@ function saveAdmin(event) {
 }
 
 document.querySelectorAll("[data-nav-route]").forEach((link) => link.addEventListener("click", handleInternalLink));
+document.addEventListener("pointerdown", (event) => {
+  document.querySelectorAll('[data-month-picker][data-open="true"]').forEach((picker) => {
+    if (!picker.contains(event.target)) closeMonthPicker(picker);
+  });
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  const picker = document.querySelector('[data-month-picker][data-open="true"]');
+  if (!picker) return;
+  event.preventDefault();
+  closeMonthPicker(picker, true);
+});
 menuToggle.addEventListener("click", () => (sidebar.dataset.open === "true" ? closeMenu(true) : openMenu()));
 menuOverlay.addEventListener("click", () => closeMenu(true));
 sidebar.addEventListener("keydown", (event) => {
