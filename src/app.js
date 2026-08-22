@@ -540,6 +540,14 @@ function kpi(label, value, emphasis = false) {
 function distributionCard(title, production, field) {
   const values = MODALITIES.map((modality) => ({ ...modality, value: Number(production[modality.id]?.[field]) || 0 }));
   const total = values.reduce((sum, item) => sum + item.value, 0);
+  const isFinancial = field === "matfin";
+  const singularUnit = isFinancial ? "matrícula financeira" : "inscrito";
+  const pluralUnit = isFinancial ? "matrículas financeiras" : "inscritos";
+  const subtitle = isFinancial
+    ? "Quantidade de matrículas financeiras por modalidade e participação no total."
+    : "Quantidade de inscritos por modalidade e participação no total.";
+  const totalUnit = total === 1 ? singularUnit : pluralUnit;
+  const accessibleDescription = total === 0 ? "" : `${title}. Total: ${formatNumber(total)} ${totalUnit}. ${values.map((item) => `${item.label}: ${formatNumber(item.value)} ${item.value === 1 ? singularUnit : pluralUnit}, ${formatPercent((item.value / total) * 100)} do total`).join(". ")}.`;
   let offset = 0;
   const circles = values.map((item) => {
     const fraction = total ? item.value / total : 0;
@@ -548,7 +556,7 @@ function distributionCard(title, production, field) {
     offset += dash;
     return circle;
   }).join("");
-  return `<article class="card result-chart-card"><h2>${escapeHtml(title)}</h2>${total === 0 ? `<div class="empty-state"><h3>Sem dados neste período</h3><p class="muted">Preencha a produção em Projeção para visualizar a distribuição.</p><a class="button button--secondary" href="/projecao?perfil=${activeProfile()}&mes=${activeMonth()}">Ir para Projeção</a></div>` : `<div class="distribution result-chart"><div class="donut" role="img" aria-label="${escapeHtml(title)}: total ${total}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="donut__track" cx="50" cy="50" r="38"/>${circles}</svg><div class="donut__center"><strong>${formatNumber(total)}</strong><span>Total</span></div></div><ul class="legend">${values.map((item) => `<li><span class="legend__dot" aria-hidden="true"></span><span>${escapeHtml(item.label)}</span><span class="legend__value">${formatNumber(item.value)} · ${formatPercent((item.value / total) * 100)}</span></li>`).join("")}</ul></div>`}</article>`;
+  return `<article class="card result-chart-card"><h2>${escapeHtml(title)}</h2><p class="chart-subtitle">${escapeHtml(subtitle)}</p>${total === 0 ? `<div class="empty-state"><h3>Sem dados neste período</h3><p class="muted">Preencha a produção em Projeção para visualizar a distribuição.</p><a class="button button--secondary" href="/projecao?perfil=${activeProfile()}&mes=${activeMonth()}">Ir para Projeção</a></div>` : `<div class="distribution result-chart" role="img" aria-label="${escapeHtml(accessibleDescription)}"><div class="donut" aria-hidden="true"><svg viewBox="0 0 100 100"><circle class="donut__track" cx="50" cy="50" r="38"/>${circles}</svg><div class="donut__center"><strong>${formatNumber(total)}</strong><span>${escapeHtml(totalUnit)}<br>no total</span></div></div><ul class="legend" aria-hidden="true">${values.map((item) => `<li class="chart-legend__row"><span class="legend__dot" aria-hidden="true"></span><span class="chart-legend__name">${escapeHtml(item.label)}</span><span class="chart-legend__count">${formatNumber(item.value)} ${escapeHtml(item.value === 1 ? singularUnit : pluralUnit)}</span><span class="chart-legend__share">${formatPercent((item.value / total) * 100)} do total</span></li>`).join("")}</ul></div>`}</article>`;
 }
 
 function bindTabs() {
