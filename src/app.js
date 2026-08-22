@@ -182,7 +182,7 @@ function monthSelect(monthKey, id = "month-select") {
     <button class="month-picker__trigger" id="${id}" type="button" value="${monthKey}" data-month-select data-month-trigger aria-haspopup="dialog" aria-expanded="false" aria-controls="${popoverId}" aria-labelledby="${id}-label ${id}-value">
       ${calendarIcon()}<span class="month-picker__value" id="${id}-value">${escapeHtml(monthLabel(monthKey))}</span><svg class="month-picker__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
     </button>
-    <div class="month-picker__popover" id="${popoverId}" role="dialog" aria-label="Selecionar mês de referência" tabindex="-1" hidden>
+    <div class="month-picker__popover" id="${popoverId}" role="dialog" aria-modal="false" aria-label="Selecionar mês de referência" tabindex="-1" hidden>
       <div class="month-picker__header">
         <button class="icon-button month-picker__year-button" type="button" data-month-year="-1" aria-label="Ano anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
         <strong class="month-picker__year" data-month-year-label aria-live="polite">${selectedYear}</strong>
