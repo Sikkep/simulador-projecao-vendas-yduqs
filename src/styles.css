@@ -11,6 +11,8 @@
   --brand-emphasis: oklch(78% 0.13 203);
   --brand-on-emphasis: oklch(19% 0.055 264);
   --brand-subtle: oklch(31% 0.075 233);
+  --header-background: oklch(68.7881% 0.113627 206.8491);
+  --header-foreground: oklch(29.987% 0.063244 276.9416);
   --success: oklch(78% 0.14 162);
   --success-subtle: oklch(29% 0.07 165);
   --warning: oklch(84% 0.15 86);
@@ -156,9 +158,13 @@ h3 {
   flex-wrap: nowrap;
   gap: var(--space-4);
   padding: 0 var(--space-6);
-  background: var(--card);
-  color: var(--foreground);
-  border-bottom: 1px solid var(--border-strong);
+  background: var(--header-background);
+  color: var(--header-foreground);
+  border-bottom: 0;
+}
+
+.app-header :focus-visible {
+  outline-color: var(--header-foreground);
 }
 
 .app-header__brand,
@@ -203,21 +209,21 @@ h3 {
 
 .q-symbol {
   position: relative;
-  width: 28px;
-  height: 28px;
-  border: 8px solid var(--foreground);
+  width: 26px;
+  height: 26px;
+  border: 6px solid var(--header-foreground);
   border-radius: 50%;
 }
 
 .q-symbol::after {
   content: "";
   position: absolute;
-  right: -7px;
-  bottom: -5px;
-  width: 10px;
+  right: -3px;
+  bottom: -3px;
+  width: 9px;
   height: 6px;
   border-radius: 2px;
-  background: var(--foreground);
+  background: var(--header-foreground);
   transform: rotate(46deg);
 }
 
@@ -226,17 +232,28 @@ h3 {
   min-height: 44px;
   gap: var(--space-2);
   padding: 0 var(--space-4);
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--header-foreground);
   border-radius: var(--radius-sm);
-  color: var(--foreground);
+  color: var(--header-foreground);
   font-weight: 700;
   text-decoration: none;
 }
 
 .header-policy-link:hover {
-  border-color: var(--brand-emphasis);
-  background: var(--brand-subtle);
-  color: var(--foreground);
+  border-color: var(--header-foreground);
+  background: var(--header-foreground);
+  color: var(--header-background);
+}
+
+.app-header .menu-toggle {
+  border-color: var(--header-foreground);
+  background: var(--transparent);
+  color: var(--header-foreground);
+}
+
+.app-header .menu-toggle:hover {
+  background: var(--header-foreground);
+  color: var(--header-background);
 }
 
 .policy-label--short {
