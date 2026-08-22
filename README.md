@@ -1,51 +1,62 @@
-# Simulador de Projeção de Vendas
+# Simulador de Remuneração Variável
 
-Simulador comercial em modo escuro, com identidade visual em tons de azul da YDUQS. O projeto possui simulações separadas para os perfis **Consultor** e **Gerente**, cada um com Graduação, Pós-Graduação e Curso Técnico.
+Aplicação estática de produção para Consultores e Gerentes, com identidade YDUQS, cálculo mensal/semestral, acompanhamento do funil e anotações locais.
 
-## Funcionalidades
+## Rotas
 
-- Seis combinações independentes de perfil e curso.
-- Projeção em tempo real por quantidade de vendas, meta e data.
-- Painel de Administração protegido por senha.
-- Edição de valor por venda, quantidade da meta, bônus e data de fechamento.
-- Persistência local no navegador por `localStorage`.
-- Projeto estático pronto para publicação na Vercel.
+- `/projecao`: entradas, remuneração estimada, tabela editável e ritmo.
+- `/resultados`: consolidação mensal/semestral e distribuições.
+- `/oportunidades`: diferenças do funil e atalhos para o próximo passo.
+- `/anotacoes`: bloco de contatos com cópia de telefone e exportação CSV.
 
-## Executar localmente
+Perfil, mês e produção podem ser compartilhados pela query string. Exemplo: `?mes=2026-08&perfil=consultor&ead=18,10,8` (Inscritos, Matrícula Financeira e Matrícula Acadêmica).
 
-O projeto não exige compilação. Abra `index.html` diretamente no navegador ou use a Vercel CLI:
+## Desenvolvimento
+
+O projeto não usa dependências de runtime nem CSS por CDN. O build local copia os módulos ES e cria os pontos de entrada das quatro rotas.
 
 ```bash
-npm install -g vercel
 npm run dev
+npm run check
 ```
 
-## Publicar na Vercel
+O segundo comando executa testes de regras de negócio, auditoria estática de tokens/contraste e o build de produção em `dist/`.
 
-1. Importe este repositório no painel da Vercel.
-2. Mantenha o preset de framework como **Other**.
-3. Não informe comando de build.
-4. Publique o projeto.
+## Regras principais
 
-Também é possível publicar pela linha de comando:
-
-```bash
-npm run deploy:prod
-```
+- Meta de Matrícula Financeira: mensal.
+- Meta de Matrícula Acadêmica: semestral.
+- Faixa considerada: menor atingimento entre as duas metas.
+- Consultor: valor por Matrícula Financeira e modalidade, conforme a faixa.
+- Gerente: percentual da faixa aplicado ao salário-base.
+- Pagamento: 60% liberado no mês e 40% retido para o fechamento semestral.
+- Persistência: `localStorage`, com migração dos dados das versões anteriores.
 
 ## Administração
 
-A opção **Administração** fica no menu lateral. Dentro dela é possível selecionar o perfil e o curso antes de editar os parâmetros.
+A opção **Administração** permanece no rodapé da sidebar e abre um modal acessível. O logo não possui comportamento administrativo. Datas, metas e matriz vertical de valores podem ser atualizadas por perfil.
 
-> Atenção: esta versão é um protótipo estático. A senha e os parâmetros ficam no navegador e não constituem controle de acesso seguro para produção. Para dados compartilhados ou acesso administrativo real, conecte o simulador a uma API com autenticação e armazenamento no servidor.
+A credencial não existe no bundle. A função `/api/admin-auth` compara, em tempo constante, o hash enviado pelo navegador com `process.env.ADMIN_PASSWORD_HASH`. Para executar localmente, copie `.env.example` para `.env`, substitua o placeholder por um hash SHA-256 e nunca versione esse arquivo. Na Vercel, configure a mesma variável nos ambientes de Preview e Production.
 
 ## Estrutura
 
 ```text
 .
 ├── index.html
+├── favicon.svg
+├── api/
+│   └── admin-auth.js
+├── src/
+│   ├── app.js
+│   ├── config.js
+│   ├── model.js
+│   ├── store.js
+│   └── styles.css
+├── scripts/
+│   ├── audit.mjs
+│   ├── build.mjs
+│   └── serve.mjs
+├── tests/
 ├── package.json
-├── vercel.json
-├── .gitignore
-└── README.md
+└── vercel.json
 ```
