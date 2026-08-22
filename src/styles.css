@@ -55,15 +55,46 @@
   --border-strong: oklch(48% 0.04 258);
   --brand-emphasis: var(--brand-solid);
   --brand-subtle: oklch(35% 0.055 214);
-  --logo-surface: var(--brand-solid);
-  --header-background: oklch(29% 0.055 262);
-  --header-foreground: oklch(98.4% 0.003 247);
-  --header-control-border: var(--border-strong);
+  --logo-surface: var(--transparent);
+  --header-background: var(--brand-solid);
+  --header-foreground: var(--logo-navy);
+  --header-control-border: oklch(27% 0.06 262 / 35%);
+  --success: oklch(78% 0.14 162);
   --success-subtle: oklch(32% 0.055 162);
+  --warning: oklch(84% 0.15 86);
   --warning-subtle: oklch(34% 0.055 78);
+  --danger: oklch(72% 0.18 25);
   --danger-subtle: oklch(34% 0.055 25);
   --shadow: oklch(10% 0.03 260 / 28%);
   --overlay: oklch(8% 0.03 260 / 72%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: oklch(24% 0.05 262);
+    --foreground: oklch(98.4% 0.003 247);
+    --card: oklch(28% 0.052 262);
+    --card-strong: oklch(31% 0.048 260);
+    --muted: oklch(31% 0.048 260);
+    --muted-foreground: oklch(76% 0.025 255);
+    --border: oklch(38% 0.042 260);
+    --border-strong: oklch(48% 0.04 258);
+    --brand-emphasis: var(--brand-solid);
+    --brand-subtle: oklch(35% 0.055 214);
+    --logo-surface: var(--transparent);
+    --header-background: var(--brand-solid);
+    --header-foreground: var(--logo-navy);
+    --header-control-border: oklch(27% 0.06 262 / 35%);
+    --success: oklch(78% 0.14 162);
+    --success-subtle: oklch(32% 0.055 162);
+    --warning: oklch(84% 0.15 86);
+    --warning-subtle: oklch(34% 0.055 78);
+    --danger: oklch(72% 0.18 25);
+    --danger-subtle: oklch(34% 0.055 25);
+    --shadow: oklch(10% 0.03 260 / 28%);
+    --overlay: oklch(8% 0.03 260 / 72%);
+  }
 }
 
 * {
@@ -1543,7 +1574,7 @@ button:disabled {
 }
 
 .dialog__panel {
-  width: min(100%, 1080px);
+  width: min(100%, 1180px);
   max-height: calc(100vh - var(--space-4));
   max-height: calc(100dvh - var(--space-8));
   display: flex;
@@ -1617,10 +1648,48 @@ button:disabled {
   border-top: 1px solid var(--border);
 }
 
+.admin-rate-section h3 {
+  margin-bottom: var(--space-4);
+}
+
+.admin-rate-rail {
+  max-width: 100%;
+  padding-bottom: var(--space-2);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: var(--border-strong) var(--muted);
+  scrollbar-width: thin;
+}
+
 .admin-rate-fields {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(7, minmax(132px, 1fr));
+  gap: var(--space-3);
+  align-items: end;
+}
+
+.admin-rate-fields--manager {
+  grid-template-columns: repeat(5, minmax(160px, 1fr));
+}
+
+.admin-rate-field {
+  min-width: 0;
+}
+
+.admin-rate-field label {
+  min-height: 36px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.admin-rate-field input {
+  width: 100%;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-rate-field .field-help {
+  min-height: 36px;
 }
 
 .form-status {
@@ -1890,7 +1959,6 @@ button:disabled {
   .notes-grid,
   .admin-context,
   .admin-grid,
-  .admin-rate-fields,
   .opportunities-grid {
     grid-template-columns: 1fr;
   }
