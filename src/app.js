@@ -287,7 +287,7 @@ function productionTable(ctx) {
   return `<div class="table-wrap">
     <table class="production-table">
       <caption class="eyebrow">Produção por modalidade e conversões</caption>
-      <colgroup><col style="width:22%"><col style="width:11%"><col style="width:13%"><col style="width:14%"><col style="width:13%"><col style="width:14%"><col style="width:13%"></colgroup>
+      <colgroup><col style="width:29%"><col style="width:10%"><col style="width:11%"><col style="width:12%"><col style="width:11%"><col style="width:12%"><col style="width:15%"></colgroup>
       <thead><tr><th scope="col">Modalidade</th><th scope="col">Inscritos</th><th scope="col"><abbr title="Matrícula Financeira">Financeira</abbr></th><th scope="col">Conversão</th><th scope="col"><abbr title="Matrícula Acadêmica">Acadêmica</abbr></th><th scope="col">Conversão</th><th scope="col">Valor liberado</th></tr></thead>
       <tbody>${rows}</tbody>
       <tfoot><tr><td>Total geral</td><td class="total-cell">${formatNumber(total.inscritos)}</td><td class="total-cell">${formatNumber(total.matfin)}</td><td class="total-cell">${conversionLabel(conversion(total.matfin, total.inscritos))}</td><td class="total-cell">${formatNumber(total.matacad)}</td><td class="total-cell">${conversionLabel(conversion(total.matacad, total.matfin))}</td><td>${currencyMarkup(ctx.result.released)}</td></tr></tfoot>
@@ -627,14 +627,18 @@ function renderOpportunities() {
   const monthKey = activeMonth(profile);
   const ctx = context(profile, monthKey);
   const cards = MODALITIES.map((modality) => opportunityCard(modality, ctx.monthState.production[modality.id], profile, monthKey));
-  const open = MODALITIES.reduce((sum, modality) => {
+  const financialOpen = MODALITIES.reduce((sum, modality) => {
+    const row = ctx.monthState.production[modality.id];
+    return sum + Math.max(0, row.inscritos - row.matfin);
+  }, 0);
+  const visibleDifferences = MODALITIES.reduce((sum, modality) => {
     const row = ctx.monthState.production[modality.id];
     return sum + Math.max(0, row.inscritos - row.matfin) + Math.max(0, row.matfin - row.matacad);
   }, 0);
-  main.innerHTML = `<div class="page">
+  main.innerHTML = `<div class="page opportunities-page">
     ${pageHeader({ eyebrow: "Acompanhamento", title: "Oportunidades", description: "Veja onde atuar no funil e registre o próximo passo sem perder a modalidade.", controls: `<div class="app-header__brand flex-wrap">${profileSelect(profile, "opportunity-profile")}${monthSelect(monthKey, "opportunity-month")}</div>` })}
-    <section aria-labelledby="opportunities-title"><div class="section-heading"><div><h2 id="opportunities-title">Oportunidades por modalidade</h2><p class="section-description">Diferenças nunca ficam negativas; conversões sem base são identificadas com clareza.</p></div><span class="badge">${quantityLabel(open, "oportunidade aberta", "oportunidades abertas")}</span></div>
-    ${open === 0 ? `<div class="empty-state"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg><h2>Funil em dia</h2><p class="muted">Não há diferenças abertas neste mês. Registre um próximo passo para manter o acompanhamento.</p><a class="button button--secondary" href="/anotacoes?perfil=${profile}&mes=${monthKey}">Registrar próximo passo</a></div>` : `<div class="opportunities-grid">${cards.join("")}</div>`}
+    <section aria-labelledby="opportunities-title"><div class="section-heading"><div><h2 id="opportunities-title">Oportunidades por modalidade</h2><p class="section-description">Diferenças nunca ficam negativas; conversões sem base são identificadas com clareza.</p></div><span class="badge">${quantityLabel(financialOpen, "oportunidade financeira aberta", "oportunidades financeiras abertas")}</span></div>
+    ${visibleDifferences === 0 ? `<div class="empty-state"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg><h2>Funil em dia</h2><p class="muted">Não há diferenças abertas neste mês. Registre um próximo passo para manter o acompanhamento.</p><a class="button button--secondary" href="/anotacoes?perfil=${profile}&mes=${monthKey}">Registrar próximo passo</a></div>` : `<div class="opportunities-grid">${cards.join("")}</div>`}
     </section>
   </div>`;
 }
@@ -642,13 +646,12 @@ function renderOpportunities() {
 function opportunityCard(modality, row, profile, monthKey) {
   const withoutFinancial = Math.max(0, row.inscritos - row.matfin);
   const withoutAcademic = Math.max(0, row.matfin - row.matacad);
-  const open = withoutFinancial + withoutAcademic;
   const params = new URLSearchParams({ perfil: profile, mes: monthKey, modalidade: modality.id });
   return `<article class="card opportunity-card">
-    <div class="opportunity-title"><h2>${escapeHtml(modality.label)}</h2><span class="badge">${open} abertas</span></div>
+    <div class="opportunity-title"><h2>${escapeHtml(modality.label)}</h2><span class="badge">${formatNumber(withoutFinancial)} sem matrícula financeira</span></div>
     <div class="opportunity-metrics">
-      <dl class="funnel"><div><dt>Inscritos</dt><dd>${row.inscritos}</dd></div><div><dt>Matrícula Financeira</dt><dd>${row.matfin}</dd></div><div><dt>Matrícula Acadêmica</dt><dd>${row.matacad}</dd></div></dl>
-      <div class="conversion-pair"><div class="conversion-pair__item"><span><strong>${withoutFinancial}</strong><small>Sem Matrícula Financeira</small></span><strong>${conversionLabel(conversion(row.matfin, row.inscritos))}</strong></div><div class="conversion-pair__item"><span><strong>${withoutAcademic}</strong><small>Sem Matrícula Acadêmica</small></span><strong>${conversionLabel(conversion(row.matacad, row.matfin))}</strong></div></div>
+      <dl class="funnel"><div><dt>Inscritos</dt><dd>${formatNumber(row.inscritos)}</dd></div><div><dt>Matrícula Financeira</dt><dd>${formatNumber(row.matfin)}</dd></div><div><dt>Matrícula Acadêmica</dt><dd>${formatNumber(row.matacad)}</dd></div></dl>
+      <div class="conversion-pair"><div class="conversion-pair__item"><span><strong>${formatNumber(withoutFinancial)}</strong><small>Sem Matrícula Financeira</small></span><strong>${conversionLabel(conversion(row.matfin, row.inscritos))}</strong></div><div class="conversion-pair__item"><span><strong>${formatNumber(withoutAcademic)}</strong><small>Sem Matrícula Acadêmica</small></span><strong>${conversionLabel(conversion(row.matacad, row.matfin))}</strong></div></div>
     </div>
     <div class="opportunity-actions"><a class="button button--primary" href="/anotacoes?${params}">Tratar oportunidades</a></div>
   </article>`;
