@@ -603,9 +603,11 @@ function opportunityCard(modality, row, profile, monthKey) {
   const params = new URLSearchParams({ perfil: profile, mes: monthKey, modalidade: modality.id });
   return `<article class="card opportunity-card">
     <div class="opportunity-title"><h2>${escapeHtml(modality.label)}</h2><span class="badge">${open} abertas</span></div>
-    <dl class="funnel"><div><dt>Inscritos</dt><dd>${row.inscritos}</dd></div><div><dt>Matrícula Financeira</dt><dd>${row.matfin}</dd></div><div><dt>Matrícula Acadêmica</dt><dd>${row.matacad}</dd></div></dl>
-    <div class="conversion-pair"><div class="conversion-pair__item"><span><strong>${withoutFinancial}</strong><small>Sem Matrícula Financeira</small></span><strong>${conversionLabel(conversion(row.matfin, row.inscritos))}</strong></div><div class="conversion-pair__item"><span><strong>${withoutAcademic}</strong><small>Sem Matrícula Acadêmica</small></span><strong>${conversionLabel(conversion(row.matacad, row.matfin))}</strong></div></div>
-    <div class="opportunity-actions"><a class="button button--primary" href="/anotacoes?${params}"><span aria-hidden="true">$</span> Tratar oportunidades</a><a class="button button--secondary" href="/anotacoes?${params}">Registrar próximo passo</a></div>
+    <div class="opportunity-metrics">
+      <dl class="funnel"><div><dt>Inscritos</dt><dd>${row.inscritos}</dd></div><div><dt>Matrícula Financeira</dt><dd>${row.matfin}</dd></div><div><dt>Matrícula Acadêmica</dt><dd>${row.matacad}</dd></div></dl>
+      <div class="conversion-pair"><div class="conversion-pair__item"><span><strong>${withoutFinancial}</strong><small>Sem Matrícula Financeira</small></span><strong>${conversionLabel(conversion(row.matfin, row.inscritos))}</strong></div><div class="conversion-pair__item"><span><strong>${withoutAcademic}</strong><small>Sem Matrícula Acadêmica</small></span><strong>${conversionLabel(conversion(row.matacad, row.matfin))}</strong></div></div>
+    </div>
+    <div class="opportunity-actions"><a class="button button--primary" href="/anotacoes?${params}">Tratar oportunidades</a></div>
   </article>`;
 }
 
