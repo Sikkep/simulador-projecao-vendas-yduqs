@@ -12,9 +12,11 @@
   --brand-emphasis: oklch(46% 0.09 207);
   --brand-on-emphasis: oklch(20.8% 0.042 265);
   --brand-subtle: oklch(95.5% 0.025 205);
-  --header-background: oklch(27% 0.06 262);
-  --header-foreground: oklch(98.4% 0.003 247);
-  --logo-navy: var(--header-background);
+  --logo-navy: oklch(27% 0.06 262);
+  --logo-surface: var(--transparent);
+  --header-background: var(--brand-solid);
+  --header-foreground: var(--logo-navy);
+  --header-control-border: oklch(27% 0.06 262 / 35%);
   --success: oklch(46% 0.12 162);
   --success-subtle: oklch(96% 0.035 162);
   --warning: oklch(50% 0.12 70);
@@ -39,6 +41,29 @@
   --sidebar-width: 248px;
   --content-max: 1440px;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: oklch(24% 0.05 262);
+  --foreground: oklch(98.4% 0.003 247);
+  --card: oklch(28% 0.052 262);
+  --card-strong: oklch(31% 0.048 260);
+  --muted: oklch(31% 0.048 260);
+  --muted-foreground: oklch(76% 0.025 255);
+  --border: oklch(38% 0.042 260);
+  --border-strong: oklch(48% 0.04 258);
+  --brand-emphasis: var(--brand-solid);
+  --brand-subtle: oklch(35% 0.055 214);
+  --logo-surface: var(--brand-solid);
+  --header-background: oklch(29% 0.055 262);
+  --header-foreground: oklch(98.4% 0.003 247);
+  --header-control-border: var(--border-strong);
+  --success-subtle: oklch(32% 0.055 162);
+  --warning-subtle: oklch(34% 0.055 78);
+  --danger-subtle: oklch(34% 0.055 25);
+  --shadow: oklch(10% 0.03 260 / 28%);
+  --overlay: oklch(8% 0.03 260 / 72%);
 }
 
 * {
@@ -167,11 +192,11 @@ h3 {
   padding: 0 var(--space-6);
   background: var(--header-background);
   color: var(--header-foreground);
-  border-bottom: 1px solid var(--header-background);
+  border-bottom: 1px solid var(--header-control-border);
 }
 
 .app-header :focus-visible {
-  outline-color: var(--brand-solid);
+  outline-color: var(--header-foreground);
 }
 
 .app-header__brand,
@@ -211,7 +236,7 @@ h3 {
   min-height: 44px;
   justify-content: center;
   border-radius: var(--radius-sm);
-  background: var(--brand-solid);
+  background: var(--logo-surface);
   text-decoration: none;
   overflow: visible;
 }
@@ -246,7 +271,7 @@ h3 {
   min-height: 44px;
   gap: var(--space-2);
   padding: 0 var(--space-4);
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--header-control-border);
   border-radius: var(--radius-sm);
   color: var(--header-foreground);
   font-weight: 700;
@@ -254,21 +279,21 @@ h3 {
 }
 
 .header-policy-link:hover {
-  border-color: var(--brand-solid);
-  background: var(--brand-solid);
-  color: var(--header-background);
+  border-color: var(--logo-navy);
+  background: var(--logo-navy);
+  color: var(--brand-solid);
 }
 
 .app-header .menu-toggle {
-  border-color: var(--border-strong);
+  border-color: var(--header-control-border);
   background: var(--transparent);
   color: var(--header-foreground);
 }
 
 .app-header .menu-toggle:hover {
-  border-color: var(--brand-solid);
-  background: var(--brand-solid);
-  color: var(--header-background);
+  border-color: var(--logo-navy);
+  background: var(--logo-navy);
+  color: var(--brand-solid);
 }
 
 .policy-label--short {
@@ -420,10 +445,13 @@ h3 {
   align-items: end;
   max-width: 100%;
   gap: var(--space-4);
+  align-self: center;
 }
 
 .page-header .profile-switch,
 .page-header .month-switch {
+  display: grid;
+  grid-template-rows: auto 48px;
   width: 100%;
   max-width: 100%;
 }
@@ -1171,7 +1199,7 @@ button:disabled {
   stroke: var(--muted);
 }
 
-.donut__segment:nth-of-type(2) { stroke: var(--header-background); }
+.donut__segment:nth-of-type(2) { stroke: var(--logo-navy); }
 .donut__segment:nth-of-type(3) { stroke: var(--brand-solid); }
 .donut__segment:nth-of-type(4) { stroke: var(--border-strong); }
 .donut__segment:nth-of-type(5) { stroke: var(--muted-foreground); }
@@ -1223,7 +1251,7 @@ button:disabled {
   background: var(--muted-foreground);
 }
 
-.legend li:first-child .legend__dot { background: var(--header-background); }
+.legend li:first-child .legend__dot { background: var(--logo-navy); }
 .legend li:nth-child(2) .legend__dot { background: var(--brand-solid); }
 .legend li:nth-child(3) .legend__dot { background: var(--border-strong); }
 .legend li:nth-child(4) .legend__dot { background: var(--muted-foreground); }
@@ -1236,14 +1264,14 @@ button:disabled {
 }
 
 .opportunities-grid {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 336px), 1fr));
   gap: var(--space-6);
 }
 
 .opportunity-card {
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  gap: var(--space-4);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--space-6);
   min-width: 0;
   box-shadow: 0 var(--space-1) var(--space-3) var(--shadow);
 }
@@ -1267,7 +1295,7 @@ button:disabled {
 
 .funnel {
   display: grid;
-  gap: var(--space-2);
+  gap: 0;
   margin: 0;
 }
 
@@ -1277,7 +1305,7 @@ button:disabled {
   align-items: baseline;
   gap: var(--space-3);
   min-height: 44px;
-  padding-bottom: var(--space-2);
+  padding: var(--space-3) 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -1294,9 +1322,15 @@ button:disabled {
   font-weight: 850;
 }
 
+.opportunity-metrics {
+  min-width: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
 .conversion-pair {
   display: grid;
-  gap: var(--space-3);
+  gap: 0;
 }
 
 .conversion-pair__item {
@@ -1304,8 +1338,13 @@ button:disabled {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--space-2);
   align-items: center;
+  min-height: 64px;
   padding: var(--space-3) 0;
   border-bottom: 1px solid var(--border);
+}
+
+.conversion-pair__item:last-child {
+  border-bottom: 0;
 }
 
 .conversion-pair__item strong {
@@ -1330,13 +1369,13 @@ button:disabled {
 }
 
 .opportunity-actions {
-  display: grid;
-  gap: var(--space-2);
+  display: block;
 }
 
 .opportunity-actions .button {
-  min-height: 52px;
-  padding: var(--space-2);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-2) var(--space-4);
   white-space: normal;
   text-align: center;
   text-wrap: pretty;
