@@ -322,7 +322,6 @@ function renderProjection() {
       <section class="card" aria-labelledby="detail-title">
         <div class="section-heading"><div><p class="eyebrow">3 · Detalhamento</p><h2 id="detail-title">Produção, conversão e valor liberado</h2><p class="section-description">Edite uma única tabela. <abbr title="Matrícula Financeira">Financeira</abbr> e <abbr title="Matrícula Acadêmica">Acadêmica</abbr> são exibidas por extenso no mobile.</p></div></div>
         ${productionTable(ctx)}
-        <p class="field-help space-top-3">Uma conversão pode ultrapassar 100% quando matrículas registradas no período incluem inscritos originados em períodos anteriores. Sem Matrícula Financeira, a conversão para Acadêmica aparece como “Sem base”.</p>
       </section>
       ${paceSection(ctx)}
     </div>
@@ -508,15 +507,15 @@ function renderResults() {
     released: semesterReleased,
     retained: semesterRetained,
   });
-  main.innerHTML = `<div class="page">
+  main.innerHTML = `<div class="page results-page">
     ${pageHeader({ eyebrow: "Acompanhamento", title: "Resultados", description: "Consolide produção, conversões e remuneração por perfil e período.", controls: `<div class="app-header__brand flex-wrap">${profileSelect(profile, "results-profile")}${monthSelect(monthKey, "results-month")}</div>` })}
-    <section class="card" aria-labelledby="results-period-title"><div class="section-heading"><div><p class="eyebrow">Visão financeira</p><h2 id="results-period-title">Período do resultado</h2></div>${tabsMarkup()}</div>${monthlyPanel}${semesterPanel}</section>
+    <section class="card results-dashboard" aria-labelledby="results-period-title"><div class="section-heading"><div><p class="eyebrow">Visão financeira</p><h2 id="results-period-title">Período do resultado</h2></div>${tabsMarkup()}</div>${monthlyPanel}${semesterPanel}</section>
   </div>`;
   bindTabs();
 }
 
 function resultsPanel({ id, hidden, label, totals, production, gross, released, retained }) {
-  return `<div id="panel-${id}" role="tabpanel" aria-labelledby="tab-${id}" ${hidden ? "hidden" : ""}>
+  return `<div class="results-panel" id="panel-${id}" role="tabpanel" aria-labelledby="tab-${id}" ${hidden ? "hidden" : ""}>
     <p class="section-description">${escapeHtml(label)}</p>
     <div class="results-grid space-top-4">
       ${kpi("Matrículas Financeiras", totals.matfin)}
@@ -549,7 +548,7 @@ function distributionCard(title, production, field) {
     offset += dash;
     return circle;
   }).join("");
-  return `<article class="card"><h2>${escapeHtml(title)}</h2>${total === 0 ? `<div class="empty-state"><h3>Sem dados neste período</h3><p class="muted">Preencha a produção em Projeção para visualizar a distribuição.</p><a class="button button--secondary" href="/projecao?perfil=${activeProfile()}&mes=${activeMonth()}">Ir para Projeção</a></div>` : `<div class="distribution"><div class="donut" role="img" aria-label="${escapeHtml(title)}: total ${total}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="donut__track" cx="50" cy="50" r="38"/>${circles}</svg><div class="donut__center"><strong>${formatNumber(total)}</strong><span>Total</span></div></div><ul class="legend">${values.map((item) => `<li><span class="legend__dot" aria-hidden="true"></span><span>${escapeHtml(item.label)}</span><span class="legend__value">${formatNumber(item.value)} · ${formatPercent((item.value / total) * 100)}</span></li>`).join("")}</ul></div>`}</article>`;
+  return `<article class="card result-chart-card"><h2>${escapeHtml(title)}</h2>${total === 0 ? `<div class="empty-state"><h3>Sem dados neste período</h3><p class="muted">Preencha a produção em Projeção para visualizar a distribuição.</p><a class="button button--secondary" href="/projecao?perfil=${activeProfile()}&mes=${activeMonth()}">Ir para Projeção</a></div>` : `<div class="distribution result-chart"><div class="donut" role="img" aria-label="${escapeHtml(title)}: total ${total}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="donut__track" cx="50" cy="50" r="38"/>${circles}</svg><div class="donut__center"><strong>${formatNumber(total)}</strong><span>Total</span></div></div><ul class="legend">${values.map((item) => `<li><span class="legend__dot" aria-hidden="true"></span><span>${escapeHtml(item.label)}</span><span class="legend__value">${formatNumber(item.value)} · ${formatPercent((item.value / total) * 100)}</span></li>`).join("")}</ul></div>`}</article>`;
 }
 
 function bindTabs() {
