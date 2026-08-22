@@ -51,6 +51,7 @@ let toastTimer = null;
 let animationFrame = null;
 let lastHeroValue = null;
 let recalculateTimer = null;
+let goalTimer = null;
 const ui = { periodTab: "mensal" };
 
 function normalizeRoute(pathname) {
@@ -326,8 +327,8 @@ function renderProjection() {
 }
 
 function bindProjection(ctx) {
-  main.querySelector("#financial-goal")?.addEventListener("change", (event) => handleGoalInput(event, ctx, "financial"));
-  main.querySelector("#academic-goal")?.addEventListener("change", (event) => handleGoalInput(event, ctx, "academic"));
+  main.querySelector("#financial-goal")?.addEventListener("input", (event) => handleGoalInput(event, ctx, "financial"));
+  main.querySelector("#academic-goal")?.addEventListener("input", (event) => handleGoalInput(event, ctx, "academic"));
   main.querySelector("#manager-salary")?.addEventListener("change", (event) => {
     const value = parseMoney(event.target.value);
     ctx.monthState.salary = Math.max(0, value);
@@ -345,6 +346,7 @@ function bindProjection(ctx) {
 }
 
 function handleGoalInput(event, ctx, kind) {
+  clearTimeout(goalTimer);
   const validation = validateGoal(event.target.value);
   const error = main.querySelector(`#${kind}-goal-error`);
   event.target.setAttribute("aria-invalid", validation.valid ? "false" : "true");
@@ -357,14 +359,17 @@ function handleGoalInput(event, ctx, kind) {
     }
     return;
   }
-  if (kind === "financial") ctx.monthState.financialGoal = validation.value;
-  else ctx.semesterState.academicGoal = validation.value;
-  persist();
   const id = event.target.id;
-  renderProjection();
-  const restored = main.querySelector(`#${id}`);
-  restored?.focus();
-  restored?.select();
+  const caret = event.target.selectionStart;
+  goalTimer = setTimeout(() => {
+    if (kind === "financial") ctx.monthState.financialGoal = validation.value;
+    else ctx.semesterState.academicGoal = validation.value;
+    persist();
+    renderProjection();
+    const restored = main.querySelector(`#${id}`);
+    restored?.focus({ preventScroll: true });
+    restored?.setSelectionRange(caret, caret);
+  }, 280);
 }
 
 function handleProductionInput(event, ctx) {
@@ -497,7 +502,7 @@ function resultsPanel({ id, hidden, label, totals, production, gross, released, 
     <div class="results-grid space-top-4">
       ${kpi("Matrículas Financeiras", totals.matfin)}
       ${kpi("Conversão Inscritos → Financeira", conversionLabel(conversion(totals.matfin, totals.inscritos)))}
-      ${kpi("Total já liberado", formatCurrency(released))}
+      ${kpi("Total já liberado", formatCurrency(released), true)}
       ${kpi("Saldo retido", formatCurrency(retained))}
     </div>
     <div class="details-grid space-top-4">
@@ -510,8 +515,8 @@ function resultsPanel({ id, hidden, label, totals, production, gross, released, 
   </div>`;
 }
 
-function kpi(label, value) {
-  return `<article class="card kpi-card"><span class="kpi-card__label">${escapeHtml(label)}</span><p class="kpi-card__value">${escapeHtml(value)}</p></article>`;
+function kpi(label, value, emphasis = false) {
+  return `<article class="card kpi-card${emphasis ? " kpi-card--emphasis" : ""}"><span class="kpi-card__label">${escapeHtml(label)}</span><p class="kpi-card__value">${escapeHtml(value)}</p></article>`;
 }
 
 function distributionCard(title, production, field) {
@@ -675,6 +680,7 @@ function exportNotes(profile, button) {
 
 function render() {
   closeMenu();
+  ensureRouteQuery();
   updateNavigation();
   if (route === ROUTES.results) renderResults();
   else if (route === ROUTES.opportunities) renderOpportunities();
@@ -682,6 +688,22 @@ function render() {
   else renderProjection();
   bindGlobalPageControls();
   document.title = `${main.querySelector("h1")?.textContent || "Simulador"} · YDUQS`;
+}
+
+function ensureRouteQuery() {
+  const query = new URLSearchParams(location.search);
+  const profile = query.get("perfil") === "gerente" ? "gerente" : "consultor";
+  const month = validMonthKey(query.get("mes")) ? query.get("mes") : activeMonth(profile);
+  let changed = false;
+  if (query.get("perfil") !== profile) {
+    query.set("perfil", profile);
+    changed = true;
+  }
+  if (query.get("mes") !== month) {
+    query.set("mes", month);
+    changed = true;
+  }
+  if (changed) history.replaceState({}, "", `${route}?${query}`);
 }
 
 function bindGlobalPageControls() {
@@ -707,6 +729,14 @@ function handleInternalLink(event) {
   if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   const link = event.currentTarget;
   const url = new URL(link.href, location.origin);
+  const requestedProfile = url.searchParams.get("perfil");
+  const nextProfile = requestedProfile === "gerente"
+    ? "gerente"
+    : requestedProfile === "consultor"
+      ? "consultor"
+      : activeProfile();
+  if (!url.searchParams.has("perfil")) url.searchParams.set("perfil", nextProfile);
+  if (!url.searchParams.has("mes")) url.searchParams.set("mes", activeMonth(nextProfile));
   event.preventDefault();
   history.pushState({}, "", `${url.pathname}${url.search}`);
   route = normalizeRoute(url.pathname);
@@ -716,12 +746,18 @@ function handleInternalLink(event) {
 }
 
 function updateNavigation() {
+  const profile = activeProfile();
+  const month = activeMonth(profile);
   document.querySelectorAll("[data-nav-route]").forEach((link) => {
     const routeMatches = link.dataset.navRoute === route;
-    const profileMatches = !link.dataset.navProfile || link.dataset.navProfile === activeProfile();
+    const profileMatches = !link.dataset.navProfile || link.dataset.navProfile === profile;
+    const targetProfile = link.dataset.navProfile || profile;
+    link.href = `${link.dataset.navRoute}?perfil=${targetProfile}&mes=${activeMonth(targetProfile)}`;
     if (routeMatches && profileMatches) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   });
+  const logo = document.querySelector(".brand-logo");
+  if (logo) logo.href = `/projecao?perfil=${profile}&mes=${month}`;
 }
 
 function openMenu() {
