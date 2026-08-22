@@ -36,7 +36,7 @@ O segundo comando executa testes de regras de negócio, auditoria estática de t
 
 A opção **Administração** permanece no rodapé da sidebar e abre um modal acessível. O logo não possui comportamento administrativo. Datas, metas e matriz vertical de valores podem ser atualizadas por perfil.
 
-A credencial não existe no bundle. A função `/api/admin-auth` compara, em tempo constante, o hash enviado pelo navegador com `process.env.ADMIN_PASSWORD_HASH`. Para executar localmente, copie `.env.example` para `.env`, substitua o placeholder por um hash SHA-256 e nunca versione esse arquivo. Na Vercel, configure a mesma variável nos ambientes de Preview e Production.
+A credencial não existe no bundle. A função `/api/admin-auth` calcula o SHA-256 da senha somente no servidor e o compara, em tempo constante, com `process.env.ADMIN_PASSWORD_HASH`; o hash não é aceito como credencial do cliente. Para executar localmente, copie `.env.example` para `.env`, substitua o placeholder por um hash SHA-256 e nunca versione esse arquivo. Na Vercel, configure a mesma variável nos ambientes de Preview e Production.
 
 ## Estrutura
 

@@ -1,4 +1,4 @@
-import { timingSafeEqual } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 
 const attempts = new Map();
 const WINDOW_MS = 15 * 60 * 1000;
@@ -43,6 +43,10 @@ function secureEqual(candidate, expected) {
   return timingSafeEqual(Buffer.from(candidate, "hex"), Buffer.from(expected, "hex"));
 }
 
+function passwordDigest(password) {
+  return createHash("sha256").update(String(password), "utf8").digest("hex");
+}
+
 export default async function handler(request, response) {
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST");
@@ -59,8 +63,8 @@ export default async function handler(request, response) {
   }
 
   try {
-    const { passwordHash } = await readBody(request);
-    if (!secureEqual(String(passwordHash || ""), expectedHash)) {
+    const { password } = await readBody(request);
+    if (typeof password !== "string" || password.length < 1 || password.length > 256 || !secureEqual(passwordDigest(password), expectedHash)) {
       recordFailure(key);
       return json(response, 401, { error: "Senha incorreta" });
     }
@@ -72,4 +76,4 @@ export default async function handler(request, response) {
   }
 }
 
-export const __test = { secureEqual };
+export const __test = { passwordDigest, secureEqual };

@@ -803,12 +803,6 @@ function closeDialog(dialog) {
   lastDialogTrigger?.focus();
 }
 
-async function hash(value) {
-  const bytes = new TextEncoder().encode(value);
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
-}
-
 function initializeAdmin() {
   document.querySelector("#admin-open").addEventListener("click", (event) => openDialog(loginDialog, event.currentTarget));
   document.querySelectorAll("[data-dialog-close]").forEach((button) => button.addEventListener("click", () => closeDialog(button.closest("dialog"))));
@@ -837,7 +831,7 @@ function initializeAdmin() {
       const response = await fetch("/api/admin-auth", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ passwordHash: await hash(password.value) }),
+        body: JSON.stringify({ password: password.value }),
       });
       authenticated = response.ok;
       if (!authenticated) {

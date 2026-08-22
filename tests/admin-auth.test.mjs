@@ -17,8 +17,9 @@ async function invoke({ method = "POST", body = {}, address = "test" } = {}) {
   return response;
 }
 
-test("comparação aceita somente hashes SHA-256 equivalentes", () => {
+test("senha é transformada e comparada somente no servidor", () => {
   const hash = createHash("sha256").update("segredo-de-teste").digest("hex");
+  assert.equal(__test.passwordDigest("segredo-de-teste"), hash);
   assert.equal(__test.secureEqual(hash, hash), true);
   assert.equal(__test.secureEqual("invalido", hash), false);
 });
@@ -31,12 +32,14 @@ test("endpoint falha fechado quando variável de ambiente não existe", async ()
   if (previous) process.env.ADMIN_PASSWORD_HASH = previous;
 });
 
-test("endpoint autentica pelo hash armazenado apenas no ambiente", async () => {
+test("endpoint autentica a senha contra o hash armazenado apenas no ambiente", async () => {
   const expected = createHash("sha256").update("segredo-de-teste").digest("hex");
   process.env.ADMIN_PASSWORD_HASH = expected;
-  const denied = await invoke({ body: { passwordHash: "0".repeat(64) }, address: "denied" });
-  const allowed = await invoke({ body: { passwordHash: expected }, address: "allowed" });
+  const denied = await invoke({ body: { password: "incorreta" }, address: "denied" });
+  const replayDenied = await invoke({ body: { password: expected }, address: "replay-denied" });
+  const allowed = await invoke({ body: { password: "segredo-de-teste" }, address: "allowed" });
   assert.equal(denied.statusCode, 401);
+  assert.equal(replayDenied.statusCode, 401);
   assert.equal(allowed.statusCode, 200);
   assert.deepEqual(allowed.payload, { authenticated: true });
   delete process.env.ADMIN_PASSWORD_HASH;
